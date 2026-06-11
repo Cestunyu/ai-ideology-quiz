@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Governance Spectrum</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f6f8;
+      --surface: #fff;
+      --soft: #fbfcfe;
+      --ink: #17202a;
+      --muted: #657386;
+      --line: #d9dee8;
+      --accent: #0f766e;
+      --shadow: 0 10px 28px rgba(20, 31, 52, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); }
+    a { color: inherit; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(217, 222, 232, 0.92);
+      background: rgba(245, 246, 248, 0.94);
+      backdrop-filter: blur(14px);
+    }
+    .topbar-inner, main {
+      width: min(1080px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+    .topbar-inner {
+      min-height: 54px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand { font-weight: 850; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 760;
+      text-decoration: none;
+    }
+    .btn.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    main { padding: 22px 0 44px; }
+    .hero, .map-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .hero { display: grid; gap: 10px; margin-bottom: 14px; padding: 18px; }
+    h1 { margin: 0; font-size: clamp(26px, 5vw, 42px); line-height: 1.1; letter-spacing: 0; }
+    .hero p { max-width: 820px; margin: 0; color: #344054; font-size: 14px; line-height: 1.65; }
+    .map-card {
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .map-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+    .map-head h2 { margin: 0; font-size: 16px; }
+    .map-head span { color: var(--muted); font-size: 12px; font-weight: 750; text-align: right; }
+    .map-plot {
+      position: relative;
+      width: min(100%, 680px);
+      aspect-ratio: 1 / 1;
+      margin: 16px auto 12px;
+      border: 1px solid #cfd8e5;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.08), transparent 42%, transparent 58%, rgba(21, 94, 239, 0.08)),
+        linear-gradient(0deg, rgba(183, 121, 31, 0.08), transparent 42%, transparent 58%, rgba(15, 118, 110, 0.08)),
+        #fbfcfe;
+    }
+    .map-axis {
+      position: absolute;
+      background: rgba(23, 32, 42, 0.18);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .map-axis.horizontal { left: 0; right: 0; top: 50%; height: 1px; }
+    .map-axis.vertical { top: 0; bottom: 0; left: 50%; width: 1px; }
+    .map-label {
+      position: absolute;
+      padding: 5px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.86);
+      color: #344054;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.15;
+      box-shadow: 0 1px 4px rgba(20, 31, 52, 0.08);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .map-label.top { top: 8px; left: 50%; transform: translateX(-50%); }
+    .map-label.bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .map-label.left { left: 8px; top: 50%; transform: translateY(-50%); }
+    .map-label.right { right: 8px; top: 50%; transform: translateY(-50%); }
+    .reference-layer { position: absolute; inset: 0; z-index: 2; }
+    .reference-point {
+      position: absolute;
+      left: var(--left);
+      bottom: var(--bottom);
+      transform: translate(calc(-50% + var(--dx)), calc(50% + var(--dy)));
+      display: block;
+      width: var(--size);
+      height: var(--size);
+      border: 0;
+      background: transparent;
+      color: var(--color);
+      cursor: pointer;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 820;
+      line-height: 1.05;
+      padding: 0;
+      text-align: left;
+    }
+    .reference-point::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid #fff;
+      border-radius: 999px;
+      background: var(--color);
+      box-shadow: 0 2px 8px rgba(20, 31, 52, 0.18);
+      transition: box-shadow 120ms ease, transform 120ms ease;
+    }
+    .reference-point.active { z-index: 6; }
+    .reference-point.active::before,
+    .reference-point:hover::before,
+    .reference-point:focus-visible::before {
+      transform: scale(1.16);
+      box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--color), 0 8px 18px rgba(20, 31, 52, 0.18);
+    }
+    .reference-label {
+      position: absolute;
+      top: 50%;
+      display: inline-block;
+      max-width: 128px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 3px 5px;
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 1px 4px rgba(20, 31, 52, 0.08);
+      pointer-events: auto;
+      transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+    .reference-point.label-right .reference-label { left: calc(var(--size) + 5px); transform: translateY(-50%); }
+    .reference-point.label-left .reference-label { right: calc(var(--size) + 5px); transform: translateY(-50%); text-align: right; }
+    .reference-point.active .reference-label,
+    .reference-point:hover .reference-label,
+    .reference-point:focus-visible .reference-label {
+      border-color: var(--color);
+      background: #fff;
+      box-shadow: 0 5px 14px rgba(20, 31, 52, 0.14);
+    }
+    .map-dot {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      transform: translate(-50%, 50%);
+      display: grid;
+      place-items: center;
+      min-width: 56px;
+      height: 40px;
+      padding: 0 10px;
+      border: 3px solid #fff;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 950;
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.25);
+      z-index: 3;
+    }
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      padding: 0 14px 10px;
+    }
+    .map-legend span,
+    .map-legend button {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      min-height: 24px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fbfcfe;
+      color: #344054;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 780;
+      line-height: 1.1;
+    }
+    .map-legend button {
+      cursor: pointer;
+      font: inherit;
+    }
+    .map-legend button:hover,
+    .map-legend button:focus-visible {
+      border-color: var(--color);
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(20, 31, 52, 0.12);
+      outline: none;
+    }
+    .map-legend i { display: inline-block; width: 10px; height: 10px; flex: 0 0 auto; border-radius: 999px; }
+    .reference-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      overflow-y: auto;
+    }
+    .reference-modal[hidden] { display: none; }
+    .reference-modal-backdrop { position: absolute; inset: 0; background: rgba(18, 25, 38, 0.42); }
+    .reference-modal-card {
+      position: relative;
+      z-index: 1;
+      width: min(560px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(20, 31, 52, 0.24);
+      padding: 14px;
+      max-height: calc(100vh - 36px);
+      overflow-y: auto;
+    }
+    .reference-modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #344054;
+      font-size: 18px;
+      font-weight: 820;
+      cursor: pointer;
+    }
+    .reference-detail {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--soft);
+      padding: 13px 44px 13px 13px;
+      min-height: 78px;
+    }
+    .reference-detail-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .reference-detail-head b { font-size: 14px; line-height: 1.25; }
+    .reference-detail-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 23px;
+      border: 1px solid var(--color);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--color);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 820;
+      line-height: 1.1;
+    }
+    .reference-detail p { margin: 7px 0 0; color: #3a4454; font-size: 12px; line-height: 1.5; }
+    .reference-detail a { color: #0f5fbb; text-decoration: underline; text-underline-offset: 2px; }
+    .reference-note-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .reference-note {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      padding: 10px;
+    }
+    button.reference-note {
+      width: 100%;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    button.reference-note:hover,
+    button.reference-note:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(20, 31, 52, 0.12);
+      outline: none;
+    }
+    .reference-note span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 820;
+      line-height: 1.2;
+    }
+    .reference-note p,
+    .reference-note ul {
+      margin: 6px 0 0;
+    }
+    .reference-note p + p {
+      margin-top: 8px;
+    }
+    .reference-note a {
+      color: var(--accent);
+      font-weight: 780;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.32);
+    }
+    .reference-note a:hover {
+      border-bottom-color: var(--accent);
+    }
+    @media (max-width: 760px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; padding: 8px 0; }
+      main { padding-top: 10px; }
+      .hero { padding: 14px; }
+      .map-plot { width: 100%; margin: 8px 0; }
+      .reference-point { --size: 8px !important; font-size: 9px; }
+      .reference-label { max-width: 84px; }
+      .map-legend { padding: 0 8px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">AI Governance Spectrum</div>
+      <nav class="nav" aria-label="Page navigation">
+        <a class="btn primary" href="/en/">Back to Quiz</a>
+        <a class="btn" href="ai-governance-persona-profiles-en.html">AI Persona Profiles</a>
+        <a class="btn" href="ai-governance-spectrum.html">EN / CH</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="map-card">
+      <div class="map-head">
+        <h2>Two-Dimensional Stance Map</h2>
+      </div>
+      <div class="map-plot" aria-label="AI governance two-dimensional map">
+        <div class="map-axis horizontal"></div>
+        <div class="map-axis vertical"></div>
+        <span class="map-label top">Human / social-structure centered</span>
+        <span class="map-label bottom">Posthuman / intelligence centered</span>
+        <span class="map-label left">Control threshold</span>
+        <span class="map-label right">Open deployment</span>
+        <div class="reference-layer" id="referenceLayer"></div>
+      </div>
+      <div class="map-legend" id="mapLegend" aria-label="Intellectual lineage legend"></div>
+    </section>
+
+    <div class="reference-modal" id="referenceModal" hidden>
+      <div class="reference-modal-backdrop" data-reference-close></div>
+      <section class="reference-modal-card" role="dialog" aria-modal="true" aria-labelledby="referenceModalTitle">
+        <button class="reference-modal-close" type="button" aria-label="Close map detail" data-reference-close>&times;</button>
+        <div class="reference-detail" id="referenceDetail" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="application/json" id="referenceData">
+[
+  {"id":"eliezer-yudkowsky","label":"Yudkowsky","name":"Eliezer Yudkowsky","cluster":"Rationalist AI x-risk / MIRI","category":"X-risk safety","x":-2,"y":1,"influence":5,"dx":"-18px","dy":"-12px","source":"https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities","sourceTitle":"AGI Ruin: A List of Lethalities"},
+  {"id":"nick-bostrom","label":"Bostrom","name":"Nick Bostrom","cluster":"Superintelligence / philosophical x-risk","category":"X-risk safety","x":-1.68,"y":1,"influence":5,"dx":"16px","dy":"10px","source":"https://nickbostrom.com/views/superintelligence.pdf","sourceTitle":"Superintelligence"},
+  {"id":"stuart-russell","label":"Russell","name":"Stuart Russell","cluster":"Beneficial AI / human-compatible AI","category":"X-risk safety","x":-1,"y":2,"influence":5,"dx":"0px","dy":"0px","source":"https://aima.cs.berkeley.edu/~russell/papers/mi19book-hcai.pdf","sourceTitle":"Human-Compatible Artificial Intelligence"},
+  {"id":"pope-leo-xiv","label":"Leo XIV","name":"Pope Leo XIV / Magnifica Humanitas","cluster":"Catholic social humanism / AI governance","category":"Catholic social humanism","x":-1.18,"y":1.72,"influence":4,"dx":"30px","dy":"-20px","source":"https://www.vatican.va/content/leo-xiv/en/encyclicals/documents/20260515-magnifica-humanitas.html","sourceTitle":"Magnifica Humanitas"},
+  {"id":"paul-christiano","label":"Christiano","name":"Paul Christiano","cluster":"Scalable alignment / technical safety","category":"X-risk safety","x":-0.87,"y":1.2,"influence":4,"dx":"-18px","dy":"8px","source":"https://www.alignmentforum.org/posts/HBxe6wdjxK239zajf/what-failure-looks-like","sourceTitle":"What Failure Looks Like"},
+  {"id":"ajeya-cotra","label":"Cotra","name":"Ajeya Cotra","cluster":"AI timelines / Open Philanthropy","category":"X-risk safety","x":-0.87,"y":1,"influence":4,"dx":"16px","dy":"-10px","source":"https://www.cold-takes.com/forecasting-transformative-ai-the-biological-anchors-method-in-a-nutshell/","sourceTitle":"Forecasting Transformative AI"},
+  {"id":"dario-amodei-anthropic","label":"Amodei","name":"Dario Amodei / Anthropic","cluster":"Frontier-lab safety optimism","category":"Frontier lab governance","x":-0.22,"y":1.1,"influence":5,"dx":"12px","dy":"8px","source":"https://darioamodei.com/essay/machines-of-loving-grace","sourceTitle":"Machines of Loving Grace"},
+  {"id":"dan-hendrycks-cais","label":"Hendrycks","name":"Dan Hendrycks / Center for AI Safety","cluster":"Public AI x-risk and ML safety","category":"X-risk safety","x":-1.38,"y":1,"influence":4,"dx":"8px","dy":"-12px","source":"https://safe.ai/work/statement-on-ai-risk","sourceTitle":"Statement on AI Risk"},
+  {"id":"bender-gebru-mitchell-mcmillan-major","label":"Bender et al.","name":"Emily Bender, Timnit Gebru, Margaret Mitchell, and Angelina McMillan-Major","cluster":"Critical AI / stochastic parrots","category":"Critical AI","x":-0.46,"y":2,"influence":5,"dx":"-40px","dy":"-16px","source":"https://dl.acm.org/doi/10.1145/3442188.3445922","sourceTitle":"On the Dangers of Stochastic Parrots"},
+  {"id":"kate-crawford","label":"Crawford","name":"Kate Crawford","cluster":"AI political economy / extraction","category":"Critical AI","x":-0.39,"y":2,"influence":4,"dx":"18px","dy":"2px","source":"https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai/","sourceTitle":"Atlas of AI"},
+  {"id":"ruha-benjamin","label":"Benjamin","name":"Ruha Benjamin","cluster":"Race, automation, and technology critique","category":"Critical AI","x":-0.39,"y":2,"influence":4,"dx":"0px","dy":"24px","source":"https://www.ruhabenjamin.com/race-after-technology","sourceTitle":"Race After Technology"},
+  {"id":"ai-as-normal-technology","label":"Normal Tech","name":"AI as Normal Technology","cluster":"Normal technology / context-specific governance","category":"Normal technology","x":0.02,"y":0.9,"influence":3,"dx":"-12px","dy":"-18px","source":"https://www.normaltech.ai/p/ai-as-normal-technology","sourceTitle":"AI as Normal Technology"},
+  {"id":"narayanan-kapoor","label":"Narayanan/Ka...","name":"Arvind Narayanan and Sayash Kapoor","cluster":"AI hype skepticism / demystification","category":"Hype skepticism","x":-0.07,"y":1.5,"influence":4,"dx":"0px","dy":"0px","source":"https://www.aisnakeoil.com/","sourceTitle":"AI Snake Oil"},
+  {"id":"gary-marcus-melanie-mitchell","label":"Marcus/Mitch...","name":"Gary Marcus / Melanie Mitchell","cluster":"Deep learning skepticism","category":"Hype skepticism","x":0.07,"y":0.5,"influence":4,"dx":"0px","dy":"0px","source":"https://www.penguinrandomhouse.com/books/575774/rebooting-ai-by-gary-marcus-and-ernest-davis/","sourceTitle":"Rebooting AI"},
+  {"id":"rich-sutton","label":"Sutton","name":"Rich Sutton","cluster":"Bitter Lesson / computation-centered AI","category":"Scaling thought","x":0.6,"y":-1,"influence":5,"dx":"-12px","dy":"0px","source":"http://www.incompleteideas.net/IncIdeas/BitterLesson.html","sourceTitle":"The Bitter Lesson"},
+  {"id":"benjamin-bratton","label":"Bratton","name":"Benjamin Bratton","cluster":"Posthuman control / planetary computation","category":"Posthuman control","x":-1.15,"y":-1.1,"influence":4,"dx":"12px","dy":"0px","source":"https://mitpress.mit.edu/9780262029575/the-stack/","sourceTitle":"The Stack"},
+  {"id":"yann-lecun","label":"LeCun","name":"Yann LeCun","cluster":"Open-source / architecture optimism / anti-doom","category":"Architecture optimism","x":1.03,"y":0,"influence":5,"dx":"12px","dy":"4px","source":"https://openreview.net/pdf?id=BZ5a1r-kVsf","sourceTitle":"A Path Towards Autonomous Machine Intelligence"},
+  {"id":"andrew-ng","label":"Andrew Ng","name":"Andrew Ng","cluster":"Pragmatic AI optimism","category":"Pragmatic optimism","x":1.07,"y":1,"influence":4,"dx":"-15px","dy":"-11px","source":"https://www.gsb.stanford.edu/insights/andrew-ng-why-ai-new-electricity","sourceTitle":"AI is the New Electricity"},
+  {"id":"sam-altman-openai","label":"Altman/OpenAI","name":"Sam Altman / OpenAI","cluster":"Managed AGI optimism","category":"Frontier lab governance","x":0.84,"y":1,"influence":5,"dx":"16px","dy":"11px","source":"https://openai.com/index/planning-for-agi-and-beyond/","sourceTitle":"Planning for AGI and beyond"},
+  {"id":"elon-musk-xai","label":"Musk/xAI","name":"Elon Musk / xAI","cluster":"Risk-aware techno-optimism / open-weight frontier build","category":"Techno-optimism","x":1.2,"y":-0.28,"influence":5,"dx":"-24px","dy":"18px","source":"https://x.ai/news/grok-os","sourceTitle":"Open Release of Grok-1"},
+  {"id":"peter-thiel","label":"Thiel","name":"Peter Thiel / Founders Fund","cluster":"Techno-libertarian anti-stagnation / founder sovereignty","category":"Techno-libertarianism","x":1.32,"y":-0.72,"influence":4,"dx":"16px","dy":"-18px","source":"https://foundersfund.com/2017/01/manifesto/","sourceTitle":"What Happened to the Future?"},
+  {"id":"ray-kurzweil","label":"Kurzweil","name":"Ray Kurzweil","cluster":"Singularity / transhumanist optimism","category":"Techno-optimism","x":1.44,"y":-0.4,"influence":5,"dx":"-20px","dy":"10px","source":"https://www.thesingularityisnearer.com/","sourceTitle":"The Singularity Is Nearer"},
+  {"id":"marc-andreessen","label":"Andreessen","name":"Marc Andreessen","cluster":"Techno-optimism / anti-pause politics","category":"Techno-optimism","x":1.64,"y":0.4,"influence":4,"dx":"15px","dy":"-8px","source":"https://a16z.com/the-techno-optimist-manifesto/","sourceTitle":"The Techno-Optimist Manifesto"},
+  {"id":"effective-accelerationism","label":"e/acc","name":"e/acc / effective accelerationism","cluster":"Accelerationist AI politics","category":"Accelerationism","x":1.93,"y":-0.8,"influence":3,"dx":"0px","dy":"0px","source":"https://wiki.p2pfoundation.net/Effective_Accelerationism","sourceTitle":"Effective Accelerationism"},
+  {"id":"nick-land","label":"Land","name":"Nick Land","cluster":"Accelerationism / Dark Enlightenment","category":"Accelerationism","x":1.79,"y":-2,"influence":4,"dx":"0px","dy":"0px","source":"https://www.ccru.net/swarm1/1_melt.htm","sourceTitle":"Meltdown"}
+]
+  </script>
+  <script type="application/json" id="referenceProfilesData">
+{
+  "eliezer-yudkowsky": "Advanced AI is likely to take humanity's future irreversibly if alignment is not solved before capability takeoff.",
+  "nick-bostrom": "Superintelligence may pursue instrumental goals such as resources, power, and self-preservation in ways that threaten human control.",
+  "stuart-russell": "AI systems should be designed around uncertainty about human preferences, remaining corrigible, supervisable, and beneficial to humans.",
+  "pope-leo-xiv": "AI should serve human dignity, the common good, workers, and vulnerable people; technical power needs public responsibility.",
+  "paul-christiano": "Advanced AI failure may emerge through gradual delegation, weak oversight, and misaligned objectives rather than sudden cartoonish rebellion.",
+  "ajeya-cotra": "Transformative AI timelines can be estimated through compute requirements and biological anchors, so safety and policy need advance preparation.",
+  "dario-amodei-anthropic": "Frontier AI could bring enormous benefits, but scaling requires explicit safety evaluations and deployment thresholds.",
+  "dan-hendrycks-cais": "AI should be treated as a societal-scale risk comparable to other major global hazards.",
+  "bender-gebru-mitchell-mcmillan-major": "Large language models can amplify social, environmental, labor, data, and representational harms that scale narratives obscure.",
+  "kate-crawford": "AI is a material infrastructure of minerals, energy, data, labor, and state or corporate power, not disembodied intelligence.",
+  "ruha-benjamin": "Automated systems can reproduce racial and social hierarchy while presenting themselves as neutral or objective.",
+  "ai-as-normal-technology": "AI should be treated as important but ordinary technology, evaluated by use case, failure mode, institutional responsibility, and verifiable benefit.",
+  "narayanan-kapoor": "AI is powerful but often overpackaged; evaluation should distinguish useful tools from snake oil and inflated AGI narratives.",
+  "gary-marcus-melanie-mitchell": "Current deep learning is powerful but brittle and may not be enough for robust abstraction, causality, common sense, or general intelligence.",
+  "rich-sutton": "General methods that leverage search, learning, and computation ultimately beat hand-coded human domain knowledge.",
+  "benjamin-bratton": "AI governance should be understood through planetary computation, platform stacks, and synthetic intelligence rather than simple product rules.",
+  "yann-lecun": "Near-term doom narratives overstate current systems; stronger AI needs world models, planning, and new architectures.",
+  "andrew-ng": "AI is a general-purpose technology like electricity, and the priority is deploying it into workflows that create real productivity and welfare.",
+  "sam-altman-openai": "AGI could produce broad abundance if paired with safety, governance, benefit sharing, and gradual deployment.",
+  "elon-musk-xai": "Musk combines AI risk warnings with a build-oriented vision of Mars, Neuralink, xAI, and expanded human-machine intelligence.",
+  "peter-thiel": "The central problem is stagnation; the future needs deep-tech breakthroughs, strong founders, and vertical progress rather than risk-averse bureaucracy.",
+  "ray-kurzweil": "Exponential progress in computing, AI, life sciences, and nanotechnology points toward the singularity and human-machine merger.",
+  "marc-andreessen": "AI should be developed aggressively because technological progress can expand abundance, solve problems, and empower people.",
+  "effective-accelerationism": "Technological acceleration is treated as a moral and civilizational task, while regulation and pause politics are often seen as larger risks.",
+  "nick-land": "Capital, technology, and intelligence are imagined as autonomous acceleration processes that exceed humanist control."
+}
+  </script>
+  <script type="application/json" id="referenceDetailsData">
+{}
+  </script>
+  <script>
+    const referencePoints = JSON.parse(document.querySelector("#referenceData").textContent);
+    const referenceProfiles = JSON.parse(document.querySelector("#referenceProfilesData").textContent);
+    const referenceDetails = JSON.parse(document.querySelector("#referenceDetailsData").textContent);
+    const referenceSources = Object.fromEntries(referencePoints.map((point) => [
+      point.id,
+      { title: point.sourceTitle, url: point.source }
+    ]));
+    const categoryInfo = {
+      "X-risk safety": { label: "X-risk / alignment safety", color: "#b42318" },
+      "Catholic social humanism": { label: "Catholic social humanism / human dignity", color: "#9a3412" },
+      "Frontier lab governance": { label: "Frontier lab governance", color: "#0f766e" },
+      "Critical AI": { label: "Critical AI / social harm", color: "#7c3aed" },
+      "Normal technology": { label: "Normal technology / contextual governance", color: "#475569" },
+      "Hype skepticism": { label: "AI hype skepticism / demystification", color: "#64748b" },
+      "Scaling thought": { label: "Scaling / Bitter Lesson", color: "#0369a1" },
+      "Architecture optimism": { label: "Architecture optimism / world models", color: "#4f46e5" },
+      "Posthuman control": { label: "Posthuman control / system governance", color: "#5b21b6" },
+      "Pragmatic optimism": { label: "Pragmatic AI optimism", color: "#15803d" },
+      "Techno-libertarianism": { label: "Techno-libertarianism / anti-stagnation", color: "#a16207" },
+      "Techno-optimism": { label: "Techno-optimism / singularity", color: "#c2410c" },
+      "Accelerationism": { label: "Accelerationism / posthuman edge", color: "#7f1d1d" }
+    };
+    const referenceLayer = document.querySelector("#referenceLayer");
+    const mapLegend = document.querySelector("#mapLegend");
+    const referenceModal = document.querySelector("#referenceModal");
+    const referenceDetail = document.querySelector("#referenceDetail");
+    let activeReferenceId = "";
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[char]);
+    }
+    function coordToReferencePercent(value) {
+      return Math.max(0, Math.min(100, 7 + ((value + 2) / 4) * 86));
+    }
+    function quadrantFor(x, y) {
+      const horizontal = x < -0.35 ? "control threshold" : x > 0.35 ? "open deployment" : "middle governance";
+      const vertical = y > 0.35 ? "human / social-structure centered" : y < -0.35 ? "posthuman / intelligence centered" : "middle value position";
+      return `${horizontal} / ${vertical}`;
+    }
+    function renderMapLegend() {
+      mapLegend.innerHTML = Object.entries(categoryInfo).map(([category, info]) => `
+        <button type="button" data-category="${escapeHTML(category)}" style="--color:${escapeHTML(info.color)}"><i style="background:${escapeHTML(info.color)}"></i>${escapeHTML(info.label)}</button>
+      `).join("");
+    }
+    function renderReferencePoints() {
+      referenceLayer.innerHTML = referencePoints.map((point) => {
+        const size = 8 + point.influence * 1.2;
+        const info = categoryInfo[point.category] || categoryInfo["Normal technology"];
+        const labelSide = point.x > 0.85 ? "label-left" : "label-right";
+        const isActive = activeReferenceId === point.id;
+        return `
+          <button class="reference-point ${labelSide}${isActive ? " active" : ""}" type="button" data-id="${escapeHTML(point.id)}" aria-pressed="${isActive ? "true" : "false"}" style="--left:${coordToReferencePercent(point.x)}%; --bottom:${coordToReferencePercent(point.y)}%; --dx:${point.dx}; --dy:${point.dy}; --size:${size}px; --color:${escapeHTML(info.color)};" title="${escapeHTML(point.name)} · ${escapeHTML(point.cluster)}">
+            <span class="reference-label">${escapeHTML(point.label)}</span>
+          </button>
+        `;
+      }).join("");
+    }
+    function renderReferenceNotes(point, detail, stance) {
+      const core = detail?.core || stance;
+      const lineage = detail?.lineage || "This reference point does not yet have a full intellectual lineage note.";
+      const placement = detail?.placement || `This reference point sits near ${quadrantFor(point.x, point.y)} because its public arguments are closest to ${point.cluster}.`;
+      const focus = detail?.focus || "Read it as a neighboring reference point, not as proof that every view in the same region is identical.";
+      const counter = detail?.counter || "";
+      const works = detail?.works || [];
+      const source = referenceSources[point.id];
+      const sourceLink = source
+        ? `<p>Main reference: <a href="${escapeHTML(source.url)}" target="_blank" rel="noreferrer">${escapeHTML(source.title)}</a></p>`
+        : "";
+      const worksLine = works.length ? `<p>Related texts: ${works.map(escapeHTML).join(" · ")}</p>` : "";
+      return `
+        <div class="reference-note-grid">
+          <div class="reference-note">
+            <span>Core Claim</span>
+            <p>${escapeHTML(core)}</p>
+            <p>${escapeHTML(placement)}</p>
+            <p>${escapeHTML(focus)}</p>
+          </div>
+          ${counter ? `<div class="reference-note"><span>Contrast</span><p>${escapeHTML(counter)}</p></div>` : ""}
+          <div class="reference-note">
+            <span>Intellectual Lineage</span>
+            <p>${escapeHTML(lineage)}</p>
+            ${sourceLink}
+            ${worksLine}
+          </div>
+        </div>
+      `;
+    }
+    function openReference(point) {
+      activeReferenceId = point.id;
+      renderReferencePoints();
+      const info = categoryInfo[point.category] || categoryInfo["Normal technology"];
+      const stance = referenceProfiles[point.id] || point.cluster;
+      const detail = referenceDetails[point.id];
+      referenceDetail.innerHTML = `
+        <div class="reference-detail-head">
+          <b id="referenceModalTitle">${escapeHTML(point.name)}</b>
+          <span class="reference-detail-badge" style="--color:${escapeHTML(info.color)}">${escapeHTML(info.label)}</span>
+        </div>
+        ${renderReferenceNotes(point, detail, stance)}
+      `;
+      referenceModal.hidden = false;
+    }
+    function openCategory(category) {
+      const info = categoryInfo[category];
+      if (!info) return;
+      const points = referencePoints.filter((point) => point.category === category);
+      if (points.length === 1) {
+        openReference(points[0]);
+        return;
+      }
+      activeReferenceId = "";
+      renderReferencePoints();
+      referenceDetail.innerHTML = `
+        <div class="reference-detail-head">
+          <b id="referenceModalTitle">${escapeHTML(info.label)}</b>
+          <span class="reference-detail-badge" style="--color:${escapeHTML(info.color)}">${points.length} references</span>
+        </div>
+        <div class="reference-note-grid">
+          ${points.map((point) => `
+            <button class="reference-note" type="button" data-reference-id="${escapeHTML(point.id)}" style="text-align:left; cursor:pointer;">
+              <span>${escapeHTML(point.label)}</span>
+              <p><b>${escapeHTML(point.name)}</b></p>
+              <p>${escapeHTML(point.cluster)}</p>
+            </button>
+          `).join("")}
+        </div>
+      `;
+      referenceModal.hidden = false;
+    }
+    function closeReference() {
+      activeReferenceId = "";
+      renderReferencePoints();
+      referenceModal.hidden = true;
+    }
+    referenceLayer.addEventListener("click", (event) => {
+      const target = event.target.closest(".reference-point");
+      if (!target) return;
+      const point = referencePoints.find((item) => item.id === target.dataset.id);
+      if (point) openReference(point);
+    });
+    mapLegend.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-category]");
+      if (!target) return;
+      openCategory(target.dataset.category);
+    });
+    referenceModal.addEventListener("click", (event) => {
+      const referenceTarget = event.target.closest("[data-reference-id]");
+      if (referenceTarget) {
+        const point = referencePoints.find((item) => item.id === referenceTarget.dataset.referenceId);
+        if (point) openReference(point);
+        return;
+      }
+      if (event.target.matches("[data-reference-close]")) closeReference();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !referenceModal.hidden) closeReference();
+    });
+    renderMapLegend();
+    renderReferencePoints();
+  </script>
+</body>
+</html>

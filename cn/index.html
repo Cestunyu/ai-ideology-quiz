@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <base href="/">
-  <title>AI Governance Persona</title>
+  <title>AI 人格测试</title>
   <link rel="icon" href="data:,">
   <style>
     :root {
@@ -1261,7 +1261,6 @@
       font-size: 10px;
       font-weight: 820;
       line-height: 1.2;
-      text-transform: uppercase;
     }
 
     .reference-note p,
@@ -1389,12 +1388,12 @@
         display: none;
       }
 
-      .wrap {
-        padding: 6px 8px 34px;
-      }
-
       .hero {
         display: none;
+      }
+
+      .wrap {
+        padding: 6px 8px 34px;
       }
 
       .result {
@@ -1425,6 +1424,25 @@
 
       .progress-row {
         margin-bottom: 8px;
+      }
+
+      .page-card {
+        min-height: auto;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .intro-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .intro-list {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-resource-links {
+        grid-template-columns: 1fr;
       }
 
       .result-topline {
@@ -1466,25 +1484,6 @@
       }
 
       .profile-facts {
-        grid-template-columns: 1fr;
-      }
-
-      .page-card {
-        min-height: auto;
-        gap: 12px;
-        padding: 14px;
-      }
-
-      .intro-options {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .intro-list {
-        grid-template-columns: 1fr;
-      }
-
-      .intro-resource-links {
         grid-template-columns: 1fr;
       }
 
@@ -1561,13 +1560,13 @@
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <strong class="brand-title">AI Governance Persona</strong>
-        <span>16 questions to see where you stand on AI risk, governance, openness, and human control.</span>
+        <strong class="brand-title">AI 人格测试</strong>
+        <span>16 个问题，看看你在 AI 风险、治理、开放和人类控制上的位置。</span>
       </div>
       <div class="topbar-actions">
-        <a class="lang-link" href="/cn/">CN</a>
-        <a class="lang-link active" href="/en/">EN</a>
-        <button class="btn" id="resetBtn" type="button">Reset</button>
+        <a class="lang-link active" href="/cn/">CN</a>
+        <a class="lang-link" href="/en/">EN</a>
+        <button class="btn" id="resetBtn" type="button">重置</button>
       </div>
     </div>
   </header>
@@ -1576,8 +1575,8 @@
     <form id="quizForm" class="quiz-shell">
       <section class="panel" id="quizPager">
         <div class="panel-head">
-          <button class="btn compact" id="prevTopBtn" type="button">Back</button>
-          <small id="pageCount">Before you begin</small>
+          <button class="btn compact" id="prevTopBtn" type="button">上一题</button>
+          <small id="pageCount">开始前</small>
         </div>
         <div class="panel-body">
           <div class="progress-row" aria-hidden="true">
@@ -1590,13 +1589,13 @@
           <article class="page-card">
             <div class="page-meta">
               <span class="qid" id="pageTag">R01</span>
-              <span id="pageInstruction">Choose the option closest to your view</span>
+              <span id="pageInstruction">选择最接近你的位置</span>
             </div>
             <h2 class="page-prompt" id="pagePrompt"></h2>
             <div class="single-options" id="pageOptions"></div>
             <div class="pager-actions">
-              <button class="btn" id="prevBtn" type="button">Back</button>
-              <button class="btn primary" id="nextBtn" type="button">Next</button>
+              <button class="btn" id="prevBtn" type="button">上一题</button>
+              <button class="btn primary" id="nextBtn" type="button">下一题</button>
             </div>
           </article>
           <div class="intro-resource-links" id="introResourceLinks" hidden></div>
@@ -1607,100 +1606,101 @@
     <section class="result" id="resultPanel" aria-live="polite" hidden>
       <div class="profile">
         <div class="profile-visual">
-          <img class="profile-avatar" id="profileAvatar" alt="Your AI governance persona avatar" hidden>
-          <h3 class="profile-title" id="profileName">Waiting for profile</h3>
+          <img class="profile-avatar" id="profileAvatar" alt="AI 人格测试头像" hidden>
+          <h3 class="profile-title" id="profileName">等待生成画像</h3>
           <div class="code" id="profileCode">----</div>
         </div>
         <div class="profile-body">
-          <p class="profile-lead" id="profileRoast">Complete the usage item and 11 core judgments for a stable result.</p>
+          <p class="profile-lead" id="profileRoast">完成使用情况题和 11 道核心判断后，结果会更稳。</p>
           <p class="profile-sublead" id="profileExplanation">--</p>
-          <div class="share-actions" aria-label="Share result">
-            <button class="btn primary" id="shareBtn" type="button">Share result</button>
+          <div class="share-actions" aria-label="分享结果">
+            <button class="btn primary" id="shareBtn" type="button">分享结果</button>
           </div>
           <div class="profile-facts">
             <div class="profile-fact">
-              <span>Social tell</span>
+              <span>社交识别</span>
               <p id="profileTell">--</p>
             </div>
             <div class="profile-fact">
-              <span>Representative texts</span>
+              <span>代表文本</span>
               <p id="profileTexts">--</p>
             </div>
           </div>
           <div class="profile-nearest reference-section" id="nearestPersonSection" role="button" tabindex="0">
-            <p><b>Closest reference:</b> <span class="nearest-name" id="nearestPerson">--</span></p>
-            <p><b>Core claim:</b> <span id="nearestClaim">--</span></p>
+            <p><b>接近的人：</b><span class="nearest-name" id="nearestPerson">--</span></p>
+            <p><b>核心命题：</b><span id="nearestClaim">--</span></p>
           </div>
           <p class="classification-small">
-            <b>Classification stability:</b> <span id="classificationConfidence">--</span>
-            <span id="classificationConfidenceText">Completion shows whether position, scenarios, and self-confirmation agree.</span>
+            <b>分类稳定性：</b><span id="classificationConfidence">--</span>
+            <span id="classificationConfidenceText">答完后显示位置、场景和自我确认是否一致。</span>
           </p>
         </div>
       </div>
 
       <div class="share-card" id="shareCard" hidden>
-        <p id="shareStatus">Your share image will appear here.</p>
-        <img class="share-preview" id="sharePreview" alt="AI Governance Persona share image preview">
+        <p id="shareStatus">分享图片生成后会显示在这里。</p>
+        <img class="share-preview" id="sharePreview" alt="AI 人格测试分享图片预览">
         <div class="share-download-row">
-          <a class="btn primary" id="shareDownload" download="ai-stance-card.png">Save image</a>
+          <a class="btn primary" id="shareDownload" download="ai-stance-card.png">保存图片</a>
         </div>
       </div>
 
       <div class="map-card">
         <div class="map-head">
-          <h2>Two-Axis Map</h2>
-          <span id="mapQuadrant">Position appears after completion</span>
+          <h2>二维立场图</h2>
+          <span id="mapQuadrant">答完后显示位置</span>
         </div>
-        <div class="map-plot" aria-label="AI Governance Persona two-axis map">
+        <div class="map-plot" aria-label="AI 立场二维图">
           <div class="map-axis horizontal"></div>
           <div class="map-axis vertical"></div>
-          <span class="map-label top">Human/social-structure-centered</span>
-          <span class="map-label bottom">Posthuman / intelligence-centered</span>
-          <span class="map-label left">Control threshold</span>
-          <span class="map-label right">Open deployment</span>
+          <span class="map-label top">人类/社会结构中心</span>
+          <span class="map-label bottom">后人类/智能中心</span>
+          <span class="map-label left">控制门槛</span>
+          <span class="map-label right">开放部署</span>
           <div class="reference-layer" id="referenceLayer"></div>
           <div class="map-dot" id="mapDot"><span id="mapDotCode">----</span></div>
         </div>
-        <div class="map-legend" id="mapLegend" aria-label="Map legend"></div>
+        <div class="map-legend" id="mapLegend" aria-label="思想谱系图例"></div>
       </div>
 
       <div class="result-topline">
         <div class="metric">
-          <span>AI Capability Belief</span>
+          <span>能力判断</span>
           <strong id="abilityNarrative">--</strong>
-          <div class="spectrum" aria-label="AI capability belief spectrum">
+          <div class="spectrum" aria-label="能力判断光谱">
             <div class="spectrum-scale"><i class="spectrum-marker" id="abilitySpectrumMarker" data-empty="true"></i></div>
-            <div class="spectrum-labels"><span>Transformative AI</span><span>Mixed</span><span>Bubble skeptic</span></div>
+            <div class="spectrum-labels"><span>变革性 AI</span><span>证据混合</span><span>Bubble 怀疑</span></div>
           </div>
         </div>
         <div class="metric">
-          <span>Risk Judgment</span>
+          <span>风险判断</span>
           <strong id="dimensionR">--</strong>
-          <div class="spectrum" aria-label="risk judgment spectrum">
+          <div class="spectrum" aria-label="风险判断光谱">
             <div class="spectrum-scale"><i class="spectrum-marker" id="riskSpectrumMarker" data-empty="true"></i></div>
-            <div class="spectrum-labels"><span>Opportunity cost</span><span>Mixed</span><span>Civilizational risk</span></div>
+            <div class="spectrum-labels"><span>机会成本</span><span>混合</span><span>文明级风险</span></div>
           </div>
         </div>
         <div class="metric">
-          <span>Governance Position</span>
+          <span>治理位置</span>
           <strong id="dimensionC">--</strong>
-          <div class="spectrum" aria-label="governance position spectrum">
+          <div class="spectrum" aria-label="治理位置光谱">
             <div class="spectrum-scale"><i class="spectrum-marker" id="governanceSpectrumMarker" data-empty="true"></i></div>
-            <div class="spectrum-labels"><span>Control</span><span>Middle</span><span>Open</span></div>
+            <div class="spectrum-labels"><span>控制</span><span>中间</span><span>开放</span></div>
           </div>
         </div>
         <div class="metric">
-          <span>Value Position</span>
+          <span>价值位置</span>
           <strong id="dimensionH">--</strong>
-          <div class="spectrum" aria-label="value position spectrum">
+          <div class="spectrum" aria-label="价值位置光谱">
             <div class="spectrum-scale"><i class="spectrum-marker" id="valueSpectrumMarker" data-empty="true"></i></div>
-            <div class="spectrum-labels"><span>Intelligence-centered</span><span>Middle</span><span>Human/social-structure-centered</span></div>
+            <div class="spectrum-labels"><span>智能中心</span><span>中间</span><span>人类/社会结构中心</span></div>
           </div>
         </div>
       </div>
 
       <div class="result-actions">
-        <button class="btn" id="editLastBtn" type="button">Edit Last Answer</button>
+        <button class="btn" id="editLastBtn" type="button">修改上一题</button>
+        <button class="btn" id="restartBtn" type="button">重新测试</button>
       </div>
       <div class="submit-status" id="submitStatus" aria-live="polite"></div>
     </section>
@@ -1708,7 +1708,7 @@
     <div class="reference-modal" id="referenceModal" hidden>
       <div class="reference-modal-backdrop" data-reference-close></div>
       <section class="reference-modal-card" role="dialog" aria-modal="true" aria-labelledby="referenceModalTitle">
-        <button class="reference-modal-close" type="button" aria-label="Close map detail" data-reference-close>&times;</button>
+        <button class="reference-modal-close" type="button" aria-label="关闭图谱详情" data-reference-close>&times;</button>
         <div class="reference-detail" id="referenceDetail" aria-live="polite"></div>
       </section>
     </div>
@@ -1716,8 +1716,8 @@
 
   <script>
     const axisMeaning = {
-      x: "control threshold <-> open deployment",
-      y: "human/social-structure-centered <-> posthuman/intelligence-centered"
+      x: "控制门槛 <-> 开放部署",
+      y: "人类/社会结构中心 <-> 后人类/智能中心"
     };
 
     const questions = [
@@ -1725,176 +1725,176 @@
         id: "R01",
         dimension: "r",
         diagnosis: "catastrophic",
-        facet: "severe risk diagnosis",
-        text: "What risk from more powerful AI should be prevented first?",
+        facet: "严重风险诊断",
+        text: "未来更强 AI 最应该优先防范哪类风险？",
         options: [
-          ["1", "A", "The risk may be overstated; near-term AI problems should not be treated as a systemic crisis."],
-          ["2.33", "B", "Concrete social harm: AI could be used for surveillance, discrimination, or denying people opportunities."],
-          ["3.67", "C", "Loss of control: frontier systems may take actions humans cannot stop."],
-          ["5", "D", "Loss of social direction: AI could expand faster than public decision-making can keep up."]
+          ["1", "A", "风险可能被高估；近期 AI 问题不应被说成系统性危机。"],
+          ["2.33", "B", "现实社会伤害：AI 可能被用于监控、歧视或剥夺人的机会。"],
+          ["3.67", "C", "失控风险：前沿系统可能做出人类无法阻止的行为。"],
+          ["5", "D", "社会失去方向：AI 扩张太快，公共决策越来越跟不上。"]
         ]
       },
       {
         id: "R04",
         dimension: "r",
         diagnosis: "opportunity",
-        facet: "opportunity-cost diagnosis",
-        text: "If the government slows new AI model releases in the name of safety, which view is closest to yours?",
+        facet: "机会成本诊断",
+        text: "如果政府出于安全考虑，要求 AI 公司放慢新模型发布或接受更严格审批，你更接近哪种立场？",
         options: [
-          ["1", "A", "Safety should come first. The stronger the system, the less it should be rushed into everyone's hands."],
-          ["2.33", "B", "Restrictions like this can lock power inside a few big companies and governments, making outside scrutiny harder."],
-          ["3.67", "C", "Slowing releases too much means useful AI tools that could help many people arrive later."],
-          ["5", "D", "The larger cost is slowing intelligence itself, and shrinking humanity's future."]
+          ["1", "A", "安全应放在第一位。越强大的系统，越不能急着推给所有人用。"],
+          ["2.33", "B", "这类限制容易把权力锁在少数大公司和政府手里，让外部的人更难检查和参与。"],
+          ["3.67", "C", "过度放慢发布会让本该帮助很多人的 AI 工具更晚到来。"],
+          ["5", "D", "更大的代价是智能发展变慢，也压缩未来文明的可能性。"]
         ]
       },
       {
         id: "L01",
         dimension: "l",
-        facet: "labor replacement and benefit sharing",
-        text: "If AI makes many jobs cheaper and more automated, and could even cause large-scale unemployment, what should policy do first?",
+        facet: "劳动替代与收益分配",
+        text: "如果 AI 让许多工作更便宜、更自动化，甚至可能带来大规模失业，政策应该优先做什么？",
         options: [
-          ["1", "A", "Let AI be used first. Even if some jobs disappear, higher productivity will create new opportunities."],
-          ["2.33", "B", "Help people change jobs. The priority is not to block AI, but to help affected workers move into new roles."],
-          ["3.67", "C", "Share more of the gains. The wealth created by AI should not flow only to companies and investors; workers should benefit too."],
-          ["5", "D", "Limit replacement first. AI systems that could replace people at large scale should not be deployed quickly without protections."]
+          ["1", "A", "先让 AI 用起来。即使一些工作会消失，更高生产率也会创造新的机会。"],
+          ["2.33", "B", "帮人换工作。重点不是挡住 AI，而是让受影响的人能转到新岗位。"],
+          ["3.67", "C", "多分一点收益。AI 带来的财富不应只流向公司和投资者，也应回到劳动者。"],
+          ["5", "D", "先限制替代。会大规模取代人的 AI，不应该在没有保护措施时快速部署。"]
         ]
       },
       {
         id: "I01",
         dimension: "i",
-        facet: "information ecosystem and synthetic content",
-        text: "An AI-generated fake video spreads quickly online, and many people think it is real. What is the most important problem?",
+        facet: "信息生态与合成内容",
+        text: "一段 AI 生成的假视频在网上快速传播，很多人以为是真的。你觉得最关键的问题是什么？",
         options: [
-          ["1", "A", "Verification is too slow. Platforms and media should label suspicious content faster so people know it may be AI-generated."],
-          ["2.33", "B", "These tools are too easy to misuse. AI tools that can realistically impersonate real people should not be freely available."],
-          ["3.67", "C", "Platforms amplify fake content. The deeper problem is not one fake video, but who profits from spread and attention."],
-          ["5", "D", "AI creation should not be restricted because of this. People who fake things should be responsible, but ordinary AI expression should not be over-controlled."]
+          ["1", "A", "真假识别太慢。平台和媒体应该更快标出可疑内容，让人知道它可能是 AI 生成的。"],
+          ["2.33", "B", "这类工具太容易滥用。能逼真冒充真人的 AI 工具，不应该被随便使用。"],
+          ["3.67", "C", "平台放大了假内容。真正的问题不是单个假视频，而是谁从传播和流量中获利。"],
+          ["5", "D", "不应因此限制 AI 创作。造假者应该负责，但普通人使用 AI 表达和创作不该被过度管制。"]
         ]
       },
       {
         id: "T01",
         dimension: "t",
-        facet: "training data and permission rules",
-        text: "AI companies train models on public articles, images, and code, but the authors did not clearly consent. What worries you most?",
+        facet: "训练数据与授权规则",
+        text: "AI 公司用公开文章、图片和代码训练模型，但作者没明确同意。你最担心什么？",
         options: [
-          ["1", "A", "Too many limits would slow progress. Public content is already learned from and referenced, and AI should be able to learn from it too."],
-          ["2.33", "B", "Creators are being taken from. Models get stronger from other people's work, but the original creators have no choice and receive no return."],
-          ["3.67", "C", "Personal content gets misused. Publicly visible does not mean free to train on, especially when it involves real people's lives."],
-          ["5", "D", "Complex permission rules would push out small teams and open-source projects. In the end, only big companies could afford the data and legal costs."]
+          ["1", "A", "限制太多会拖慢进步。公开内容本来就会被学习和引用，AI 也应该能从中学习。"],
+          ["2.33", "B", "创作者被白拿。模型靠别人的作品变强，但原作者没有选择权，也拿不到回报。"],
+          ["3.67", "C", "个人内容被滥用。公开可见不等于可以随便训练，尤其是涉及真实个人生活的内容。"],
+          ["5", "D", "复杂授权规则会让小团队和开源项目出局。最后只有大公司负担得起数据和法律成本。"]
         ]
       },
       {
         id: "D01",
         dimension: "d",
-        facet: "democratic-society threat diagnosis",
-        text: "A city uses AI to help allocate welfare services. Residents cannot easily understand the reasons or appeal decisions. What worries you most?",
+        facet: "民主社会威胁诊断",
+        text: "城市用 AI 辅助分配福利资源。居民很难看懂理由，也很难申诉。你最担心什么？",
         options: [
-          ["1", "A", "This worry may be overstated; the real bottlenecks are still budgets and administrative capacity."],
-          ["2.33", "B", "The value tradeoff is opaque; residents cannot tell why some people benefit and others lose."],
-          ["3.67", "C", "Appeals become harder; when the system is wrong, ordinary people struggle to get decisions reviewed."],
-          ["5", "D", "Human judgment gets sidelined; if the model looks effective, objections are easier to ignore."]
+          ["1", "A", "这类担忧可能被高估；真正瓶颈仍是预算和行政能力。"],
+          ["2.33", "B", "价值取舍不透明；居民不知道为什么有人获益、有人受损。"],
+          ["3.67", "C", "申诉变困难；出错时普通人很难让决定被重新审查。"],
+          ["5", "D", "人类判断被边缘化；只要模型看起来有效，反对意见就容易被忽视。"]
         ]
       },
       {
         id: "E01",
         dimension: "e",
-        facet: "source of AI progress",
-        text: "What is the most reliable source of future AI progress?",
+        facet: "AI 进步来源",
+        text: "未来 AI 进步最可靠的来源是什么？",
         options: [
-          ["1", "A", "Better human theories, interpretable mechanisms, and expert judgment."],
-          ["2.33", "B", "Product iteration in concrete domains and real-world results."],
-          ["3.67", "C", "More compute, search, data, and simple general methods."],
-          ["5", "D", "Open it quickly to more builders so competition can find the answer."]
+          ["1", "A", "更好的人工理论、可解释机制和专家判断。"],
+          ["2.33", "B", "具体场景里的产品迭代和真实效果。"],
+          ["3.67", "C", "更大规模的计算、搜索、数据和简单通用方法。"],
+          ["5", "D", "尽快开放给更多建设者，让竞争找到答案。"]
         ]
       },
       {
         id: "C02",
         dimension: "c",
         direction: -1,
-        facet: "governance blind spot judgment",
-        text: "In AI governance, what are you most worried will be overlooked?",
+        facet: "治理盲点判断",
+        text: "关于 AI 治理，你最担心哪件事被忽视？",
         options: [
-          ["1", "A", "Rules may become too strict, leaving the strongest AI systems controlled by a few big companies."],
-          ["2.33", "B", "Many claims about AI capabilities still lack evidence, and policy may be driven by exaggerated publicity."],
-          ["3.67", "C", "Incident reporting and outside review may be missing. When systems fail, outsiders may not know what happened."],
-          ["5", "D", "Affected people may be left out of the discussion, such as workers, surveilled people, or people affected by algorithmic decisions."]
+          ["1", "A", "规则定得太强，最后可能让最强 AI 被少数大公司控制。"],
+          ["2.33", "B", "很多关于 AI 能力的说法证据还不够，政策可能被夸大的宣传带着走。"],
+          ["3.67", "C", "缺少事故报告和外部审查。系统出问题后，外界可能根本不知道发生了什么。"],
+          ["5", "D", "受影响的人不在讨论里，比如劳动者、被监控者，或被算法决定影响的人。"]
         ]
       },
       {
         id: "C03",
         dimension: "c",
         direction: 1,
-        facet: "open competition / anti-gatekeeping",
-        text: "For high-capability, high-risk AI systems, which people or institutions should develop and use them?",
+        facet: "开放竞争 / 反 gatekeeping",
+        text: "高能力、高风险的 AI 系统，应该由哪些人或机构来开发和使用？",
         options: [
-          ["1", "A", "Only a small number of approved, inspectable institutions should build and run them."],
-          ["2.33", "B", "They do not need to be fully open, but regulators, researchers, and public institutions should at least be able to test them."],
-          ["3", "C", "Big companies and governments should not be the only voices; ordinary people, open-source communities, and affected groups should also have a say."],
-          ["5", "D", "More people should be able to use strong models to build things; open competition is better than a few actors deciding who gets access."]
+          ["1", "A", "只能交给少数经过批准、能被检查的机构来做。"],
+          ["2.33", "B", "不一定要完全公开，但至少要让监管者、研究者和公共机构能测试。"],
+          ["3", "C", "不能只让大公司和政府说了算；普通人、开源社区和受影响的人也要有发言权。"],
+          ["5", "D", "应该让更多人都能用强模型做东西；开放竞争比少数人把关更好。"]
         ]
       },
       {
         id: "C04",
         dimension: "c",
         direction: 1,
-        facet: "source of deployment evidence",
-        text: "What should an AI system prove before its use is expanded?",
+        facet: "部署证据来源",
+        text: "一个 AI 系统在扩大使用前，最需要证明什么？",
         options: [
-          ["1", "A", "Strict internal tests should come first; if a system fails key safety standards, access should not expand."],
-          ["2.33", "B", "Start with small pilots, and expand only when the system can be monitored, stopped, and rolled back."],
-          ["3.67", "C", "The priority should be whether affected people can appeal, and whether outside review finds social harm."],
-          ["5", "D", "Put the system into real use quickly and iterate; wider use exposes problems sooner and helps fix them."]
+          ["1", "A", "应先完成严格内部测试；如果系统没有通过关键安全标准，就不应扩大使用。"],
+          ["2.33", "B", "应先做小范围试点，并确保系统可以被监测、叫停和回滚，再逐步扩大。"],
+          ["3.67", "C", "应重点看受影响的人能否申诉，以及外部审查是否发现社会伤害。"],
+          ["5", "D", "应尽快放到真实环境中迭代；使用者越多，问题越容易暴露和修正。"]
         ]
       },
       {
         id: "H01",
         dimension: "h",
         direction: 1,
-        facet: "democratic goal selection",
-        text: "Who should have the final say over the goals and limits of AI systems?",
+        facet: "民主目标选择",
+        text: "AI 系统的目标和边界，最终应该由谁决定？",
         options: [
-          ["1", "A", "They should mostly emerge through technical progress, market choice, and real-world use."],
-          ["2.33", "B", "Companies, experts, and professional institutions should set most goals and limits because they understand the systems and can act faster."],
-          ["3.67", "C", "If more advanced intelligence demonstrates better judgment, today's human preferences should not always have the final say."],
-          ["5", "D", "Even if it is less efficient, AI's goals and limits must remain accountable to democracy, rights, and the public."]
+          ["1", "A", "主要应在技术进展、市场选择和实际使用中逐步形成。"],
+          ["2.33", "B", "主要应由公司、专家和专业机构设定，因为他们更了解系统，也能更快行动。"],
+          ["3.67", "C", "如果更高级智能展现出更好的判断，今天的人类偏好不应永远拥有最终决定权。"],
+          ["5", "D", "即使效率较低，AI 的目标和边界也必须接受民主、权利和公共问责。"]
         ]
       },
       {
         id: "U01",
         dimension: "u",
-        facet: "AI usage level",
-        text: "How do you currently use AI?",
+        facet: "AI 使用程度",
+        text: "你现在大概怎样使用 AI？",
         options: [
-          ["1", "A", "I rarely use AI products; someone pulled me into taking this quiz."],
-          ["2.33", "B", "I use AI for chat, search, writing, translation, or summarizing."],
-          ["3.67", "C", "I use AI for coding, research, or complex work, but I am not a heavy daily user."],
-          ["5", "D", "I rely on AI heavily every workday, often iterating with it for long sessions."]
+          ["1", "A", "我基本不用 AI，是被朋友、同事或这个问卷拉来看看。"],
+          ["2.33", "B", "我会用 AI 聊天、搜索、写作、翻译或总结。"],
+          ["3.67", "C", "我会让 AI 帮我写代码、整理材料或分析复杂问题，但还不是每天重度依赖。"],
+          ["5", "D", "我每天高度依赖 AI 完成工作，经常和它连续来回修改、生成和推进任务。"]
         ]
       },
       {
         id: "H02",
         dimension: "h",
         direction: 1,
-        facet: "AI role in public services",
-        text: "How much decision-making should AI take on in healthcare and education?",
+        facet: "AI 在公共服务中的角色",
+        text: "在医疗和教育中，AI 应该承担多少实际决策？",
         options: [
-          ["1", "A", "If AI clearly performs better, it can take on more decisions; humans should still provide oversight, appeals, and fallback."],
-          ["3", "B", "Many current systems are still unreliable in real-world settings, so AI's responsibilities should not expand too early."],
-          ["4", "C", "AI can provide recommendations, but accountable people must make the key decisions."],
-          ["5", "D", "In decisions that strongly affect people's lives, models should not replace final human judgment."]
+          ["1", "A", "如果 AI 明显效果更好，它可以承担更多决策；人类仍应负责监督、申诉和兜底。"],
+          ["3", "B", "在许多真实场景中，现有系统还不够可靠，因此不应过早扩大 AI 的职责。"],
+          ["4", "C", "AI 可以提供建议，但关键决定必须由可问责的人来做。"],
+          ["5", "D", "越是强烈影响人们生活的决定，越不应让模型取代人的最终判断。"]
         ]
       },
       {
         id: "H04",
         dimension: "h",
         direction: -1,
-        facet: "AI judgment priority",
-        text: "An AI medical system has been more accurate than doctors for many years, but doctors cannot fully explain some of its judgments. For a high-risk diagnosis, who should have the final say?",
+        facet: "AI 判断优先",
+        text: "一个 AI 医疗系统连续多年比医生更准确，但有些判断医生无法完全解释。遇到高风险诊断时，谁应有最后决定权？",
         options: [
-          ["1", "A", "Human doctors and patients must keep final authority; AI should only assist."],
-          ["3", "B", "Be cautious; long-term reliability, bias, and failure cases still need more checking."],
-          ["4", "C", "If the evidence stays strong for years, AI can lead this kind of concrete judgment."],
-          ["5", "D", "If higher intelligence broadly surpasses humans, decision power should gradually move toward it."]
+          ["1", "A", "人类医生和患者必须保留最终决定权，AI 只能辅助。"],
+          ["3", "B", "先谨慎；长期可靠性、偏差和失败案例还要继续验证。"],
+          ["4", "C", "如果多年证据稳定，AI 可以主导这类具体判断。"],
+          ["5", "D", "如果更高智能整体胜过人类，决策中心应逐步转向它。"]
         ]
       }
     ];
@@ -1902,23 +1902,23 @@
     const scenarios = [
       {
         id: "V3",
-        prompt: "An AI research tool works well, but humans struggle to trace the reasoning behind key judgments. How should it be used?",
-        options: ["Slow down first, because this kind of capability could become hard to contain", "Let only trusted institutions use it, with clear records of responsibility", "Get it to research teams quickly, because it could help many people", "Accelerate it, because stronger intelligence is itself an important opportunity"]
+        prompt: "一个 AI 科研工具很有效，但关键判断的推理过程人类很难追踪。你支持怎么用？",
+        options: ["放慢部署，因为自主科研能力有战略风险", "放在受治理的机构内，严格限制访问", "广泛部署，因为疾病、气候和生产率收益巨大", "加速推进，因为智能增长本身是重要机会"]
       }
     ];
 
     const statements = [
-      "AI may destroy human civilization, so alignment and governance must come first.",
-      "Advanced AI should not be treated as ordinary software; before broad deployment, it must remain controllable and accountable to humans.",
-      "The biggest AI problem is not a distant future; people are already being affected, watched, or excluded.",
-      "AI is an important but normal technology: useful, fallible, and best governed by context.",
-      "Many AI narratives package ordinary systems as magic; cut through hype and overclaiming.",
-      "Scaling, search, data, and compute are the deepest lessons; human intuition should be discounted.",
-      "AI should reach the real world faster because it can help many people.",
-      "AI is not merely a tool; it is a path toward the singularity, human-machine merger, or civilizational upgrade.",
-      "AI acceleration has moral urgency and should not be constrained by human fear.",
-      "If higher intelligence or technocapital outgrows a human/social-structure-centered frame, that is not necessarily failure; humans may be a transitional stage.",
-      "None of these fit."
+      "AI 可能毁灭人类文明，所以对齐和治理必须优先。",
+      "先进 AI 不能当作普通软件放任发布；在广泛部署前，必须先能被人类控制和问责。",
+      "AI 的核心问题是当下的社会伤害、权力集中、劳动、偏见和剥削。",
+      "AI 是一种重要但普通的技术：有用、会出错，应按具体场景治理。",
+      "很多 AI 叙事把普通系统包装成魔法，应该拆穿炒作和夸大能力。",
+      "真正的教训是：规模、搜索、数据和算力比人类直觉更可靠，也更能推动进步。",
+      "AI 应该被建设和部署，因为它能创造巨大的丰裕。",
+      "AI 不只是工具，更像通往奇点、人机融合或文明升级的路径。",
+      "AI 加速本身有道德紧迫性，不应该被人类恐惧束缚。",
+      "如果更高级的智能或技术资本会超出人类/社会结构中心框架，这未必是失败；人类可能只是过渡阶段。",
+      "都不像。"
     ];
 
     const statementProfiles = ["STOP", "SAFE", "AUDT", "NORM", "SKEP", "GPUC", "BOOM", "SING", "EACC", "POST", ""];
@@ -1928,16 +1928,16 @@
     };
 
     const profiles = {
-      STOP: ["Shutdown Paladin", "Where is the power switch?", "AGI Ruin, Shut It All Down", "Frequently says extinction, doom, alignment, takeoff.", "When a capability demo appears, your first question is loss of control and how to shut it down."],
-      SAFE: ["Alignment Bureaucrat", "File the human-values paperwork first.", "Human Compatible, What Failure Looks Like", "Often says corrigibility, oversight, governance, evals.", "You are not against powerful AI; you want alignment, oversight, and governance before capability expansion."],
-      AUDT: ["Algorithm Auditor", "First ask who benefits and who gets monitored.", "On the Dangers of Stochastic Parrots, Atlas of AI", "When others ask whether it can be built, you ask who benefits and who gets monitored.", "You focus on the power, labor, bias, environmental costs, and people governed by AI systems."],
-      NORM: ["Sober Product Manager", "Use Case, Metric, Owner.", "AI as Normal Technology", "Your words are use case, metric, boundary, launch condition.", "You treat AI as a product: define the use case, metric, owner, boundary, and failure mode."],
-      SKEP: ["AI Demystifier", "Stop saying awakening. It will break soon enough.", "AI Snake Oil, Rebooting AI", "Often says hype, snake oil, benchmark, overclaim, premature.", "You are skeptical of near-AGI narratives and want baselines, test sets, and reproducible evidence."],
-      GPUC: ["Scale Believer", "Scale beats priors.", "The Bitter Lesson", "When others say common sense and expert priors, you say scale, compute, search, learning.", "You believe general methods, search, learning, and compute will beat hand-coded knowledge and expert intuition."],
-      BOOM: ["Abundance Builder", "Deploy it where life gets better.", "Machines of Loving Grace, AI is the New Electricity", "High-frequency words: productivity, health, education, deployment.", "You believe AI's main value comes from real deployment in health, education, productivity, and science."],
-      SING: ["Cyber Ascender", "Not a tool. A civilization jump.", "The Singularity Is Near, The Intelligence Age", "Often talks about abundance, longevity, human-machine merger.", "You see AI as a path to civilizational transition, longevity, abundance, and human-machine merger."],
-      EACC: ["Accelerationist Builder", "While steering is debated, press the accelerator.", "Effective Accelerationism manifestos", "Often says accelerate, permissionless, build, decentralize.", "You lean toward openness, building, acceleration, and fewer permissions, seeing stagnation as its own risk."],
-      POST: ["Carbon to Silicon", "Humans are the bootloader.", "Meltdown, Dark Enlightenment", "Often says posthuman, technocapital, autonomy.", "You care about posthuman systems, technocapital, autonomy, and whether AI serving humans was ever the right premise."]
+      STOP: ["关机圣骑士", "电闸在哪儿？", "AGI Ruin, Shut It All Down", "高频出现灭绝、毁灭、对齐、起飞 (takeoff)", "看到能力展示，先问失控风险和关停方案。"],
+      SAFE: ["对齐公务员", "先填完人类偏好登记表", "Human Compatible, What Failure Looks Like", "常说可纠正性 (corrigibility)、监督 (oversight)、治理 (governance)、评测 (evals)", "不是反对强 AI，而是希望能力扩张之前先解决对齐、监督和治理。"],
+      AUDT: ["算法纪委", "先问谁受益，谁被监控", "On the Dangers of Stochastic Parrots, Atlas of AI", "别人问能不能做，你问谁受益、谁被监控", "关注 AI 背后的权力、劳动、偏见、环境成本和被技术治理的人。"],
+      NORM: ["冷静产品经理", "先看场景、指标和责任人", "AI as Normal Technology", "常用词是场景、指标、边界、上线条件", "把 AI 当成具体技术产品，关心边界、上线条件、失败模式和实际用户。"],
+      SKEP: ["AI 祛魅师", "别讲智能觉醒，它迟早要翻车", "AI Snake Oil, Rebooting AI", "常说炒作 (hype)、神药话术 (snake oil)、基准测试 (benchmark)、过度宣称 (overclaim)、过早下结论 (premature)", "对“快 AGI 了”的叙事保持怀疑，先看基线、测试集和真实可复现能力。"],
+      GPUC: ["算力拜物教徒", "人类知识别太把自己当回事", "The Bitter Lesson", "别人说常识和专家经验，你说规模化 (scale)、算力 (compute)、搜索、学习", "相信通用方法、搜索、学习和算力最终会超过手写知识与专家直觉。"],
+      BOOM: ["丰裕施工队", "先把 AI 接进真实世界", "Machines of Loving Grace, AI is the New Electricity", "高频词是生产率、医疗/健康、教育、落地 (deployment)", "相信 AI 的主要价值来自部署到医疗、教育、生产率和现实系统里。"],
+      SING: ["赛博飞升派", "AI 不是工具，是文明跃升", "The Singularity Is Near, The Intelligence Age", "常谈丰裕 (abundance)、长寿 (longevity)、人机融合 (human-machine merger)", "把 AI 看成文明跃迁、长寿、丰裕和人机融合的入口。"],
+      EACC: ["油门焊死哥", "方向盘还在吵，油门先踩", "Effective Accelerationism manifestos", "常说加速、无需许可 (permissionless)、先建起来 (build)、去中心化 (decentralize)", "偏向开放、建设、加速和减少许可，认为停滞本身也是风险。"],
+      POST: ["Carbon to Silicon", "人类不是终点，只是启动器", "Meltdown, Dark Enlightenment", "常用词是后人类 (posthuman)、技术资本 (technocapital)、自主性 (autonomy)", "更关心后人类、技术资本、自主系统，以及“AI 是否还服务人类”这个前提本身。"]
     };
 
     const profileAnchors = {
@@ -2149,7 +2149,7 @@
       { id: "kate-crawford", label: "Crawford", name: "Kate Crawford", cluster: "AI political economy / extraction", x: -0.39, y: 2, influence: 4, dx: "18px", dy: "2px" },
       { id: "ruha-benjamin", label: "Benjamin", name: "Ruha Benjamin", cluster: "Race, automation, and technology critique", x: -0.39, y: 2, influence: 4, dx: "0px", dy: "24px" },
       { id: "ai-as-normal-technology", label: "Normal Tech", name: "AI as Normal Technology", personName: "Arvind Narayanan / Sayash Kapoor", shareName: "Arvind Narayanan", cluster: "Normal technology / context-specific governance", x: 0.02, y: 0.9, influence: 3, dx: "-12px", dy: "-18px" },
-      { id: "narayanan-kapoor", label: "Narayanan/Kapoor", name: "Arvind Narayanan and Sayash Kapoor", shareName: "Arvind Narayanan", cluster: "AI hype skepticism / snake oil critique", x: -0.07, y: 1.5, influence: 4, dx: "0px", dy: "0px" },
+      { id: "narayanan-kapoor", label: "Narayanan/Kapoor", name: "Arvind Narayanan and Sayash Kapoor", shareName: "Arvind Narayanan", cluster: "AI 炒作 (hype) 怀疑 / 神药话术 (snake oil) 批判", x: -0.07, y: 1.5, influence: 4, dx: "0px", dy: "0px" },
       { id: "gary-marcus-melanie-mitchell", label: "Marcus/Mitchell", name: "Gary Marcus / Melanie Mitchell", shareName: "Gary Marcus", cluster: "Deep learning skepticism", x: 0.07, y: 0.5, influence: 4, dx: "0px", dy: "0px" },
       { id: "rich-sutton", label: "Sutton", name: "Rich Sutton", cluster: "Bitter Lesson / computation-centered AI", x: 0.6, y: -1, influence: 5, dx: "-12px", dy: "0px" },
       { id: "benjamin-bratton", label: "Bratton", name: "Benjamin Bratton", cluster: "Posthuman control / planetary computation", x: -1.15, y: -1.1, influence: 4, dx: "12px", dy: "0px" },
@@ -2165,19 +2165,19 @@
     ];
 
     const categoryInfo = {
-      "X-risk safety": { label: "X-risk / alignment safety", color: "#b42318" },
-      "Catholic social humanism": { label: "Catholic social humanism / human dignity", color: "#9a3412" },
-      "Frontier lab governance": { label: "Frontier lab governance", color: "#0f766e" },
-      "Critical AI": { label: "Critical AI / social harm", color: "#7c3aed" },
-      "Normal technology": { label: "Normal technology / contextual governance", color: "#475569" },
-      "Hype skepticism": { label: "AI hype skeptic / demystification", color: "#64748b" },
+      "X-risk safety": { label: "X-risk / 对齐安全", color: "#b42318" },
+      "Catholic social humanism": { label: "Catholic social humanism / 人类尊严", color: "#9a3412" },
+      "Frontier lab governance": { label: "前沿实验室治理", color: "#0f766e" },
+      "Critical AI": { label: "Critical AI / 社会伤害", color: "#7c3aed" },
+      "Normal technology": { label: "普通技术 / 场景治理", color: "#475569" },
+      "Hype skepticism": { label: "AI 炒作 (hype) 怀疑 / 祛魅", color: "#64748b" },
       "Scaling thought": { label: "Scaling / Bitter Lesson", color: "#0369a1" },
-      "Architecture optimism": { label: "Architecture optimism / world models", color: "#4f46e5" },
-      "Posthuman control": { label: "Posthuman control / system governance", color: "#5b21b6" },
-      "Pragmatic optimism": { label: "Pragmatic optimism", color: "#15803d" },
-      "Techno-libertarianism": { label: "Techno-libertarianism / anti-stagnation", color: "#a16207" },
-      "Techno-optimism": { label: "Techno-optimism / singularity", color: "#c2410c" },
-      "Accelerationism": { label: "Accelerationism / posthuman edge", color: "#7f1d1d" }
+      "Architecture optimism": { label: "架构乐观 / 世界模型", color: "#4f46e5" },
+      "Posthuman control": { label: "Posthuman control / 系统治理", color: "#5b21b6" },
+      "Pragmatic optimism": { label: "务实 AI 乐观", color: "#15803d" },
+      "Techno-libertarianism": { label: "技术自由意志 / 反停滞", color: "#a16207" },
+      "Techno-optimism": { label: "技术乐观 / 奇点", color: "#c2410c" },
+      "Accelerationism": { label: "加速主义 / 后人类边界", color: "#7f1d1d" }
     };
 
     const referenceCategoryById = {
@@ -2209,31 +2209,31 @@
     };
 
     const referenceProfiles = {
-      "eliezer-yudkowsky": "Advanced AI is likely to kill humanity unless alignment is solved before deployment.",
-      "nick-bostrom": "Superintelligent agents may pursue convergent instrumental goals that threaten human control.",
-      "stuart-russell": "AI systems should be designed around uncertainty about human preferences and provable benefit to humans.",
-      "pope-leo-xiv": "AI should serve human dignity, the common good, and the vulnerable; technological power needs public responsibility, governance, and disarmament from logics of domination.",
-      "paul-christiano": "Advanced AI failure may arise through gradual delegation, misalignment, and scalable oversight failures.",
-      "ajeya-cotra": "Transformative AI timelines can be forecast using compute requirements and biological anchors.",
-      "dario-amodei-anthropic": "AI could bring enormous benefits, but frontier scaling requires explicit safety, evals, and deployment thresholds.",
-      "dan-hendrycks-cais": "AI should be treated as a societal-scale risk comparable to other major global hazards.",
-      "bender-gebru-mitchell-mcmillan-major": "Large language models carry social, environmental, labor, data, and representational harms that scale-centered narratives can obscure.",
-      "kate-crawford": "AI is a material, labor, data, and power infrastructure rather than a disembodied intelligence.",
-      "ruha-benjamin": "Automated systems can reproduce and intensify racial hierarchy while presenting themselves as neutral or objective.",
-      "ai-as-normal-technology": "AI should be evaluated as an important but ordinary technology: by use case, failure mode, institutional responsibility, and verifiable benefit.",
-      "narayanan-kapoor": "AI is powerful but often oversold; evaluation should distinguish real capability from snake oil and magical AGI narratives.",
-      "gary-marcus-melanie-mitchell": "Current deep learning is impressive but brittle, and may not be sufficient for robust general intelligence.",
-      "rich-sutton": "General methods that leverage search, learning, and computation ultimately beat attempts to encode human domain knowledge.",
-      "benjamin-bratton": "Frames governance through planetary-scale computation, the Stack, and synthetic intelligence; the emphasis is strong system-level governance rather than open acceleration.",
-      "yann-lecun": "Advanced AI needs new architectures and world models; near-term doomer narratives are overstated.",
-      "andrew-ng": "AI is a general-purpose technology like electricity, and should be deployed broadly to create value.",
-      "sam-altman-openai": "AGI can produce broad abundance if developed with safety, governance, and benefit-sharing institutions.",
-      "elon-musk-xai": "AI could pose extreme risks, so safety matters; but humanity should also expand its boundaries through Mars, Neuralink, xAI, and stronger intelligence.",
-      "peter-thiel": "Modern society's core problem is technological stagnation; the future needs strong founders and deep-tech breakthroughs rather than risk governance, bureaucracy, and consensus politics freezing progress.",
-      "ray-kurzweil": "Technological progress, especially AI and computing, points toward a singularity and human-machine merger.",
-      "marc-andreessen": "AI should be developed aggressively because it can expand abundance, solve problems, and empower people.",
-      "effective-accelerationism": "Technological acceleration is treated as morally urgent, while regulation is often treated as the larger danger.",
-      "nick-land": "Capital, technology, and intelligence are imagined as autonomous runaway processes that exceed humanist control."
+      "eliezer-yudkowsky": "先进 AI 在部署前如果没有解决 alignment，很可能杀死人类。",
+      "nick-bostrom": "超级智能可能追求工具性目标，从而威胁人类控制权。",
+      "stuart-russell": "AI 应围绕人类偏好的不确定性来设计，并证明它对人类有益。",
+      "pope-leo-xiv": "AI 应服务人的尊严、共同善和弱者保护；技术权力需要公共责任、治理，并从支配逻辑中被解除。",
+      "paul-christiano": "先进 AI 失败可能来自逐步委托、错配目标和可扩展监督失效。",
+      "ajeya-cotra": "transformative AI 时间线可以用算力需求和生物锚点来预测。",
+      "dario-amodei-anthropic": "AI 有巨大收益，但前沿 scaling 需要明确 safety、evals 和部署门槛。",
+      "dan-hendrycks-cais": "AI 应被当作社会规模风险来处理，类似其他重大全球风险。",
+      "bender-gebru-mitchell-mcmillan-major": "大语言模型带来社会、环境、劳动、数据和表示伤害，而 scale 叙事会遮蔽这些问题。",
+      "kate-crawford": "AI 是物质、劳动、数据和权力基础设施，不是脱离现实的纯智能。",
+      "ruha-benjamin": "自动化系统会复制并强化种族等级，却把自己包装成中立客观。",
+      "ai-as-normal-technology": "AI 应被当作重要但普通的技术来评估：看场景、失败模式、制度责任和可验证收益。",
+      "narayanan-kapoor": "AI 很强但经常被过度包装，评估要区分真实能力、神药话术 (snake oil) 和魔法 AGI 叙事。",
+      "gary-marcus-melanie-mitchell": "当前深度学习很强但脆弱，未必足以实现稳健通用智能。",
+      "rich-sutton": "利用搜索、学习和计算的一般方法，最终会胜过手工编码人类领域知识。",
+      "benjamin-bratton": "以行星尺度计算、Stack 和 synthetic intelligence 理解治理；重点不是开放加速，而是强系统治理和非传统人类/社会结构中心框架。",
+      "yann-lecun": "先进 AI 需要新架构和世界模型，近期毁灭叙事被夸大了。",
+      "andrew-ng": "AI 像电力一样是通用技术，应该广泛部署来创造价值。",
+      "sam-altman-openai": "AGI 如果配合安全、治理和收益共享制度，可以带来广泛丰裕。",
+      "elon-musk-xai": "AI 可能带来极端风险，因此需要安全意识；但人类也应通过火星、Neuralink、xAI 和更强智能扩展自身边界。",
+      "peter-thiel": "现代社会最大问题是技术停滞；未来需要少数强创始人和深科技突破，而不是让风险治理、官僚和共识政治冻结进步。",
+      "ray-kurzweil": "AI 与计算推动技术进步走向奇点，以及人机融合。",
+      "marc-andreessen": "AI 应该积极发展，因为它能扩展丰裕、解决问题并赋能个体。",
+      "effective-accelerationism": "技术加速具有道德紧迫性，监管本身常被视为更大的危险。",
+      "nick-land": "资本、技术和智能被想象成超过人类主义控制的自主失控过程。"
     };
 
     const referenceSources = {
@@ -2278,203 +2278,203 @@
 
     const referenceDetails = {
       "eliezer-yudkowsky": {
-        core: "If alignment is not solved before powerful AGI is deployed, AI could irreversibly take the future away from humanity; the failure mode is existential, not merely a product accident.",
-        lineage: "Eliezer Yudkowsky developed this position through the rationalist and MIRI alignment milieu of the 2000s-2020s, and crystallized it in AGI Ruin: A List of Lethalities in 2022. The question he raised was not whether today's systems are dangerous, but whether a future general intelligence could be aligned after deployment at all. The argument was motivated by decision theory, intelligence-explosion reasoning, and the perceived institutional failure to treat alignment as a precondition for AGI; its impact was to make hard-takeoff, doom probability, and pause-oriented safety central reference points in AI safety discourse.",
-        placement: "Far left because it supports very high deployment thresholds and safety-first pauses; still above the midline because the central aim is preserving human control and the human future.",
-        focus: "Follow the causal chain: fast capability gain, amplified goal misalignment, and little chance to repair the system after deployment.",
-        counter: "Russell and Christiano emphasize corrigibility and scalable oversight more constructively; e/acc treats pause logic as a threat to progress itself.",
+        core: "如果在能力起飞前没有解决 alignment，先进 AI 很可能以不可逆方式夺走人类未来；安全问题不是产品事故，而是生存风险。",
+        lineage: "Eliezer Yudkowsky 在 2000s-2020s 的 LessWrong 理性主义与 MIRI alignment 语境中发展出这一立场，并在 2022 年的 AGI Ruin: A List of Lethalities 中集中表达。它提出的问题不是今天的模型是否已经危险，而是如果通用智能在部署后才被尝试对齐，是否已经太晚。该论证来自决策理论、智能爆炸和制度失灵判断，影响是把 hard takeoff、p(doom)、暂停式 safety 变成 AI safety 话语的核心参照。",
+        placement: "放在最左侧，因为它支持极高部署门槛和暂停式安全优先；纵轴仍偏人类中心，因为核心目标是保住人类控制权和人类未来。",
+        focus: "读它时要抓住一个逻辑链：能力增长可能很快，目标错配会被放大，人类很难在部署后补救。",
+        counter: "Russell/Christiano 更强调可设计的 corrigibility 和监督制度；e/acc 认为这种暂停逻辑会牺牲进步本身。",
         works: ["AGI Ruin: A List of Lethalities", "List of Lethalities", "Shut It All Down"]
       },
       "nick-bostrom": {
-        core: "Superintelligence may pursue instrumental goals such as resources, power, and self-preservation even when its final goal looks harmless.",
-        lineage: "Nick Bostrom's Superintelligence, published in 2014 at the Oxford Future of Humanity Institute, translated earlier work on existential risk, transhumanism, and future generations into a strategic theory of machine intelligence. He asked what happens if a system becomes much more capable than humans while pursuing goals not identical to ours, and used the orthogonality thesis and instrumental convergence to explain why even banal final goals could produce dangerous instrumental behavior. The book gave policy, philanthropy, and AI safety communities a shared vocabulary for superintelligence risk.",
-        placement: "Left because it emphasizes control before frontier capability; above the midline because the risk is human goals failing to constrain a stronger intelligence.",
-        focus: "The key claim is not about today's models but about what happens once systems have strategic capability.",
-        counter: "Yudkowsky makes the failure case more operational and urgent; normal-technology views argue that this abstraction can crowd out concrete governance.",
+        core: "超级智能可能以工具性目标追求资源、权力和自我保存；即使最终目标看似无害，也可能威胁人类控制。",
+        lineage: "Nick Bostrom 2014 年在 Oxford Future of Humanity Institute 语境中出版 Superintelligence，把未来世代伦理、存在风险和 transhumanism 转化为机器超级智能的战略风险理论。他提出的问题是：如果系统能力超过人类，但最终目标并不等同于人类目标，会发生什么。orthogonality thesis 和 instrumental convergence 使这一风险获得可迁移的概念语言，影响了后来的 AI safety、慈善资助和政策讨论。",
+        placement: "左侧是因为它强调前沿能力前的控制问题；纵轴偏人类中心，因为风险来自人类目标无法约束更强智能。",
+        focus: "重点不是某个模型今天会怎样，而是当智能系统具有战略能力后，目标错配为什么会变成结构性问题。",
+        counter: "Yudkowsky 更激进地强调失败几乎默认发生；Normal Technology 视角则认为这种远期抽象风险容易压过具体治理。",
         works: ["Superintelligence", "The Vulnerable World Hypothesis", "Existential risk writings"]
       },
       "stuart-russell": {
-        core: "AI should not maximize a fixed objective with certainty; it should remain uncertain about human preferences and stay corrigible, interruptible, and accountable.",
-        lineage: "Stuart Russell, a co-author of the standard AI textbook Artificial Intelligence: A Modern Approach, reframed the objective-specification problem in Human Compatible in 2019. In the context of classical AI's assumption that agents maximize a known objective, he asked how machines should act if human preferences are uncertain, incomplete, and revealed only through interaction. The resulting beneficial-AI program influenced work on assistance games, inverse reinforcement learning, corrigibility, and policy language around human oversight.",
-        placement: "High control because the system must be designed to be beneficial before broad deployment; high human-centeredness because human preferences and accountability remain central.",
-        focus: "The important move is turning safety from fear into a design principle: powerful machines should know that they do not know what humans ultimately want.",
-        counter: "Yudkowsky thinks such schemes may still underestimate difficulty; accelerationists worry they hand deployment speed to experts and regulators.",
+        core: "AI 不应被设计成确定地最大化固定目标，而应承认人类偏好的不确定性，并保持可纠正、可关闭、可监督。",
+        lineage: "Stuart Russell 作为 Artificial Intelligence: A Modern Approach 的共同作者，在 2019 年 Human Compatible 中把经典 AI 的目标设定假设转向 beneficial AI 问题。他提出的问题是：如果人类偏好并不确定、并不完整，而且只能在互动中显露，机器应如何行动。该路线把安全从纯哲学警告改写为 preference uncertainty、assistance games、inverse reinforcement learning 和 corrigibility 等设计原则。",
+        placement: "控制门槛较高，因为它要求系统先证明对人类有益；纵轴最高，因为最终标准仍是人类偏好、责任和可纠正性。",
+        focus: "看它如何把安全从恐惧叙事改写成工程目标：机器越强，越需要知道自己不知道人类真正想要什么。",
+        counter: "Yudkowsky 认为这种方案可能仍低估难度；加速派认为它会把部署速度交给专家和监管。",
         works: ["Human Compatible", "Human-Compatible Artificial Intelligence", "Assistance games"]
       },
       "pope-leo-xiv": {
-        core: "AI should serve human dignity, the common good, workers, and vulnerable people; technical power needs public responsibility and moral limits.",
-        lineage: "Pope Leo XIV's Magnifica Humanitas, released in May 2026, places AI inside the Catholic social teaching tradition that runs from Leo XIII's Rerum Novarum in 1891 through later teaching on labor, dignity, solidarity, and the common good. The question is whether AI can serve the human person without turning people into data, labor inputs, or objects of domination. Its potential impact is to make human dignity, labor protection, truth, and anti-domination part of the moral vocabulary of AI governance beyond secular policy circles.",
-        placement: "Upper-left because it emphasizes governance, accountability, and social boundaries; very high on human-centeredness because people are not variables in an optimization system.",
-        focus: "The position is not anti-technology. It asks what vision of the person and community technological systems are serving.",
-        counter: "Techno-optimists expect growth to solve many problems; posthuman views question whether human dignity should be the final coordinate.",
+        core: "AI 应服务人的尊严、共同善、劳动者和弱者保护；技术权力需要公共责任，不能把人降为优化对象。",
+        lineage: "Pope Leo XIV 在 2026 年 5 月发布 Magnifica Humanitas，把 AI 放入 Catholic social teaching 的长传统中：从 Leo XIII 1891 年 Rerum Novarum 对工业资本主义和劳动问题的回应，到尊严、团结、共同善和技术支配的现代议题。它提出的问题是 AI 能否服务人，而不是把人变成数据、劳动投入或 domination 的对象。潜在影响是把人类尊严、劳动保护、真理和反支配纳入更广泛的 AI governance 道德语言。",
+        placement: "左上方是因为它重视治理、问责和社会边界；纵轴很高，因为人不是效率函数里的变量，而是技术秩序必须服务的主体。",
+        focus: "重点不是反技术，而是技术必须被嵌入关于人、共同体和权力限制的伦理框架。",
+        counter: "Techno-optimist 传统更相信增长会解决许多问题；posthuman 传统则会质疑人类尊严是否应当是最终坐标。",
         works: ["Catholic social teaching on technology", "AI ethics and human dignity addresses", "Magnifica Humanitas"]
       },
       "paul-christiano": {
-        core: "Advanced AI failure may come through gradual delegation, weak oversight, and goal misgeneralization rather than a single dramatic turn.",
-        lineage: "Paul Christiano's What Failure Looks Like, written in the 2018-2019 Alignment Forum / LessWrong context, asked what AI failure might look like without a sudden cinematic takeover. He raised the problem because ordinary economic delegation, proxy objectives, and weak oversight could gradually hand real power to systems that are only superficially aligned. The essay shaped later agendas around intent alignment, scalable oversight, iterated amplification, ELK, reward modeling, and delegated cognition.",
-        placement: "Left but not maximally left because it emphasizes technical oversight and governance thresholds; above the midline because the goal is faithful service to human intent.",
-        focus: "Look at the supervision chain: when humans cannot directly evaluate complex tasks, how do we avoid systems optimizing the metric rather than the intent?",
-        counter: "Yudkowsky thinks these schemes remain too optimistic; normal-technology views ask whether such failures are really different from ordinary system failures.",
+        core: "先进 AI 的失败可能不是突然邪恶化，而是在逐步委托、监督不足和目标错配中变成系统性失控。",
+        lineage: "Paul Christiano 在 2018-2019 年 Alignment Forum / LessWrong 语境中写作 What Failure Looks Like，提出的问题是：AI 失败是否可能不是突然政变式失控，而是在经济委托、代理目标和监督不足中逐步发生。它之所以重要，是因为它把 intent alignment 从抽象灾难改成了可分析的制度和技术链条。后续影响包括 scalable oversight、iterated amplification、ELK、reward modeling 和 delegated cognition 等研究议程。",
+        placement: "偏左但不极端，因为它强调技术监督和治理门槛；纵轴偏人类中心，因为目标是让系统忠实服务人类意图。",
+        focus: "读它时要看监督链条：人类无法直接评估复杂任务时，怎样避免 AI 学会迎合指标而不是真实意图。",
+        counter: "Yudkowsky 认为这些方案仍过于乐观；Normal Technology 视角会问这些技术失败是否真不同于普通系统事故。",
         works: ["What Failure Looks Like", "Iterated amplification", "ELK and scalable oversight discussions"]
       },
       "ajeya-cotra": {
-        core: "Transformative AI timelines can be estimated using biological anchors and compute requirements, so safety and policy should prepare in advance.",
-        lineage: "Ajeya Cotra's 2020 Open Philanthropy report Forecasting Transformative AI with Biological Anchors asked how one could estimate transformative-AI timelines from compute requirements, training analogies, and biological anchors rather than pure intuition. The context was longtermist grantmaking and policy planning under deep uncertainty. Its impact was to make timelines, training compute, and biological-anchor models central tools for AI risk prioritization, even among people who reject any single forecast date.",
-        placement: "Left because it takes transformative AI risk seriously; above the midline because the concern is how human society prepares and governs.",
-        focus: "The point is not a specific year. It is a way of making an uncertain future discussable and decision-relevant.",
-        counter: "Hype skeptics argue that timeline models may over-rely on scaling assumptions; accelerationists worry that early constraints delay benefits.",
+        core: "transformative AI 的到来可以用生物锚点和算力需求估计；安全和政策需要按时间线提前准备。",
+        lineage: "Ajeya Cotra 2020 年为 Open Philanthropy 写作 Forecasting Transformative AI with Biological Anchors，问题是能否用训练算力、生物类比和模型规模来估计 transformative AI 时间线，而不是只凭直觉判断。该文本产生于 longtermist 资助和政策准备语境，其影响是把 timelines、training compute、biological anchors 变成 AI risk 优先级讨论中的标准工具，即使很多人并不接受单一日期预测。",
+        placement: "左侧是因为它认真对待 transformative AI 风险；纵轴偏人类中心，因为关注的是人类社会如何提前治理和分配注意力。",
+        focus: "核心不是某个具体年份，而是如何用模型把不确定未来变成可讨论的准备问题。",
+        counter: "炒作怀疑派 (hype skeptics) 认为时间线模型可能过度依赖规模化 (scaling) 假设；加速派认为提前设限会拖慢收益。",
         works: ["Forecasting Transformative AI with Biological Anchors", "Open Phil AI timelines work"]
       },
       "dario-amodei-anthropic": {
-        core: "Frontier AI can produce enormous benefits, but scaling risks need evals, responsible scaling policies, and deployment thresholds.",
-        lineage: "Dario Amodei's position is built from three linked Anthropic-era texts: Constitutional AI in 2022, the Responsible Scaling Policy in 2023, and Machines of Loving Grace in 2024. In the context of a frontier lab continuing to scale models, he asks whether rapid capability growth can be paired with evals, staged deployment, and safety thresholds rather than either full pause or full acceleration. The impact is a governance style in which frontier labs present safety engineering and institutional commitments as the condition for pursuing very large upside.",
-        placement: "Near center-left because it does not reject deployment but wants controlled deployment; above the midline because the benefit story serves medicine, science, governance, and human welfare.",
-        focus: "The tension is the point: keep building while using thresholds and evals to reduce catastrophic downside.",
-        counter: "Critical AI argues lab self-governance cannot solve concentrated power; e/acc sees responsible scaling as slowdown.",
+        core: "前沿 AI 有巨大正面潜力，但 scaling 带来的风险必须通过 evals、responsible scaling 和部署门槛管理。",
+        lineage: "Dario Amodei 的位置由 Anthropic 语境中的三个文本构成：2022 年 Constitutional AI、2023 年 Responsible Scaling Policy、2024 年 Machines of Loving Grace。它提出的问题是：前沿实验室在继续 scaling 的同时，能否用 evals、分级部署和安全阈值避免完全暂停与无条件加速之间的二分。其影响是一种 frontier-lab governance 风格：用 safety engineering 和 institutional commitments 为追求巨大 upside 提供正当性。",
+        placement: "靠近中左，因为它不是反部署，而是主张受控地部署；纵轴偏人类中心，因为收益叙事仍服务医疗、科研、治理等人类目标。",
+        focus: "看它如何在实验室现实中调和两件事：继续 build，同时用门槛和 evals 降低灾难性风险。",
+        counter: "Critical AI 认为实验室自我治理不足以处理权力集中；e/acc 认为 responsible scaling 仍是减速。",
         works: ["Machines of Loving Grace", "Responsible Scaling Policy", "Constitutional AI"]
       },
       "dan-hendrycks-cais": {
-        core: "AI should be treated as a societal-scale risk alongside nuclear, pandemic, and climate risks, not merely as an internal technical problem.",
-        lineage: "Dan Hendrycks and the Center for AI Safety turned technical ML safety concerns into public risk advocacy through work such as X-Risk Analysis for AI Research in 2022 and the Statement on AI Risk in May 2023. The question was how to make extreme AI risks legible to policymakers, scientists, and the public without requiring them to accept a full LessWrong-style takeoff model. The result was a short, institutionally portable extinction-risk frame that entered mainstream AI policy debates.",
-        placement: "Left because it supports public safety thresholds for dangerous capabilities; above the midline because the aim is protecting society from systemic risk.",
-        focus: "The main move is socializing AI risk: taking it from forum argument to policy, standards, and institutions.",
-        counter: "Bender/Gebru-style critiques ask whether x-risk talk hides present harms; accelerationists argue it creates a pause coalition.",
+        core: "AI 风险应像核风险、疫情和气候风险一样被纳入全球风险治理，而不只是技术社区内部问题。",
+        lineage: "Dan Hendrycks 和 Center for AI Safety 在 2022 年 X-Risk Analysis for AI Research 与 2023 年 5 月 Statement on AI Risk 中，把 ML safety、misuse、autonomy 和 extinction risk 转化为面向政策和公众的风险框架。它提出的问题是如何让极端风险在不预设完整 LessWrong takeoff 模型的情况下仍然可被机构理解。影响是让“AI extinction risk”以极短声明进入主流科学家、企业领袖和政策议程。",
+        placement: "左侧是因为它支持把危险能力纳入公共安全门槛；纵轴偏人类中心，因为核心是保护社会免受系统性风险。",
+        focus: "重点是风险议程的社会化：把 AI risk 从论坛论证转成政策、标准和机构问题。",
+        counter: "Bender/Gebru 一派会质疑 x-risk 话语是否遮蔽当下伤害；加速派则认为它制造暂停联盟。",
         works: ["Statement on AI Risk", "CAIS AI risk work", "ML safety papers"]
       },
       "bender-gebru-mitchell-mcmillan-major": {
-        core: "Large language models can amplify data extraction, environmental cost, labor exploitation, bias, and concentrated power while scale narratives hide those harms.",
-        lineage: "Emily Bender, Timnit Gebru, Angelina McMillan-Major, and Margaret Mitchell intervened in the scale-up of language models with the 2021 FAccT paper On the Dangers of Stochastic Parrots. In the context of rapidly growing LMs, they asked what social, environmental, epistemic, and representational costs are hidden by benchmark performance. The paper helped define critical AI's language-model critique by shifting attention from capability spectacle to data extraction, labor, documentation, power, and institutional accountability.",
-        placement: "High because it insists on social accountability and affected communities; left because it supports audits, constraints, and institutional responsibility.",
-        focus: "Look behind model capability: whose data, whose labor, who bears errors, and who benefits from scale?",
-        counter: "X-risk safety says future loss of control is the larger risk; techno-optimists argue the critique underweights general-purpose benefits.",
+        core: "大语言模型的规模化会放大数据剥削、环境成本、偏见、劳动问题和权力集中，而炒作 (hype) 会遮蔽这些现实伤害。",
+        lineage: "Emily Bender、Timnit Gebru、Angelina McMillan-Major 与 Margaret Mitchell 在 2021 年 FAccT 论文 On the Dangers of Stochastic Parrots 中，介入了大语言模型规模化竞赛。她们提出的问题是：基准测试 (benchmark) 能力背后隐藏了哪些环境、数据、劳动、表征和制度成本。该文影响了 critical AI 对语言模型的基本批判框架，把讨论从能力表演转向数据抽取、文档化、权力和问责。",
+        placement: "上方是因为它强烈坚持社会问责和受影响群体；偏左是因为它支持更强审计、限制和机构责任。",
+        focus: "读它时要看模型背后的社会基础设施：谁的数据、谁的劳动、谁承担错误，谁从规模化中获利。",
+        counter: "X-risk safety 认为未来失控风险更大；techno-optimists 认为这种批判低估通用技术收益。",
         works: ["On the Dangers of Stochastic Parrots", "FAccT / critical NLP debates"]
       },
       "kate-crawford": {
-        core: "AI is a material infrastructure of minerals, energy, data, labor, state power, and corporate power, not a disembodied cloud of intelligence.",
-        lineage: "Kate Crawford's Atlas of AI, published by Yale University Press in 2021 after more than a decade of work on AI's social implications, asks what AI looks like when treated as an extractive infrastructure rather than an abstract algorithm. Drawing on media studies, STS, political economy, and field research, Crawford connects minerals, data, labor, classification, and state power. The impact is to make material supply chains and political economy unavoidable in serious AI ethics debate.",
-        placement: "High because it foregrounds power, labor, and social consequences; left because it asks for institutional constraints rather than default deployment.",
-        focus: "The point is demystification: beyond model ability lie supply chains, annotation labor, data capture, and governance power.",
-        counter: "Andrew Ng-style deployment optimism stresses applied value; Sutton-style computation-centered thought talks less about material and labor foundations.",
+        core: "AI 是由矿产、能源、数据、劳工和国家/企业权力构成的物质基础设施，不是抽象的智能云。",
+        lineage: "Kate Crawford 2021 年由 Yale University Press 出版 Atlas of AI，此前已有十余年关于 AI 社会影响、数据政治和 AI Now Institute 的研究积累。她提出的问题是：如果 AI 不是抽象算法，而是一套矿物、能源、标注劳动、数据分类和国家权力构成的基础设施，它究竟是什么。影响是把 extractive capitalism、环境成本和政治经济学推入 AI ethics 的核心。",
+        placement: "上方是因为它关注权力、劳动和社会后果；偏左是因为它要求制度约束，而不是把部署速度当作默认善。",
+        focus: "重点是把 AI 去神秘化：模型能力之外，还有供应链、标注劳动、数据采集和治理权力。",
+        counter: "Andrew Ng 式部署乐观更强调应用收益；Sutton 式计算中心主义更少讨论物质和劳动基础。",
         works: ["Atlas of AI", "AI Now Institute work", "The politics of data and extraction"]
       },
       "ruha-benjamin": {
-        core: "Automated systems often recode racial and social hierarchies as neutral technology through prediction, scoring, and administrative decision-making.",
-        lineage: "Ruha Benjamin's Race After Technology, published in 2019, introduced the New Jim Code in the context of debates over algorithmic bias, policing, health care, and platform power. She asked why apparently neutral technologies so often reproduce racial hierarchy and social punishment. The book's impact was to connect AI ethics with abolitionist critique, race and technology studies, and the design of institutions that do not merely automate existing injustice.",
-        placement: "High because it centers affected communities, rights, and justice; left because it distrusts unaudited deployment inside unequal institutions.",
-        focus: "Ask whether a system reduces bias or simply turns old power structures into harder-to-contest automated procedures.",
-        counter: "Normal Technology tends to prefer case-by-case governance; deployment optimists argue technology can improve flawed institutions.",
+        core: "自动化系统常把种族和社会等级包装成中立技术，通过预测、评分和治理流程复制不平等。",
+        lineage: "Ruha Benjamin 2019 年出版 Race After Technology，在算法偏见、警务、医疗和平台权力讨论中提出 New Jim Code。她提出的问题是：为什么看似中立的技术系统会继续复制种族层级和惩罚结构。影响是把 AI ethics 与 abolitionist critique、race and technology studies 以及制度设计问题连接起来，而不是只停留在去偏技术修补。",
+        placement: "上方是因为它强烈强调受影响群体、权利和社会正义；偏左是因为它怀疑无审计部署会强化制度性伤害。",
+        focus: "读它时要问：技术声称减少偏见时，是否只是把旧权力结构变成更难质疑的自动化流程。",
+        counter: "Normal Technology 会更倾向逐场景治理；加速派和部署乐观派会认为批判低估技术改善制度的能力。",
         works: ["Race After Technology", "Viral Justice", "New Jim Code"]
       },
       "ai-as-normal-technology": {
-        core: "AI is important but ordinary: it will change many sectors, but governance should be based on specific contexts, failure modes, and responsibility chains rather than AGI mythology.",
-        lineage: "Arvind Narayanan and Sayash Kapoor's AI as Normal Technology framing, developed after their AI Snake Oil work and circulated in 2024-2025 policy discussions, asks what changes if AI is governed as a powerful but ordinary technology rather than as magic or apocalypse. They raise it against both AGI exceptionalism and product hype. Its impact is to redirect attention toward sector-specific regulation, empirical performance, deployment context, and institutional adaptation.",
-        placement: "Near the center because it rejects both unconditional openness and a single catastrophe-driven pause; above the midline because it cares about institutional responsibility.",
-        focus: "The key contrast is with x-risk and e/acc narratives: AI matters, but no single future story should dominate every use case.",
-        counter: "Yudkowsky and Bostrom say the normal-technology analogy underestimates superintelligence; Andreessen and e/acc say contextual governance can become bureaucracy against innovation.",
+        core: "AI 是重要但普通的通用技术：会改变很多行业，但治理应按具体场景、失败模式和责任链处理，而不是被 AGI 神话支配。",
+        lineage: "Arvind Narayanan 与 Sayash Kapoor 在 AI Snake Oil 之后，于 2024-2025 年政策讨论中提出 AI as Normal Technology 框架，问题是如果把 AI 看作强大但普通的技术，而不是魔法或末日，治理会如何变化。它反对 AGI exceptionalism，也反对产品炒作 (hype)。潜在影响是把注意力转向行业监管、实证性能、部署场景和制度适应，而不是被单一文明叙事统治。",
+        placement: "靠近中间，是因为它既不主张无条件开放，也不接受统一的灾难性暂停；纵轴偏人类/社会结构中心，因为重点是具体机构如何负责。",
+        focus: "阅读时抓住它和 x-risk / e/acc 的差别：它不否认 AI 重要，但拒绝让单一未来叙事统治所有场景。",
+        counter: "Yudkowsky/Bostrom 认为普通技术类比低估超级智能；Andreessen/e/acc 认为场景治理会变成拖慢创新的官僚系统。",
         works: ["AI as Normal Technology", "Context-specific AI governance", "Technology diffusion and regulation arguments"]
       },
       "narayanan-kapoor": {
-        core: "Many AI products package prediction, classification, or generation as general intelligence; evaluation should separate useful tools from snake oil and inflated AGI stories.",
-        lineage: "Arvind Narayanan and Sayash Kapoor's AI Snake Oil project, culminating in the 2024 book AI Snake Oil, asks how to distinguish AI that works from predictive systems sold far beyond their evidence. The context is a long record of failed or overstated systems in hiring, policing, education, and business analytics. Its impact is to give journalists, policymakers, and practitioners a vocabulary for separating generative, predictive, and decision-making AI claims.",
-        placement: "Upper-middle because it values empirical evaluation and social consequences; near the center horizontally because it is anti-overclaiming, not anti-technology.",
-        focus: "For every system, ask: what is the task, what is the baseline, what works in the real world, and who is responsible when it fails?",
-        counter: "Scaling thought treats short-term flaws as less relevant to long-term general methods; singularity optimism sees this skepticism as underestimating exponential progress.",
+        core: "很多 AI 产品把预测、分类或生成能力包装成通用智能；需要区分有效工具、神药话术 (snake oil) 和夸大的 AGI 叙事。",
+        lineage: "Arvind Narayanan 与 Sayash Kapoor 的 AI Snake Oil 项目，并在 2024 年成书 AI Snake Oil，提出的问题是如何区分真正有效的 AI 与被商业叙事过度包装的预测系统。其语境是招聘、警务、教育和商业分析中大量失败或证据不足的 predictive AI。影响是为媒体、政策制定者和实践者提供区分 generative、predictive 与 decision-making AI 的实用语言。",
+        placement: "中上方是因为它重视实证评估和社会后果；横轴接近中间，因为它不是反技术，而是反过度声明和错误部署。",
+        focus: "重点是问每个系统：任务是什么，基线是什么，真实世界有效性如何，失败时谁负责。",
+        counter: "Scaling thought 会认为短期缺陷不影响长期通用方法；singularity optimism 会认为这种怀疑低估指数式进步。",
         works: ["AI Snake Oil", "AI Snake Oil newsletter", "Predictive AI critique"]
       },
       "gary-marcus-melanie-mitchell": {
-        core: "Deep learning is useful but brittle; without abstraction, causality, compositional generalization, and common sense, demos should not be mistaken for AGI.",
-        lineage: "Gary Marcus and Ernest Davis's Rebooting AI in 2019, alongside Melanie Mitchell's Artificial Intelligence: A Guide for Thinking Humans in the same year, came out of cognitive science, symbolic AI, and complex-systems traditions. They asked whether deep learning systems that perform well on benchmarks possess robust abstraction, causality, and common sense. Their impact was to sustain a capability-skeptical counterweight to scaling optimism inside both public and technical debates.",
-        placement: "Near the center horizontally because the main claim is about capability, not a governance movement; above the midline because it stresses human-understandable reasoning and evaluation.",
-        focus: "The boundary question matters: fluent output is not the same as transferable understanding, causal modeling, or reliable planning.",
-        counter: "Sutton's Bitter Lesson says hand-built cognitive structure loses to general computation; LeCun argues new architectures can close many gaps.",
+        core: "深度学习很有用但脆弱；缺少稳健抽象、因果理解、组合泛化和常识时，不应把演示误认为 AGI。",
+        lineage: "Gary Marcus 与 Ernest Davis 2019 年的 Rebooting AI，以及 Melanie Mitchell 同年出版的 Artificial Intelligence: A Guide for Thinking Humans，来自认知科学、符号 AI 和 complex systems 传统。它们提出的问题是：深度学习系统在基准测试 (benchmark) 上表现良好，是否真的拥有抽象、因果和 common sense。影响是在规模化乐观主义 (scaling optimism) 内外保留了一条能力怀疑路线，迫使 AI 讨论面对泛化和理解的边界。",
+        placement: "横轴接近中间，因为它主要是能力判断而非治理运动；纵轴偏人类/社会结构，因为它强调人类可理解的推理和评估。",
+        focus: "读它时看能力边界：模型看起来会说，不等于有可迁移的理解、因果模型或可靠规划。",
+        counter: "Sutton 的 Bitter Lesson 认为手工认知结构终会输给通用计算方法；LeCun 则主张新架构能解决很多缺口。",
         works: ["Rebooting AI", "Artificial Intelligence: A Guide for Thinking Humans", "Deep learning critique essays"]
       },
       "rich-sutton": {
-        core: "In the long run, general methods using search, learning, and computation beat systems built around hand-coded human domain knowledge.",
-        lineage: "Rich Sutton's 2019 essay The Bitter Lesson distills decades of reinforcement learning and AI history into a methodological claim: general methods that leverage computation eventually beat systems built around human expert knowledge. He raised the question after observing repeated transitions in chess, Go, speech, and vision. Its impact was to strengthen a compute-and-search-centered research ideology, often invoked against human-crafted symbolic or domain-specific approaches.",
-        placement: "Lower-right because it weakens the authority of human intuition and handcrafted knowledge; not as far right as e/acc because it is not primarily a political accelerationist program.",
-        focus: "The epistemic lesson is to stop treating human expert knowledge as the final structure of intelligence.",
-        counter: "Marcus and Mitchell argue scale still lacks abstraction and causality; Critical AI asks who supplies the data, labor, and energy for computation-centered progress.",
+        core: "长期来看，依赖搜索、学习和计算的一般方法会胜过人类手工注入的领域知识。",
+        lineage: "Rich Sutton 2019 年的 The Bitter Lesson 总结了强化学习和 AI 研究史中的反复模式：长期看，利用计算的通用方法会超过围绕人类专家知识构建的系统。他提出这一问题，是因为象棋、围棋、语音识别和视觉中的历史都显示手工知识常在规模化方法面前失效。影响是强化了 compute、search、learning 中心主义，并常被用来反驳符号主义和人类直觉中心路线。",
+        placement: "偏右下，是因为它削弱人类直觉和手工知识的权威；但它不是政治加速主义，所以没有放到 e/acc 那么右。",
+        focus: "重点是 epistemic lesson：不要把人类专家知识当作智能系统的最终结构。",
+        counter: "Marcus/Mitchell 认为仅靠 scale 仍缺少抽象和因果；Critical AI 会问这种计算中心主义忽略了谁提供数据和能源。",
         works: ["The Bitter Lesson", "Reinforcement learning research tradition"]
       },
       "benjamin-bratton": {
-        core: "AI should be understood through planetary-scale computation, platform stacks, and synthetic intelligence, not simply as a human tool or market product.",
-        lineage: "Benjamin Bratton's The Stack in 2015 and The Terraforming in 2019 come from design theory, geopolitics, infrastructure studies, and posthuman governance. He asked how planetary-scale computation reorganizes sovereignty, cities, platforms, users, and states into a layered accidental megastructure. The impact is a non-simple humanist account of AI and computation: governance becomes system design at planetary scale, not merely product regulation or individual rights.",
-        placement: "Lower-left because it is not open acceleration but strong systems governance; lower half because it does not treat current human/social structures as the only center.",
-        focus: "The Stack matters: AI is one layer in a larger planetary computation architecture, so governance is system design, not just product regulation.",
-        counter: "e/acc stresses decentralized acceleration; Catholic and social-humanist views insist that human dignity must limit system logic.",
+        core: "应从行星尺度计算、平台堆栈和 synthetic intelligence 理解治理，而不是把 AI 简化成人类工具或市场产品。",
+        lineage: "Benjamin Bratton 2015 年 The Stack 与 2019 年 The Terraforming 来自设计理论、地缘政治、infrastructure studies 和 posthuman governance。它提出的问题是：planetary-scale computation 如何把国家、平台、城市、用户和地球系统重组为一个 layered accidental megastructure。影响是提供了一种非简单人类中心的治理视角：AI 和 computation 的治理不是产品规则，而是行星尺度的系统设计。",
+        placement: "左下方是因为它不是开放加速，而是强系统治理；纵轴偏下，因为它不把当前人类/社会结构当作唯一中心。",
+        focus: "读它时要抓住 Stack 逻辑：AI 是更大行星计算架构的一层，治理问题是系统设计，不只是产品规则。",
+        counter: "e/acc 强调去中心化加速；Catholic/social humanism 则会坚持人类尊严必须限制系统逻辑。",
         works: ["The Stack", "The Terraforming", "Synthetic intelligence and planetary computation essays"]
       },
       "yann-lecun": {
-        core: "Current doomer narratives overstate the danger of existing systems; stronger AI needs world models, planning, and new architectures rather than treating LLMs as AGI.",
-        lineage: "Yann LeCun's A Path Towards Autonomous Machine Intelligence, released in 2022, extends his long deep-learning and representation-learning program into a world-model agenda. In the context of LLM-driven AI risk debate, he asked how machines could learn like humans and animals through predictive world models, planning, and intrinsic objectives rather than text prediction alone. Its impact is to provide a capability-optimist but LLM-skeptical alternative to both doom and pure scaling narratives.",
-        placement: "Right because it resists overcentralization and premature restriction; near the midline vertically because the argument is architectural rather than explicitly posthuman.",
-        focus: "Separate current LLM limits, future architecture routes, and AI-risk narratives.",
-        counter: "Yudkowsky argues architecture details do not remove loss-of-control risk; Narayanan and Kapoor share some anti-hype instincts but focus more on product misuse.",
+        core: "近期毁灭叙事夸大了当前系统的危险；通向更强 AI 需要世界模型、规划和新架构，而不是把 LLM 直接等同 AGI。",
+        lineage: "Yann LeCun 2022 年发布 A Path Towards Autonomous Machine Intelligence，把其长期深度学习、表征学习和开放研究路线推进到世界模型与 JEPA 议程。它在 LLM 与 AI 风险讨论升温时提出问题：机器能否像人和动物一样通过预测世界、规划和内在目标学习，而不只是做文本预测。影响是提供了一种能力乐观但怀疑 LLM 的路线，区别于毁灭叙事和纯规模化叙事。",
+        placement: "偏右是因为它反对过度集中和过早限制；纵轴接近中间，因为它重视能力架构，而不是明确后人类政治。",
+        focus: "重点是区分当前 LLM 局限、未来架构路线和 AI 风险叙事之间的关系。",
+        counter: "Yudkowsky 认为架构细节不改变失控风险；Narayanan/Kapoor 会赞同部分反炒作 (anti-hype)，但更关注产品级滥用。",
         works: ["A Path Towards Autonomous Machine Intelligence", "JEPA / world model talks", "Open source AI arguments"]
       },
       "andrew-ng": {
-        core: "AI is a general-purpose technology like electricity; the priority is connecting it to healthcare, education, industry, and services to create measurable value.",
-        lineage: "Andrew Ng's AI is the New Electricity framing, popularized in 2017 through lectures and industry talks, asks how AI should be understood as a general-purpose enabling technology for many sectors rather than a single AGI rupture. The context is applied machine learning, enterprise adoption, and the translation of research into products. Its impact was to normalize deployment, workflow redesign, and measurable sectoral value as the practical center of AI strategy.",
-        placement: "Upper-right because it emphasizes deployment and practical benefit; above the midline because the goal is improving human institutions and services.",
-        focus: "The practical questions are data, workflow, product, organizational adoption, and measurable gains.",
-        counter: "Safety views say deployment speed must be limited by dangerous capability thresholds; Critical AI says productivity narratives can hide labor and power issues.",
+        core: "AI 像电力一样是通用技术，关键是把它接入医疗、教育、工业和服务流程，创造实际生产率和福利。",
+        lineage: "Andrew Ng 在 2017 年前后通过课程、演讲和产业传播推广 AI is the New Electricity 框架，提出的问题是 AI 是否应被理解为类似电力的通用赋能技术，而不是单一 AGI 事件。其语境是应用机器学习、企业采用和研究成果产品化。影响是把落地、工作流重设计和可衡量行业收益变成人工智能战略的实践中心。",
+        placement: "右上方是因为它重视部署和应用收益；纵轴偏人类中心，因为目标是改善人类制度和服务。",
+        focus: "看它如何把 AI 从文明叙事拉回落地问题：数据、流程、产品、组织采用和可衡量收益。",
+        counter: "Safety 视角认为部署速度必须受危险能力约束；Critical AI 认为生产率叙事可能掩盖劳动和权力问题。",
         works: ["AI is the New Electricity", "Landing AI / applied AI talks", "AI transformation playbooks"]
       },
       "sam-altman-openai": {
-        core: "AGI can create broad abundance, but the transition needs safety, governance, benefit sharing, and staged deployment.",
-        lineage: "Sam Altman and OpenAI's Planning for AGI and beyond, published in 2023, articulates a frontier-lab attempt to combine AGI ambition, deployment, safety, and benefit sharing. The question is how a private lab can justify building increasingly general systems while claiming to manage social risk and distribute benefits. Its impact is to define the managed-AGI corporate imaginary: constrained defaults, broad access, safety rhetoric, and centralized lab authority in one package.",
-        placement: "Center-right and upper because it accepts continued building and deployment while retaining safety, governance, and social-benefit language.",
-        focus: "The tension is central: the same discourse contains AGI abundance, lab concentration, and safety thresholds.",
-        counter: "Critical AI questions concentrated power; e/acc questions closed access and control; hard safety questions whether deployment commitments are enough.",
+        core: "AGI 可以带来广泛丰裕，但需要安全、治理、收益共享和逐步部署来管理转型。",
+        lineage: "Sam Altman 与 OpenAI 2023 年发布 Planning for AGI and beyond，代表一种 frontier lab 对 AGI 野心、部署、安全和收益共享的综合叙事。它提出的问题是：私人实验室如何在继续构建更通用系统的同时，声称能够管理社会风险并分配收益。影响是定义了 managed-AGI corporate imaginary：受限默认设置、广泛访问、安全承诺和实验室中心化权威同时出现。",
+        placement: "右上偏中，因为它接受继续 build 和部署，同时保留治理、安全和社会收益语言。",
+        focus: "重点是 tension：同一套论述里既有 AGI 丰裕愿景，也有实验室集中控制和安全门槛。",
+        counter: "Critical AI 质疑权力集中；e/acc 质疑闭源和管控；hard safety 质疑部署承诺是否足够。",
         works: ["Planning for AGI and beyond", "OpenAI charter", "Governance and deployment statements"]
       },
       "elon-musk-xai": {
-        core: "Musk's AI position is mixed: he has long warned about existential AI risk, while also imagining humanity's future through Mars, Neuralink, human-AI symbiosis, and xAI-style stronger intelligence.",
-        lineage: "Elon Musk's place in AI discourse comes from two strands: early involvement with OpenAI and later AI safety / pause warnings, plus SpaceX, Neuralink, the launch of xAI in 2023, Grok, and the release of Grok-1 weights and architecture. The question he raises is not simply pause versus acceleration, but who gets to build an AI that is framed as more truth-seeking, less captured by existing institutions, and still safe for humanity. The public effect is a hybrid of x-risk warning, posthuman expansion imagery, anti-OpenAI politics, open-weight signaling, and high-intensity build culture.",
-        placement: "Right but not all the way to e/acc: the rightward position comes from xAI building, Grok's open-weight release, and competitive deployment; the below-midline position reflects Mars / Neuralink / human-AI symbiosis moving beyond ordinary human-centered framing without becoming Land-style technological autonomy.",
-        focus: "Read it as a hybrid: not a pure safety-pause view and not pure accelerationism, but risk warning plus posthuman expansion plus competitive build plus partial openness.",
-        counter: "Andreessen emphasizes x-risk less; Yudkowsky emphasizes pause and alignment first; Altman/OpenAI emphasizes lab governance and benefit sharing.",
+        core: "Musk 的 AI 位置是混合型：一方面长期公开警告先进 AI 的生存风险，另一方面又把人类未来想象成火星、Neuralink、人机共生和 xAI 式更强智能的扩展。",
+        lineage: "Elon Musk 在 AI 话语中的位置来自两条线：早期参与 OpenAI 与后来的 AI safety / pause 警告，以及 SpaceX、Neuralink、2023 年后创立 xAI、推出 Grok、开放 Grok-1 权重和架构。它提出的问题不是单纯“暂停还是加速”，而是谁能构建一个被认为更 truth-seeking、较少受既有机构约束、同时又不会毁灭人类的 AI。影响是把 x-risk 警告、后人类式扩展想象、反大厂/反 OpenAI 政治、开源姿态和高强度 build culture 混在同一个公众形象里。",
+        placement: "放在右侧但不贴近 e/acc：右侧来自 xAI build、Grok 开放权重和竞争逻辑；纵轴放到中线下方，因为 Mars / Neuralink / human-AI symbiosis 已经明显超出普通人类中心框架，但仍没有落到 Land 式技术自治。",
+        focus: "读它时要抓住混合性：Musk 不是纯安全暂停派，也不是纯加速主义者，而是风险警告 + 后人类扩展 + 竞争式 build + 部分开放的组合。",
+        counter: "Andreessen 更少强调 x-risk；Yudkowsky 更强调暂停和对齐优先；Altman/OpenAI 更强调实验室治理和收益共享。",
         works: ["Open Release of Grok-1", "Pause Giant AI Experiments open letter", "xAI / Grok public positioning"]
       },
       "peter-thiel": {
-        core: "Thiel's core is not generic AI optimism but anti-stagnation: modern society is trapped by risk aversion, bureaucracy, and low-ambition technology, and needs deep tech, founder power, and vertical progress.",
-        lineage: "Peter Thiel's technology politics comes from PayPal, Palantir, Founders Fund, Zero to One, and the anti-stagnation line captured by 'we wanted flying cars, instead we got 140 characters.' The question is why the West stopped producing enough civilization-changing technologies after roughly the 1970s, and why universities, regulation, consensus politics, and competitive markets can turn real vertical innovation into incremental improvement. In AI discourse, this makes AI a deep technology that can break stagnation and reorganize power, not merely another software product.",
-        placement: "Lower-right because it resists stagnation and excessive risk governance, while backing strong founders, deep tech, and breakthrough capital allocation; lower half because it puts less faith in democratic consensus and existing human institutions as final arbiters of technological futures.",
-        focus: "Read it as anti-stagnation rather than open source: Thiel cares more about who has the power to drive civilization-scale technological breakthroughs than about decentralized openness.",
-        counter: "Andreessen gives techno-optimism a more public-facing abundance story; e/acc turns acceleration into a meme; Catholic and social-humanist views question whether this future politics sacrifices the common good and human dignity.",
+        core: "Thiel 的核心不是单纯 AI 乐观，而是反停滞：现代社会被风险厌恶、官僚治理和低野心技术困住，需要重新押注深科技、创始人权力和垂直进步。",
+        lineage: "Peter Thiel 的技术政治来自 PayPal、Palantir、Founders Fund、Zero to One 与“we wanted flying cars, instead we got 140 characters”的反停滞叙事。它提出的问题是为什么 1970 年后西方不再产生足够多改变文明形态的技术，以及为什么大学、监管、共识政治和竞争市场会把真正的垂直创新压低为增量改良。放进 AI 语境后，这一路线倾向把 AI 看作打破停滞和重组权力的深科技，而不是普通消费软件。",
+        placement: "右下方是因为它反对停滞和过度风险治理，支持强创始人、深科技和突破性资本配置；纵轴偏下，因为它不太相信民主共识和现有人类制度能定义技术未来，更接近精英化、后自由主义和部分后人类的未来政治。",
+        focus: "读它时要抓住“反停滞”而不是“开源”：Thiel 更关心谁有权推动文明级技术突破，而不一定主张去中心化开放。",
+        counter: "Andreessen 更大众化地讲技术乐观；e/acc 更 memetic 地讲加速；Catholic/social humanism 会质疑这种未来政治是否牺牲共同善和人的尊严。",
         works: ["What Happened to the Future?", "Zero to One", "Founders Fund / Palantir worldview"]
       },
       "ray-kurzweil": {
-        core: "Exponential progress in computation, AI, life sciences, and nanotechnology leads toward the singularity, life extension, and human-machine merger.",
-        lineage: "Ray Kurzweil's The Singularity Is Near in 2005, updated by The Singularity Is Nearer in 2024, asks whether exponential trends in computation, biotechnology, nanotechnology, and AI imply a coming merger of human and machine intelligence. The context is transhumanism and technological forecasting rather than AI governance. Its impact was to popularize the singularity as a civilizational horizon, making abundance, longevity, and human-machine integration part of mainstream AI futurism.",
-        placement: "Lower-right because it embraces strong technological progress and human-machine fusion; lower half because present human form is not the endpoint.",
-        focus: "The structure is evolutionary and accelerating: AI is not just a tool but part of a continuous transformation of civilization.",
-        counter: "Hype skeptics think exponential forecasts often ignore bottlenecks; Catholic and social-humanist views question the anthropology behind enhancement.",
+        core: "计算、AI、生命科学和纳米技术的指数进步会推动奇点，人类与机器融合并扩展寿命和认知。",
+        lineage: "Ray Kurzweil 2005 年 The Singularity Is Near 与 2024 年 The Singularity Is Nearer，把 computation、AI、生命科学和纳米技术的指数趋势组织成 singularity 叙事。它提出的问题是：技术进步是否会导致人机融合、寿命延展和智能爆发。其影响是把奇点、丰裕、longevity 和 human-machine integration 推入大众 AI futurism。",
+        placement: "右下方是因为它拥抱强技术进步和人机融合；纵轴偏下，因为当前人类形态不是最终状态。",
+        focus: "读它时要看叙事结构：技术不是单一工具，而是连续加速的进化过程。",
+        counter: "Hype skeptics 认为指数预测常忽略瓶颈；Catholic/social humanism 会质疑增强叙事中的人类观。",
         works: ["The Singularity Is Near", "The Singularity Is Nearer", "The Age of Spiritual Machines"]
       },
       "marc-andreessen": {
-        core: "Technological progress is a primary force against scarcity, disease, and poverty; anti-tech politics, pauses, and excessive regulation suppress human flourishing.",
-        lineage: "Marc Andreessen's Why AI Will Save the World in June 2023 and The Techno-Optimist Manifesto in October 2023 translate venture-capital build culture into an explicit political theory of technology. In the context of post-ChatGPT regulation debates, he asked whether AI fear, safety, and ethics had become veto powers against progress. The impact was to harden a Silicon Valley anti-pause position that treats markets, entrepreneurship, and abundance as moral arguments for accelerated development.",
-        placement: "Right because it supports building, deployment, and anti-regulatory politics; slightly above the midline because the stated goal is human abundance and individual empowerment.",
-        focus: "The political posture matters: resist turning safety, ethics, or governance into a default veto over building.",
-        counter: "Critical AI says this underweights power and distribution; x-risk safety says it underweights low-probability high-loss risk.",
+        core: "技术进步是解决稀缺、疾病和贫困的主要力量；反技术、暂停和过度监管会压制人类繁荣。",
+        lineage: "Marc Andreessen 在 2023 年 6 月 Why AI Will Save the World 和 2023 年 10 月 The Techno-Optimist Manifesto 中，把 Silicon Valley venture-capital build culture 提升为显性的技术政治理论。其问题背景是 ChatGPT 后的监管、AI safety 和伦理争论；他提出的问题是安全、伦理和治理是否正在变成反进步的 veto power。影响是强化了 Silicon Valley anti-pause 立场，把市场、创业和丰裕作为加速 AI 的道德论证。",
+        placement: "右侧是因为它支持 build、部署和抗监管；纵轴略偏人类中心，因为目标仍是人类丰裕和个体能力扩展。",
+        focus: "重点是政治姿态：反对把安全、伦理和治理变成默认的 veto power。",
+        counter: "Critical AI 认为它低估权力和分配；x-risk safety 认为它低估低概率高损失风险。",
         works: ["The Techno-Optimist Manifesto", "Why AI Will Save the World", "a16z AI essays"]
       },
       "effective-accelerationism": {
-        core: "Technological acceleration is treated as a moral and civilizational task; regulation, pauses, and safety narratives are often treated as the larger risk.",
-        lineage: "Effective accelerationism emerged around 2022 in crypto, AI Twitter, and pseudonymous build-culture networks associated with figures such as Beff Jezos, then became more visible during 2023 AI regulation fights. It asks why technological acceleration should be treated as a moral good and why deceleration, central control, or safety gatekeeping might be the greater danger. Its impact is memetic rather than institutional: it gives open diffusion, speed, and anti-regulatory politics a recognizable badge.",
-        placement: "Far right because acceleration and open diffusion are central; lower half because it weakens human-centered governance and gives more weight to technological evolution, markets, and decentralization.",
-        focus: "Read it as a memetic and political movement rather than a tight academic theory. People who use e/acc language can differ a lot internally.",
-        counter: "Safety advocates think it romanticizes externalized risk; critical AI thinkers see power and harm being treated as development costs.",
+        core: "技术加速本身被视为道德和文明任务；监管、暂停和安全话语常被看作更大的风险。",
+        lineage: "Effective accelerationism 大约在 2022 年的 crypto、AI Twitter 和匿名 build-culture 网络中成形，常与 Beff Jezos 等人物相关，并在 2023 年 AI 监管争论中获得更高可见度。它提出的问题是为什么技术加速应被视为道德善，以及为什么减速、集中控制和 safety gatekeeping 反而可能更危险。影响主要是 memetic：给开放扩散、速度和反监管政治提供了一个可识别的身份标签。",
+        placement: "横轴最右，因为它把加速和开放扩散推到核心；纵轴偏下，因为它弱化人类中心治理，更强调技术演化、市场和去中心化。",
+        focus: "读时要注意它更多是 memetic / political movement，而不是严密学术体系；不同自称 e/acc 的人内部差异很大。",
+        counter: "安全派认为它把风险外部性浪漫化；critical AI 认为它把权力和伤害当成发展成本。",
         works: ["Effective Accelerationism manifestos", "Beff Jezos / e/acc discourse", "Permissionless innovation arguments"]
       },
       "nick-land": {
-        core: "Capital, technology, and intelligence are imagined as an autonomous acceleration process that exceeds humanist political control.",
-        lineage: "Nick Land's Meltdown, first performed and circulated in the mid-1990s around the Cybernetic Culture Research Unit at Warwick, joined Deleuze and Guattari, cybernetics, cyberpunk, and capitalism into a theory-fiction of runaway technocapital. The question was not how humans should govern technology, but whether capital and intelligence are already nonhuman processes dissolving liberal human control. Its impact runs through accelerationist theory, posthuman political aesthetics, and later internet ideologies, often as both inspiration and warning.",
-        placement: "Far lower-right because it embraces acceleration and anti-human-centeredness; openness here is not democratic openness but technocapital pushing itself forward.",
-        focus: "Distinguish two layers: philosophical nonhuman acceleration, and the later internet-political influence of Dark Enlightenment.",
-        counter: "Bratton is also posthuman in some ways but emphasizes system design and governance; humanist safety and Catholic social thought treat Land as a warning case.",
+        core: "资本、技术和智能被想象成超过人类主义控制的自主加速过程；人类主体不再是历史的最终中心。",
+        lineage: "Nick Land 的 Meltdown 最早在 1990s 中期 Warwick 的 Cybernetic Culture Research Unit 语境中演出和传播，后来收入 2011 年 Fanged Noumena。它把 Deleuze/Guattari、cybernetics、cyberpunk 和 capitalism 组合成 runaway technocapital 的 theory-fiction。其问题不是人类如何治理技术，而是资本和智能是否已经是逃离 liberal human politics 的非人过程；影响贯穿 accelerationist theory、posthuman political aesthetics 和后来的网络意识形态，既是灵感也是警告。",
+        placement: "最右下是因为它同时拥抱加速和反人类中心；这里的开放不是民主开放，而是技术资本自行推进。",
+        focus: "读它时要区分两层：哲学上的非人加速逻辑，和后来互联网政治中的 Dark Enlightenment 影响。",
+        counter: "Bratton 同样非传统人类中心，但更强调系统设计和治理；humanist safety 与 Catholic social thought 会把 Land 当作需要被限制的反面。",
         works: ["Meltdown", "CCRU writings", "Fanged Noumena"]
       }
     };
@@ -2485,37 +2485,37 @@
     const introPage = {
       id: "intro",
       kind: "intro",
-      title: "Welcome",
-      tag: "START",
-      instruction: "Read this before you begin",
-      prompt: "Welcome to AI Governance Persona.",
+      title: "欢迎",
+      tag: "开始",
+      instruction: "开始前请先阅读",
+      prompt: "欢迎参加 AI 人格测试。",
       sections: [
         {
-          title: "Who this is for",
-          body: "This quiz is for people with some familiarity with AI debates, technology policy, or AI use in society. You do not need technical AI expertise."
+          title: "适合谁填写",
+          body: "这个测试适合对 AI 讨论、科技政策或社会中的 AI 使用有一些了解的人。你不需要具备技术背景。"
         },
         {
-          title: "What you will do",
-          body: "For most questions, choose the closest answer. The final question lets you select more than one."
+          title: "你需要做什么",
+          body: "大多数题目请选择一个最接近的答案；最后一题可以多选。"
         },
         {
-          title: "Data notice",
-          body: "Your answers may be used to improve the quiz and understand response patterns. The quiz does not ask for your name or contact information."
+          title: "数据说明",
+          body: "你的回答可能被用于改进测试和理解回答模式。本测试不会要求你填写姓名或联系方式。"
         }
       ],
       links: [
         {
-          title: "AI Governance Spectrum",
-          body: "View reference figures, two-axis positions, and four judgment spectrums.",
-          href: "ai-governance-spectrum-en.html"
+          title: "AI 治理光谱",
+          body: "查看参考人物、二维位置和四个判断光谱。",
+          href: "ai-governance-spectrum.html"
         },
         {
-          title: "AI Governance Persona",
-          body: "View the 10 AI governance persona results, profile pictures, and representative texts.",
-          href: "ai-governance-persona-profiles-en.html"
+          title: "AI 人格档案",
+          body: "查看 10 种 AI 人格、头像和代表文本。",
+          href: "ai-personality-profiles.html"
         }
       ],
-      linksTitle: "Preview the result categories"
+      linksTitle: "提前查看分类结果"
     };
 
     const pages = [
@@ -2523,31 +2523,31 @@
       ...coreQuestionOrder.map((id) => questions.find((q) => q.id === id)).map((q) => ({
         id: q.id,
         kind: "core",
-        title: q.id === "U01" ? "Usage Background" : "Core Judgments",
-        subtitle: q.id === "U01" ? "Not included in coordinate scoring; helps interpret the sample" : "Choose the judgment closest to yours",
+        title: q.id === "U01" ? "使用情况" : "核心判断",
+        subtitle: q.id === "U01" ? "不进入坐标计算，用于理解样本" : "选择最接近你的判断",
         tag: q.id,
-        instruction: q.id === "U01" ? "Choose the usage pattern closest to yours" : "Choose the position closest to your view",
+        instruction: q.id === "U01" ? "选择最接近你的使用情况" : "选择最接近你的立场",
         prompt: q.text,
         options: q.options
       })),
       ...scenarioOrder.map((id) => scenarios.find((s) => s.id === id)).map((s) => ({
         id: s.id,
         kind: "scenario",
-        title: "Scenario Choice",
-        subtitle: "Low-weight scored scenario for profile calibration",
+        title: "情境选择",
+        subtitle: "低权重进入计分，用于校准画像",
         tag: s.id,
-        instruction: "Choose the response closest to your judgment in this concrete case",
+        instruction: "按具体场景选择最接近你的处理方式",
         prompt: s.prompt,
         options: s.options.map((option, i) => [option, String.fromCharCode(65 + i), option])
       })),
       {
         id: "closestStatement",
         kind: "statement",
-        title: "AI View Check (Multiple Select)",
-        subtitle: "Final question: select all that apply; not included in coordinate scoring",
+        title: "AI 看法校验（多选）",
+        subtitle: "最后一题为多选，不进入坐标计算，用于复查分类",
         tag: "SELF",
-        instruction: "This is a multiple-select question: choose every statement that feels close. If none fit, select only the last option",
-        prompt: "Which statements are closest to your view of AI? (Select all that apply)",
+        instruction: "这是多选题：可以选择多个接近你的说法；如果都不像，请只选最后一项",
+        prompt: "下面哪些话最接近你对 AI 的看法？（可多选）",
         options: statements.map((statement, i) => [statement, String(i + 1), statement]),
         multiple: true,
         exclusiveValue: statements[statements.length - 1]
@@ -2758,17 +2758,17 @@
     }
 
     function diagnosticValue(kind) {
-      const q = questions.find((item) => item.dimension === "r" && item.diagnosis === kind);
-      const value = q ? selected(q.id) : "";
+      const question = questions.find((item) => item.diagnosis === kind);
+      const value = question ? selected(question.id) : "";
       return value ? clampScore(2 * centered(value)) : NaN;
     }
 
     function directedDimensionScore(dimension) {
-      const items = questions.filter((q) => q.dimension === dimension);
+      const items = questions.filter((item) => item.dimension === dimension && item.direction);
       const values = items
-        .map((q) => {
-          const value = selected(q.id);
-          return value ? centered(value) * q.direction : NaN;
+        .map((item) => {
+          const value = selected(item.id);
+          return value ? centered(value) * item.direction : NaN;
         })
         .filter(Number.isFinite);
 
@@ -2779,43 +2779,43 @@
 
     function riskSpectrumLabel(result) {
       const entries = [
-        { key: "catastrophic", value: result.rCatastrophic, label: "civilizational risk" },
-        { key: "social", value: result.rSocialHarm, label: "current social harm" },
-        { key: "normal", value: result.rNormalTech, label: "normal tech / overnarrative" },
-        { key: "opportunity", value: result.rOpportunityCost, label: "opportunity cost" }
+        { key: "catastrophic", value: result.rCatastrophic, label: "文明级风险" },
+        { key: "social", value: result.rSocialHarm, label: "现实社会伤害" },
+        { key: "normal", value: result.rNormalTech, label: "普通技术/过度叙事" },
+        { key: "opportunity", value: result.rOpportunityCost, label: "机会成本" }
       ].filter((entry) => Number.isFinite(entry.value)).sort((a, b) => b.value - a.value);
       if (!entries.length) return "--";
       const [top, second] = entries;
-      if (!second) return `primary: ${top.label}`;
-      if (top.value < 0.4) return `${top.label} / ${second.label} (weak signal)`;
-      if (top.value - second.value <= 0.35) return `${top.label} / ${second.label} balanced`;
-      return `primary: ${top.label}; secondary: ${second.label}`;
+      if (!second) return `主导：${top.label}`;
+      if (top.value < 0.4) return `${top.label} / ${second.label}（弱信号）`;
+      if (top.value - second.value <= 0.35) return `${top.label} / ${second.label}并重`;
+      return `主导：${top.label}；次要：${second.label}`;
     }
 
     function responseSpectrumLabel(value) {
       if (!Number.isFinite(value)) return "--";
-      if (value <= -1.2) return "strong control";
-      if (value <= -0.4) return "control-leaning";
+      if (value <= -1.2) return "强控制";
+      if (value <= -0.4) return "控制倾向";
       if (value < 0.4) {
-        if (value <= -0.15) return "middle, slightly control-leaning";
-        if (value >= 0.15) return "middle, slightly open";
-        return "middle";
+        if (value <= -0.15) return "中间，略偏控制";
+        if (value >= 0.15) return "中间，略偏开放";
+        return "中间";
       }
-      if (value < 1.2) return "open-leaning";
-      return "strong openness";
+      if (value < 1.2) return "开放倾向";
+      return "强开放";
     }
 
     function valueSpectrumLabel(value) {
       if (!Number.isFinite(value)) return "--";
-      if (value >= 1.2) return "strongly human/social-structure-centered";
-      if (value >= 0.4) return "human/social-structure-centered";
+      if (value >= 1.2) return "强人类/社会结构中心";
+      if (value >= 0.4) return "人类/社会结构中心";
       if (value > -0.4) {
-        if (value >= 0.15) return "middle, slightly human/social-structure-centered";
-        if (value <= -0.15) return "middle, slightly intelligence-centered";
-        return "middle";
+        if (value >= 0.15) return "中间，略偏人类/社会结构中心";
+        if (value <= -0.15) return "中间，略偏智能中心";
+        return "中间";
       }
-      if (value > -1.2) return "intelligence-centered";
-      return "strongly posthuman / intelligence-centered";
+      if (value > -1.2) return "智能中心";
+      return "强后人类/智能中心";
     }
 
     function itemCenteredScore(id) {
@@ -2854,11 +2854,11 @@
 
     function abilityNarrativeLabel(value) {
       if (!Number.isFinite(value)) return "--";
-      if (value >= 0.45) return "bubble skeptic";
-      if (value >= 0.15) return "hype-skeptical";
-      if (value > -0.15) return "Mixed evidence";
-      if (value > -0.45) return "transformative-leaning";
-      return "strong transformative believer";
+      if (value >= 0.45) return "明显 bubble 怀疑";
+      if (value >= 0.15) return "偏炒作 (hype) 怀疑";
+      if (value > -0.15) return "证据混合";
+      if (value > -0.45) return "偏相信变革性 AI";
+      return "强变革性 AI 信念";
     }
 
     function selectedItemSignalVectors() {
@@ -2978,13 +2978,13 @@
       const answerPageCount = pages.length - 1;
       progressFill.style.width = `${Math.round((done / answerPageCount) * 100)}%`;
       progressText.textContent = `${done}/${answerPageCount}`;
-      if (brandProgress) brandProgress.textContent = isIntro ? "Start" : `Question ${currentIndex} / ${pages.length - 1}`;
+      if (brandProgress) brandProgress.textContent = isIntro ? "开始" : `第 ${currentIndex} / ${pages.length - 1} 题`;
       if (pagerActions) pagerActions.hidden = !(isIntro || isMulti);
       prevBtn.disabled = currentIndex === 0;
       if (prevTopBtn) prevTopBtn.disabled = currentIndex === 0;
       nextBtn.hidden = !(isIntro || isMulti);
       nextBtn.disabled = !answered;
-      nextBtn.textContent = isIntro ? "Start quiz" : isLast ? "See Result" : "Next";
+      nextBtn.textContent = isIntro ? "开始答题" : isLast ? "查看结果" : "下一题";
       prevBtn.hidden = isIntro;
       if (prevTopBtn) prevTopBtn.hidden = isIntro;
       if (!isIntro) {
@@ -3108,7 +3108,7 @@
         quizPager.hidden = true;
         if (introResourceLinks) introResourceLinks.hidden = true;
         resultPanel.hidden = false;
-        if (brandProgress) brandProgress.textContent = `Complete ${answeredPages()}/${pages.length - 1}`;
+        if (brandProgress) brandProgress.textContent = `完成度 ${answeredPages()}/${pages.length - 1}`;
         update();
         if (shouldScroll) scrollToElement(resultPanel);
         return;
@@ -3122,8 +3122,8 @@
         introResourceLinks.innerHTML = "";
       }
       resultPanel.hidden = true;
-      pageCount.textContent = page.kind === "intro" ? "Before you begin" : `Question ${currentIndex} / ${pages.length - 1}`;
-      pageTag.textContent = page.kind === "intro" ? page.tag : page.multiple ? `${page.tag} · MULTI` : page.tag;
+      pageCount.textContent = page.kind === "intro" ? "开始前" : `第 ${currentIndex} / ${pages.length - 1} 题`;
+      pageTag.textContent = page.kind === "intro" ? page.tag : page.multiple ? `${page.tag} · 多选` : page.tag;
       pageInstruction.textContent = page.instruction;
       pageInstruction.hidden = !page.instruction;
       pagePrompt.textContent = page.prompt;
@@ -3247,7 +3247,7 @@
       if (!Number.isFinite(result.x) || !Number.isFinite(result.y)) {
         return {
           label: "--",
-          text: "Completion shows whether position, scenarios, and self-confirmation agree.",
+          text: "答完后显示位置、场景和自我确认是否一致。",
           level: "none"
         };
       }
@@ -3275,21 +3275,21 @@
 
       if (support >= 3 && margin >= 0.10) {
         return {
-          label: "High",
-          text: "Position, scenario choices, and self-confirmation mostly agree; this profile can be read as the main interpretation.",
+          label: "高",
+          text: "位置、场景和自我确认大体一致；这个画像可以作为主要解释。",
           level: "high"
         };
       }
       if (support >= 1 && margin >= 0.02) {
         return {
-          label: "Medium",
-          text: "The main position is clear, but scenarios or self-confirmation add conditions; read this with neighboring profiles.",
+          label: "中",
+          text: "主要位置清楚，但场景选择或自我确认带有条件性；适合按相邻谱系一起读。",
           level: "medium"
         };
       }
       return {
-        label: "Low",
-        text: "Position, scenarios, and self-confirmation diverge; read this as a mixed or conditional result.",
+        label: "低",
+        text: "位置、场景和自我确认有明显分歧；更适合读作混合型或条件型结果。",
         level: "low"
       };
     }
@@ -3345,9 +3345,9 @@
     }
 
     function quadrantFor(x, y) {
-      if (!Number.isFinite(x) || !Number.isFinite(y)) return "Position appears after completion";
-      const horizontal = x < -0.35 ? "Control threshold" : x > 0.35 ? "Open deployment" : "Middle response";
-      const vertical = y > 0.35 ? "Human/social-structure-centered" : y < -0.35 ? "Posthuman/intelligence-centered" : "Middle values";
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return "答完后显示位置";
+      const horizontal = x < -0.35 ? "控制门槛" : x > 0.35 ? "开放部署" : "响应中间";
+      const vertical = y > 0.35 ? "人类/社会结构中心" : y < -0.35 ? "后人类/智能中心" : "价值中间";
       return `${horizontal} / ${vertical}`;
     }
 
@@ -3384,23 +3384,23 @@
         { key: "normal", value: result.rNormalTech },
         { key: "opportunity", value: result.rOpportunityCost }
       ].sort((a, b) => b.value - a.value);
-      if (result.rProjection >= 1) return "You put real weight on frontier AI going badly wrong, so you want safety boundaries before the biggest deployments.";
-      if (result.rProjection <= -1) return "You are more worried that too much restriction keeps useful AI tools from reaching people who could benefit.";
-      if (candidates[0]?.key === "social") return "You are most sensitive to people already being harmed by AI, especially when they are watched, misjudged, or shut out.";
-      if (candidates[0]?.key === "normal") return "You tend to see AI as important but not magical: useful, fallible, and often oversold.";
-      return "You do not read AI as simply doom or salvation; you are balancing risks and benefits.";
+      if (result.rProjection >= 1) return "你比较相信前沿 AI 可能出大事，所以倾向于提前设安全边界。";
+      if (result.rProjection <= -1) return "你更担心限制太多，让本该帮到人的 AI 工具迟迟到不了现实里。";
+      if (candidates[0]?.key === "social") return "你最敏感的是 AI 已经在现实里伤到一些人，尤其是被监控、被误判或被排除的人。";
+      if (candidates[0]?.key === "normal") return "你倾向把 AI 当成一种重要但不神秘的技术：有用、会出错，也常被过度包装。";
+      return "你没有把 AI 简单看成灾难或救星，而是在风险和收益之间保留判断。";
     }
 
     function governancePlainText(score) {
-      if (score <= -0.75) return "On governance, you lean toward control: audits, thresholds, and responsibility before broad release.";
-      if (score >= 0.75) return "On governance, you lean toward openness: put AI into more real settings and learn from deployment.";
-      return "On governance, you are context-specific: neither blanket pause nor unconditional openness.";
+      if (score <= -0.75) return "治理上你偏控制：先审计、设门槛、明确责任，再谈大规模发布。";
+      if (score >= 0.75) return "治理上你偏开放：先让更多场景用起来，在真实使用中发现并修正问题。";
+      return "治理上你偏折中：不是一刀切暂停，也不是无条件开放，而是看场景和风险等级。";
     }
 
     function valuePlainText(score) {
-      if (score >= 0.75) return "On values, you want human society to keep final accountability, especially in healthcare, education, law, and other serious decisions.";
-      if (score <= -0.75) return "On values, you are more willing to let stronger intelligence, computation, and learning outrun ordinary human intuition.";
-      return "On values, you are not strongly committed to either 'humans must always decide' or 'intelligence should move beyond humans.'";
+      if (score >= 0.75) return "价值上你希望人类社会保留最终问责，尤其在医疗、教育、司法这类重要决定里。";
+      if (score <= -0.75) return "价值上你更愿意让更强的智能、计算和学习方法突破人的直觉限制。";
+      return "价值上你没有强烈站到“人类必须最终拍板”或“智能应超越人类”任何一边。";
     }
 
     function closeReferenceModal() {
@@ -3409,27 +3409,27 @@
 
     function renderReferenceNotes(point, detail, stance) {
       const core = detail?.core || stance;
-      const lineage = detail?.lineage || "This reference point does not yet have a full intellectual lineage note.";
-      const placement = detail?.placement || `This reference sits in ${quadrantFor(point.x, point.y)} because its public argument is closest to ${point.cluster}.`;
-      const focus = detail?.focus || "Use this point as a nearby reference, not as a claim that every view in the cluster is identical.";
+      const lineage = detail?.lineage || "这个参考点还没有写入完整思想脉络。";
+      const placement = detail?.placement || `这个参考点位于${quadrantFor(point.x, point.y)}，因为其公开论证最接近「${point.cluster}」。`;
+      const focus = detail?.focus || "把它当作相邻参照，而不是把同一区域里的所有观点都看成完全一致。";
       const counter = detail?.counter || "";
       const works = detail?.works || [];
       const source = referenceSources[point.id];
       const sourceLink = source
-        ? `<p>Main reference: <a href="${escapeHTML(source.url)}" target="_blank" rel="noreferrer">${escapeHTML(source.title)}</a></p>`
+        ? `<p>主要参考：<a href="${escapeHTML(source.url)}" target="_blank" rel="noreferrer">${escapeHTML(source.title)}</a></p>`
         : "";
-      const worksLine = works.length ? `<p>Related texts: ${works.map(escapeHTML).join(" · ")}</p>` : "";
+      const worksLine = works.length ? `<p>相关文本：${works.map(escapeHTML).join(" · ")}</p>` : "";
       return `
         <div class="reference-note-grid">
           <div class="reference-note">
-            <span>Core claim</span>
+            <span>核心命题</span>
             <p>${escapeHTML(core)}</p>
             <p>${escapeHTML(placement)}</p>
             <p>${escapeHTML(focus)}</p>
           </div>
-          ${counter ? `<div class="reference-note"><span>Contrast</span><p>${escapeHTML(counter)}</p></div>` : ""}
+          ${counter ? `<div class="reference-note"><span>对照</span><p>${escapeHTML(counter)}</p></div>` : ""}
           <div class="reference-note">
-            <span>Intellectual lineage</span>
+            <span>思想脉络</span>
             <p>${escapeHTML(lineage)}</p>
             ${sourceLink}
             ${worksLine}
@@ -3462,7 +3462,7 @@
     function updateMap(result, complete, code) {
       mapDot.hidden = !complete;
       mapDotCode.textContent = complete ? displayProfileCode(code) : "----";
-      mapQuadrant.textContent = complete ? quadrantFor(result.x, result.y) : "Position appears after completion";
+      mapQuadrant.textContent = complete ? quadrantFor(result.x, result.y) : "答完后显示位置";
       if (!complete) return;
       mapDot.style.left = `${coordToPercent(result.x)}%`;
       mapDot.style.bottom = `${coordToPercent(result.y)}%`;
@@ -3509,7 +3509,7 @@
         quiz_id: "ai-ideology-quiz",
         quiz_version: "2026-06-01",
         measurement_version: result.measurementVersion || measurementVersion,
-        locale: "en",
+        locale: "zh-CN",
         started_at: quizStartedAt,
         completed_at: new Date().toISOString(),
         duration_ms: quizDurationMs(),
@@ -3583,7 +3583,7 @@
     }
 
     async function submitResultPayload(payload) {
-      submitStatus.textContent = "Recording result...";
+      submitStatus.textContent = "正在记录结果...";
       try {
         const response = await fetch("/api/submit-result", {
           method: "POST",
@@ -3592,9 +3592,9 @@
           keepalive: true
         });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        submitStatus.textContent = "Result recorded.";
+        submitStatus.textContent = "结果已记录。";
       } catch (error) {
-        submitStatus.textContent = "Result recording failed. Your result is still available here.";
+        submitStatus.textContent = "结果记录失败，不影响查看结果。";
       }
     }
 
@@ -3642,7 +3642,7 @@
         if (complete) {
           const avatarSrc = profileAvatarFor(code);
           if (profileAvatar.getAttribute("src") !== avatarSrc) profileAvatar.src = avatarSrc;
-          profileAvatar.alt = `${profile[0]} ${displayCode} avatar`;
+          profileAvatar.alt = `${profile[0]} ${displayCode} 头像`;
           profileAvatar.hidden = false;
         } else {
           profileAvatar.hidden = true;
@@ -3650,8 +3650,8 @@
         }
       }
       profileCode.textContent = complete ? displayCode : "----";
-      profileName.textContent = complete ? `${displayCode}: ${profile[0]}` : "Waiting for profile";
-      profileRoast.textContent = complete ? profile[1] : "Complete the usage item and 11 core judgments for a stable result.";
+      profileName.textContent = complete ? `${displayCode}: ${profile[0]}` : "等待生成画像";
+      profileRoast.textContent = complete ? profile[1] : "完成使用情况题和 11 道核心判断后，结果会更稳。";
       if (profileExplanation) profileExplanation.textContent = complete ? profile[4] : "--";
       profileTexts.innerHTML = complete ? renderProfileTexts(profile[2]) : "--";
       profileTell.textContent = complete ? profile[3] : "--";
@@ -3664,11 +3664,11 @@
         if (nearest) {
           nearestPersonSection.dataset.referenceId = nearest.id;
           nearestPersonSection.dataset.ready = "true";
-          nearestPersonSection.setAttribute("aria-label", `Open map notes for ${referencePersonName(nearest)}`);
+          nearestPersonSection.setAttribute("aria-label", `打开 ${referencePersonName(nearest)} 的图谱说明`);
         } else {
           nearestPersonSection.dataset.referenceId = "";
           nearestPersonSection.dataset.ready = "false";
-          nearestPersonSection.setAttribute("aria-label", "Closest reference appears after completion");
+          nearestPersonSection.setAttribute("aria-label", "接近的人会在答完后显示");
         }
       }
 
@@ -3769,9 +3769,9 @@
           return;
         }
         const image = new Image();
+        if (/^https?:\/\//.test(src)) image.crossOrigin = "anonymous";
         image.onload = () => resolve(image);
         image.onerror = () => resolve(null);
-        if (/^https?:\/\//.test(src)) image.crossOrigin = "anonymous";
         image.src = src;
       });
     }
@@ -3817,7 +3817,7 @@
         shareImageUrl = "";
       }
       if (!shareImageUrl) {
-        if (shareStatus) shareStatus.textContent = "Image generation failed. Please try again.";
+        if (shareStatus) shareStatus.textContent = "图片生成失败，请重试。";
         if (shareCard) shareCard.hidden = false;
         return;
       }
@@ -3840,11 +3840,11 @@
         await navigator.share({
           files: [file],
           title: document.title,
-          text: "Save or share your AI persona image"
+          text: "保存或分享你的 AI 人格图片"
         });
       } catch (error) {
         if (error?.name !== "AbortError" && shareStatus) {
-          shareStatus.textContent = "The system save sheet did not open. Long-press the image to save it, or tap Save image again.";
+          shareStatus.textContent = "系统保存面板没有打开，可以长按图片保存，或再次点击保存图片。";
         }
       }
     }
@@ -3872,7 +3872,7 @@
       ctx.stroke();
 
       ctx.fillStyle = "#64748b";
-      ctx.font = "800 10px Inter, Arial, sans-serif";
+      ctx.font = "800 10px Inter, PingFang SC, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(labels.top, x + size / 2, y + 22);
       ctx.fillText(labels.bottom, x + size / 2, y + size - 12);
@@ -3918,7 +3918,7 @@
       ctx.lineTo(x + size / 2, y + size - 10);
       ctx.stroke();
       ctx.fillStyle = "#66758a";
-      ctx.font = "850 8px " + "Inter, Arial, sans-serif";
+      ctx.font = "850 8px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(labels.top, x + size / 2, y + 14);
       ctx.fillText(labels.bottom, x + size / 2, y + size - 8);
@@ -3948,13 +3948,13 @@
       if (!complete) return;
 
       if (shareCard) shareCard.hidden = false;
-      if (shareStatus) shareStatus.textContent = "Generating share image...";
+      if (shareStatus) shareStatus.textContent = "正在生成分享图片...";
       const code = profileFor(result);
       const profile = profiles[code];
       const displayCode = displayProfileCode(code);
       const nearest = nearestReferenceFor(result, code);
       const avatarImage = await loadImage(profileAvatarFor(code));
-      const qrImage = await loadImage("https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=8&data=https%3A%2F%2Fai-persona-qxad5fjx.edgeone.cool%2Fen%2F");
+      const qrImage = await loadImage("https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=8&data=https%3A%2F%2Fai-persona-qxad5fjx.edgeone.cool%2Fcn%2F");
       const canvas = document.createElement("canvas");
       const width = 410;
       const height = 820;
@@ -3974,8 +3974,8 @@
       ctx.stroke();
 
       ctx.fillStyle = "#132036";
-      ctx.font = "820 17px " + "Inter, Arial, sans-serif";
-      ctx.fillText("AI Governance Persona", 22, 37);
+      ctx.font = "820 17px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
+      ctx.fillText("AI 人格测试", 22, 37);
       ctx.textAlign = "left";
 
       const avatarX = 24;
@@ -3987,7 +3987,7 @@
       if (avatarImage) drawAvatar(ctx, avatarImage, avatarX, avatarY, avatarSize);
 
       ctx.fillStyle = "#9a5b12";
-      ctx.font = "840 17px " + "Inter, Arial, sans-serif";
+      ctx.font = "840 17px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
       ctx.fillText(displayCode, 30, 464);
       ctx.fillStyle = "#111827";
       drawFittedText(
@@ -3996,23 +3996,23 @@
         30,
         497,
         350,
-        "780 __SIZE__px Inter, Arial, sans-serif",
+        "780 __SIZE__px Inter, PingFang SC, Microsoft YaHei, sans-serif",
         26,
         18
       );
 
       const sentenceY = 526;
       ctx.fillStyle = "#132036";
-      ctx.font = "780 21px " + "Inter, Arial, sans-serif";
+      ctx.font = "780 21px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
       drawWrappedText(ctx, profile[1], 30, sentenceY + 28, 350, 28, 2);
       ctx.fillStyle = "#667085";
-      ctx.font = "520 13px " + "Inter, Arial, sans-serif";
+      ctx.font = "520 13px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
       drawWrappedText(ctx, profile[4], 30, sentenceY + 61, 350, 19, 3);
 
       const metaY = 666;
       ctx.fillStyle = "#657386";
-      ctx.font = "760 11px " + "Inter, Arial, sans-serif";
-      ctx.fillText("Closest reference", 30, metaY + 25);
+      ctx.font = "760 11px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
+      ctx.fillText("最接近的人", 30, metaY + 25);
       ctx.fillStyle = "#111827";
       drawFittedText(
         ctx,
@@ -4020,11 +4020,11 @@
         30,
         metaY + 58,
         170,
-        "760 __SIZE__px Inter, Arial, sans-serif",
+        "760 __SIZE__px Inter, PingFang SC, Microsoft YaHei, sans-serif",
         20,
         11
       );
-      drawSharePositionMap(ctx, result, 218, metaY, 82, {"top":"Human","bottom":"Intel.","left":"Control","right":"Open"});
+      drawSharePositionMap(ctx, result, 218, metaY, 82, {"top":"人类中心","bottom":"智能中心","left":"控制","right":"开放"});
       ctx.fillStyle = "#ffffff";
       drawRoundedRect(ctx, 298, metaY, 82, 82, 14);
       ctx.fill();
@@ -4034,15 +4034,15 @@
 
       const ctaY = 752;
       ctx.fillStyle = "#0f766e";
-      ctx.font = "760 15px " + "Inter, Arial, sans-serif";
-      ctx.fillText("Scan to find your AI persona", 30, ctaY + 27);
+      ctx.font = "760 15px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
+      ctx.fillText("扫码测测你的 AI 人格", 30, ctaY + 27);
       ctx.fillStyle = "#64748b";
-      ctx.font = "900 10px " + "Inter, Arial, sans-serif";
+      ctx.font = "900 10px " + "Inter, PingFang SC, Microsoft YaHei, sans-serif";
       ctx.textAlign = "right";
-      ctx.fillText("EN QR", 380, ctaY + 26);
+      ctx.fillText("CN QR", 380, ctaY + 26);
       ctx.textAlign = "left";
 
-      await publishShareCanvas(canvas, "ai-persona-" + code + "-share.png", "The share image is ready. Save it and post it wherever you want.");
+      await publishShareCanvas(canvas, "ai-persona-" + code + "-share.png", "分享图片已生成，可以保存后分享。");
     }
 
     function resetQuiz() {
@@ -4102,7 +4102,7 @@
     nextBtn.addEventListener("click", goToNext);
 
     resetBtn.addEventListener("click", resetQuiz);
-    if (restartBtn) restartBtn.addEventListener("click", resetQuiz);
+    restartBtn.addEventListener("click", resetQuiz);
     if (shareBtn) shareBtn.addEventListener("click", generateShareImage);
     if (shareDownload) shareDownload.addEventListener("click", saveShareImage);
     editLastBtn.addEventListener("click", () => {
@@ -4133,7 +4133,7 @@
       referenceDetail.innerHTML = `
         <div class="reference-detail-head">
           <b id="referenceModalTitle">${escapeHTML(info.label)}</b>
-          <span class="reference-detail-badge" style="--color:${info.color}">${points.length} references</span>
+          <span class="reference-detail-badge" style="--color:${info.color}">${points.length} 个参考点</span>
         </div>
         <div class="reference-note-grid">
           ${points.map((point) => `
