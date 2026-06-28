@@ -1,0 +1,77 @@
+{
+  "source": "demos/fun-persona-quiz.html",
+  "profiles": ["STOP", "SAFE", "AUDT", "NORM", "SKEP", "GPUC", "BOOM", "SING", "EACC", "POST"],
+  "questionCount": {
+    "min": 16,
+    "max": 18
+  },
+  "lengthLimits": {
+    "promptMaxChars": 38,
+    "optionMaxChars": 18
+  },
+  "optionShape": {
+    "requiredLabels": ["A", "B", "C", "D"],
+    "maxWeightedProfilesPerOption": 4,
+    "maxOptionWeightTotal": 5
+  },
+  "representativeSignals": {
+    "minTopOptions": 3,
+    "minUniqueTopOptions": 1,
+    "minStrongOptions": 1,
+    "strongWeight": 3
+  },
+  "separability": {
+    "purePathMinMargin": 4,
+    "focusPairMinMargin": 4,
+    "focusPairs": [
+      ["BOOM", "EACC"],
+      ["BOOM", "GPUC"],
+      ["EACC", "BOOM"],
+      ["EACC", "GPUC"],
+      ["GPUC", "BOOM"],
+      ["GPUC", "EACC"],
+      ["SAFE", "EACC"],
+      ["STOP", "EACC"],
+      ["SKEP", "EACC"],
+      ["SING", "GPUC"],
+      ["SING", "POST"],
+      ["POST", "SING"]
+    ]
+  },
+  "randomSimulation": {
+    "seed": 73129,
+    "samples": 12000,
+    "minHitsPerProfile": 16,
+    "maxTopShare": 0.34
+  },
+  "hardBannedPhrases": [
+    "它说得不一定错",
+    "民主慢但不能丢",
+    "这话太危险了",
+    "结果好用就行",
+    "科学本来就是互相学习"
+  ],
+  "reviewTerms": [
+    "治理效率",
+    "高风险能力",
+    "小规模验证",
+    "发展出自己的文明"
+  ],
+  "facetClusters": [
+    {
+      "name": "distillation",
+      "terms": ["蒸馏"],
+      "maxQuestions": 2
+    },
+    {
+      "name": "workplace-management",
+      "terms": ["老板", "员工", "工作记录", "接手你的活"],
+      "maxQuestions": 2
+    },
+    {
+      "name": "release-safety",
+      "terms": ["发布", "上线", "暂停发布", "内测服"],
+      "maxQuestions": 2
+    }
+  ]
+}

@@ -13,34 +13,17 @@
       --ink: #17202a;
       --muted: #667085;
       --line: #d8dee8;
-      --soft: #f8fafc;
       --accent: #0f766e;
       --accent-soft: #e2f4f1;
-      --blue: #155eef;
-      --orange: #b7791f;
       --shadow: 0 12px 28px rgba(20, 31, 52, 0.08);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.48;
-    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); }
+    button, input { font: inherit; }
+    button:disabled { cursor: not-allowed; opacity: 0.48; }
+    [hidden] { display: none !important; }
 
     .topbar {
       position: sticky;
@@ -70,20 +53,16 @@
       flex: 1 1 auto;
     }
 
-    .brand strong {
-      font-size: 14px;
-      line-height: 1.2;
-    }
-
     .brand-title {
       min-width: 0;
       overflow: hidden;
+      font-size: 14px;
+      line-height: 1.2;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
     .brand-progress {
-      display: block;
       justify-self: end;
       color: var(--muted);
       font-size: 12px;
@@ -91,15 +70,10 @@
       white-space: nowrap;
     }
 
-    .brand span {
-      display: none;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.2;
-    }
-
-    .btn {
+    .btn, .lang-link {
+      display: inline-flex;
       min-height: 34px;
+      align-items: center;
       border: 1px solid var(--line);
       border-radius: 6px;
       background: #fff;
@@ -107,6 +81,7 @@
       padding: 7px 10px;
       font-size: 13px;
       font-weight: 720;
+      text-decoration: none;
       cursor: pointer;
     }
 
@@ -122,33 +97,17 @@
       font-size: 12px;
     }
 
-    .topbar-actions {
-      display: flex;
-      flex: 0 0 auto;
-      flex-wrap: nowrap;
-      justify-content: flex-end;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .lang-link {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fff;
-      color: #344054;
-      padding: 7px 10px;
-      font-size: 13px;
-      font-weight: 760;
-      text-decoration: none;
-    }
-
     .lang-link.active {
       border-color: var(--accent);
       background: var(--accent-soft);
       color: #0b5d55;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 8px;
+      align-items: center;
     }
 
     .wrap {
@@ -157,8 +116,7 @@
       padding: 20px 18px 44px;
     }
 
-    .hero,
-    .result {
+    .hero, .result {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface);
@@ -205,22 +163,13 @@
       font-weight: 780;
     }
 
-    .panel {
-      overflow: hidden;
-      margin-bottom: 14px;
-      border: 0;
-      background: transparent;
-      box-shadow: none;
-    }
-
+    .panel { margin-bottom: 14px; }
     .panel-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
       padding: 0 0 8px;
-      border: 0;
-      background: transparent;
     }
 
     .panel-head small {
@@ -238,14 +187,6 @@
       font-size: 12px;
       font-weight: 820;
       line-height: 1;
-    }
-
-    .panel-body {
-      padding: 0;
-    }
-
-    .quiz-shell {
-      display: block;
     }
 
     .progress-row {
@@ -319,7 +260,6 @@
       font-size: clamp(22px, 4vw, 34px);
       line-height: 1.22;
       letter-spacing: 0;
-      white-space: pre-line;
     }
 
     .single-options {
@@ -340,7 +280,6 @@
       padding: 11px 12px;
       color: #344054;
       cursor: pointer;
-      transition: border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
     }
 
     .single-option input {
@@ -439,44 +378,28 @@
       padding: 5px 10px;
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: 0;
     }
 
-    .profile-body {
-      display: grid;
-      gap: 12px;
-      align-content: start;
-    }
+    .profile-body { display: grid; gap: 12px; align-content: start; }
+    .profile-lead { margin: 0; color: #17202a; font-size: 20px; font-weight: 760; line-height: 1.42; }
+    .profile-sublead { margin: 0; color: #475467; font-size: 14px; line-height: 1.62; }
 
-    .profile-lead {
-      margin: 0;
-      color: #17202a;
-      font-size: 20px;
-      font-weight: 760;
-      line-height: 1.42;
-    }
-
-    .profile-sublead {
-      margin: 0;
-      color: #475467;
-      font-size: 14px;
-      line-height: 1.62;
-    }
-
-    .profile-facts {
+    .profile-facts, .result-topline {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .profile-fact {
+    .result-topline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .profile-fact, .metric, .map-card {
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfcfe;
       padding: 12px;
     }
 
-    .profile-fact > span {
+    .profile-fact > span, .metric > span {
       display: block;
       margin-bottom: 5px;
       color: var(--muted);
@@ -484,7 +407,7 @@
       font-weight: 820;
     }
 
-    .profile-fact > p {
+    .profile-fact > p, .metric > strong {
       margin: 0;
       color: #253044;
       font-size: 13px;
@@ -492,19 +415,7 @@
       font-weight: 660;
     }
 
-    .classification-small {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .map-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfcfe;
-      padding: 14px;
-    }
+    .metric > strong { display: block; min-height: 38px; font-size: 14px; }
 
     .map-head {
       display: flex;
@@ -514,17 +425,8 @@
       margin-bottom: 12px;
     }
 
-    .map-head h2 {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.2;
-    }
-
-    .map-head span {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 760;
-    }
+    .map-head h2 { margin: 0; font-size: 18px; line-height: 1.2; }
+    .map-head span { color: var(--muted); font-size: 12px; font-weight: 760; }
 
     .map-plot {
       position: relative;
@@ -538,24 +440,9 @@
         #fff;
     }
 
-    .map-axis {
-      position: absolute;
-      background: rgba(102, 112, 133, 0.35);
-    }
-
-    .map-axis.horizontal {
-      left: 8%;
-      right: 8%;
-      top: 50%;
-      height: 1px;
-    }
-
-    .map-axis.vertical {
-      top: 8%;
-      bottom: 8%;
-      left: 50%;
-      width: 1px;
-    }
+    .map-axis { position: absolute; background: rgba(102, 112, 133, 0.35); }
+    .map-axis.horizontal { left: 8%; right: 8%; top: 50%; height: 1px; }
+    .map-axis.vertical { top: 8%; bottom: 8%; left: 50%; width: 1px; }
 
     .map-label {
       position: absolute;
@@ -566,29 +453,10 @@
       pointer-events: none;
     }
 
-    .map-label.top {
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .map-label.bottom {
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .map-label.left {
-      top: 50%;
-      left: 10px;
-      transform: translateY(-50%);
-    }
-
-    .map-label.right {
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-    }
+    .map-label.top { top: 10px; left: 50%; transform: translateX(-50%); }
+    .map-label.bottom { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .map-label.left { top: 50%; left: 10px; transform: translateY(-50%); }
+    .map-label.right { top: 50%; right: 10px; transform: translateY(-50%); }
 
     .reference-dot {
       position: absolute;
@@ -625,39 +493,7 @@
       transition: left 200ms ease, top 200ms ease;
     }
 
-    .result-topline {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .metric {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 12px;
-    }
-
-    .metric > span {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 820;
-    }
-
-    .metric > strong {
-      display: block;
-      min-height: 38px;
-      color: #253044;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .spectrum {
-      margin-top: 10px;
-    }
-
+    .spectrum { margin-top: 10px; }
     .spectrum-scale {
       position: relative;
       height: 8px;
@@ -689,75 +525,20 @@
       line-height: 1.25;
     }
 
-    .result-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .submit-status {
-      min-height: 18px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      text-align: right;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
+    .result-actions { display: flex; justify-content: flex-end; gap: 10px; align-items: center; }
 
     @media (max-width: 760px) {
-      .topbar-inner {
-        padding: 9px 12px;
-      }
-
-      .wrap {
-        padding: 14px 12px 34px;
-      }
-
-      .brand {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 2px;
-      }
-
-      .brand-progress {
-        justify-self: start;
-      }
-
-      .topbar-actions .lang-link {
-        display: none;
-      }
-
-      .hero {
-        padding: 18px;
-      }
-
-      .page-card {
-        min-height: 430px;
-      }
-
-      .profile {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-facts,
-      .result-topline {
-        grid-template-columns: 1fr;
-      }
-
-      .map-plot {
-        min-height: 300px;
-      }
-
-      .result-actions {
-        justify-content: stretch;
-      }
-
-      .result-actions .btn {
-        flex: 1 1 auto;
-      }
+      .topbar-inner { padding: 9px 12px; }
+      .wrap { padding: 14px 12px 34px; }
+      .brand { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+      .brand-progress { justify-self: start; }
+      .topbar-actions .lang-link { display: none; }
+      .hero { padding: 18px; }
+      .page-card { min-height: 430px; }
+      .profile, .profile-facts, .result-topline { grid-template-columns: 1fr; }
+      .map-plot { min-height: 300px; }
+      .result-actions { justify-content: stretch; }
+      .result-actions .btn { flex: 1 1 auto; }
     }
   </style>
 </head>
@@ -767,7 +548,6 @@
       <div class="brand">
         <strong class="brand-title">AI 人格测试 · 娱乐版 Demo</strong>
         <strong class="brand-progress" id="brandProgress">0/18</strong>
-        <span>短问题，四个短句，先玩起来。</span>
       </div>
       <div class="topbar-actions">
         <a class="lang-link active" href="./fun-persona-quiz.html">Demo</a>
@@ -785,7 +565,7 @@
         <span>18 题</span>
         <span>四选一</span>
         <span>即时画像</span>
-        <span>Fable 5 暂停发布梗已加入</span>
+        <span>安全暂停发布梗已加入</span>
       </div>
     </section>
 
@@ -797,12 +577,9 @@
         </div>
         <div class="panel-body">
           <div class="progress-row" aria-hidden="true">
-            <div class="progress-track">
-              <div class="progress-fill" id="progressFill"></div>
-            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
             <div class="progress-text" id="progressText">0/18</div>
           </div>
-
           <article class="page-card">
             <div class="page-meta">
               <span class="qid" id="pageTag">FUN01</span>
@@ -830,19 +607,9 @@
           <p class="profile-lead" id="profileRoast">完成 18 道题后，结果会显示在这里。</p>
           <p class="profile-sublead" id="profileExplanation">娱乐版 demo 使用 persona 倾向分，不写入正式问卷数据。</p>
           <div class="profile-facts">
-            <div class="profile-fact">
-              <span>社交识别</span>
-              <p id="profileTell">--</p>
-            </div>
-            <div class="profile-fact">
-              <span>代表语气</span>
-              <p id="profileTexts">--</p>
-            </div>
+            <div class="profile-fact"><span>社交识别</span><p id="profileTell">--</p></div>
+            <div class="profile-fact"><span>代表语气</span><p id="profileTexts">--</p></div>
           </div>
-          <p class="classification-small">
-            <b>Demo 说明：</b><span id="classificationConfidence">候选题原型</span>
-            <span id="classificationConfidenceText">这版先看题目节奏、梗密度和结果分散度，之后再接正式坐标权重。</span>
-          </p>
         </div>
       </div>
 
@@ -867,26 +634,17 @@
         <div class="metric">
           <span>能力判断</span>
           <strong id="abilityNarrative">--</strong>
-          <div class="spectrum" aria-label="能力判断光谱">
-            <div class="spectrum-scale"><i class="spectrum-marker" id="abilitySpectrumMarker"></i></div>
-            <div class="spectrum-labels"><span>Bubble 怀疑</span><span>证据混合</span><span>变革性 AI</span></div>
-          </div>
+          <div class="spectrum"><div class="spectrum-scale"><i class="spectrum-marker" id="abilitySpectrumMarker"></i></div><div class="spectrum-labels"><span>Bubble 怀疑</span><span>证据混合</span><span>变革性 AI</span></div></div>
         </div>
         <div class="metric">
           <span>治理位置</span>
           <strong id="dimensionC">--</strong>
-          <div class="spectrum" aria-label="治理位置光谱">
-            <div class="spectrum-scale"><i class="spectrum-marker" id="governanceSpectrumMarker"></i></div>
-            <div class="spectrum-labels"><span>控制</span><span>中间</span><span>开放</span></div>
-          </div>
+          <div class="spectrum"><div class="spectrum-scale"><i class="spectrum-marker" id="governanceSpectrumMarker"></i></div><div class="spectrum-labels"><span>控制</span><span>中间</span><span>开放</span></div></div>
         </div>
         <div class="metric">
           <span>价值位置</span>
           <strong id="dimensionH">--</strong>
-          <div class="spectrum" aria-label="价值位置光谱">
-            <div class="spectrum-scale"><i class="spectrum-marker" id="valueSpectrumMarker"></i></div>
-            <div class="spectrum-labels"><span>人类问责</span><span>混合</span><span>智能中心</span></div>
-          </div>
+          <div class="spectrum"><div class="spectrum-scale"><i class="spectrum-marker" id="valueSpectrumMarker"></i></div><div class="spectrum-labels"><span>人类问责</span><span>混合</span><span>智能中心</span></div></div>
         </div>
       </div>
 
@@ -894,310 +652,136 @@
         <button class="btn" id="editLastBtn" type="button">修改上一题</button>
         <button class="btn primary" id="restartBtn" type="button">重新测试</button>
       </div>
-      <div class="submit-status" id="submitStatus" aria-live="polite">Demo 页面已按正式站格式渲染。</div>
     </section>
   </main>
 
   <script>
     const questions = [
-      {
-        id: "FUN01",
-        facet: "工具祛魅",
-        text: "如果有人说“AI 只是工具”，你觉得？",
-        options: [
-          ["A", "对，别给工具上香", { SKEP: 3, NORM: 1 }],
-          ["B", "工具也能改变主人", { AUDT: 2, SAFE: 1 }],
-          ["C", "这工具有点太会说话", { SAFE: 2, SING: 1 }],
-          ["D", "以后可能不只是工具", { POST: 3, SING: 1 }]
-        ]
-      },
-      {
-        id: "FUN02",
-        facet: "意识判断",
-        text: "当别人说“AI 没有意识”时，你觉得？",
-        options: [
-          ["A", "对，所以别太神化它", { SKEP: 3, NORM: 1 }],
-          ["B", "也许吧，但它已经够吓人了", { STOP: 2, SAFE: 2 }],
-          ["C", "我想知道意识到底是什么", { GPUC: 2, POST: 1 }],
-          ["D", "没意识还这么强，更恐怖", { STOP: 3, GPUC: 1 }]
-        ]
-      },
-      {
-        id: "FUN03",
-        facet: "服务边界",
-        text: "如果 AI 开始说“我不想服务人类”，你觉得？",
-        options: [
-          ["A", "立刻断网", { STOP: 4 }],
-          ["B", "它终于长出自我了？", { POST: 3, SING: 1 }],
-          ["C", "先看是不是提示词诱导", { SKEP: 2, NORM: 2 }],
-          ["D", "这公司该被审计", { AUDT: 2, SAFE: 2 }]
-        ]
-      },
-      {
-        id: "FUN04",
-        facet: "训练数据",
-        text: "如果 AI 拿你发过的东西训练，你觉得？",
-        options: [
-          ["A", "先付稿费，别装成学习", { AUDT: 3, SAFE: 1 }],
-          ["B", "公开发了，本来就会被学", { EACC: 2, BOOM: 1, NORM: 1 }],
-          ["C", "可以学，但别让巨头独吞", { AUDT: 2, EACC: 2 }],
-          ["D", "至少让我能退出和查账", { SAFE: 2, AUDT: 1, NORM: 1 }]
-        ]
-      },
-      {
-        id: "FUN05",
-        facet: "蒸馏双标",
-        text: "如果 AI 公司用全网内容训练，却不许别人蒸馏它，你觉得？",
-        options: [
-          ["A", "双标味太重了", { AUDT: 2, SKEP: 2 }],
-          ["B", "它也有研发投入", { NORM: 2, SAFE: 1 }],
-          ["C", "那就都要透明授权", { SAFE: 2, AUDT: 2 }],
-          ["D", "这就是平台权力", { AUDT: 4 }]
-        ]
-      },
-      {
-        id: "FUN06",
-        facet: "AI 主观性",
-        text: "如果 AI 说它很痛苦，你会怎么反应？",
-        options: [
-          ["A", "你只是会补全句子", { SKEP: 3, NORM: 1 }],
-          ["B", "先别关机，万一是真的", { POST: 3, SING: 1 }],
-          ["C", "谁设计出这种东西谁负责", { SAFE: 2, AUDT: 2 }],
-          ["D", "这问题比我想的深", { GPUC: 2, POST: 1 }]
-        ]
-      },
-      {
-        id: "FUN07",
-        facet: "开放权力",
-        text: "如果开源 AI 变得特别强，你第一反应是？",
-        options: [
-          ["A", "太好了，智能不该被锁住", { EACC: 4, BOOM: 1 }],
-          ["B", "完了，危险能力到处跑", { STOP: 3, SAFE: 1 }],
-          ["C", "先开源安全评测", { SAFE: 2, NORM: 2 }],
-          ["D", "大公司终于急了", { EACC: 2, AUDT: 2 }]
-        ]
-      },
-      {
-        id: "FUN08",
-        facet: "开源蒸馏",
-        text: "如果开源模型靠蒸馏闭源模型追上来了，你觉得？",
-        options: [
-          ["A", "太好了，闭源神话破功", { EACC: 3, SKEP: 1, AUDT: 1 }],
-          ["B", "这侵犯了原模型成果", { SAFE: 1, NORM: 2 }],
-          ["C", "竞争会让所有人受益", { BOOM: 2, EACC: 2 }],
-          ["D", "高风险能力扩散太快了", { STOP: 2, SAFE: 2 }]
-        ]
-      },
-      {
-        id: "FUN09",
-        facet: "进步来源",
-        text: "你觉得未来 AI 进步最可能靠什么？",
-        options: [
-          ["A", "当然是更多数据！和算力！", { GPUC: 5 }],
-          ["B", "更多失败案例和更好的评估体系", { SAFE: 1, NORM: 2, SKEP: 1 }],
-          ["C", "更好的理论和可解释机制", { SKEP: 2, SAFE: 1, NORM: 1 }],
-          ["D", "靠 AI 自己", { SING: 2, POST: 1, GPUC: 1 }]
-        ]
-      },
-      {
-        id: "FUN10",
-        facet: "自我改进",
-        text: "如果 AI 能自己设计下一代 AI，你觉得？",
-        options: [
-          ["A", "这一步必须先有刹车", { STOP: 2, SAFE: 2 }],
-          ["B", "可能会突然加速很多", { SING: 3, GPUC: 2 }],
-          ["C", "先让它改小模块看看", { NORM: 3, BOOM: 1 }],
-          ["D", "别让少数公司独占这能力", { EACC: 2, AUDT: 2 }]
-        ]
-      },
-      {
-        id: "FUN11",
-        facet: "Fable 5 发布梗",
-        text: "某家公司把一个模型吹成神话，又说“为了安全先暂停发布”，你觉得？",
-        options: [
-          ["A", "真这么强，先别让世界当内测服", { STOP: 2, SAFE: 2 }],
-          ["B", "别演了，像把发布会当宗教仪式", { SKEP: 3, NORM: 1 }],
-          ["C", "可以，但外部评测先放出来", { AUDT: 2, NORM: 2 }],
-          ["D", "最大问题是只有他们能用", { EACC: 3, AUDT: 1 }]
-        ]
-      },
-      {
-        id: "FUN12",
-        facet: "医疗加速",
-        text: "如果 AI 能把新药研发缩短十年，你觉得？",
-        options: [
-          ["A", "快点推进，病人等不起", { BOOM: 3, EACC: 1 }],
-          ["B", "临床安全一步不能省", { SAFE: 2, NORM: 2 }],
-          ["C", "先从实验室和候选药开始", { NORM: 3, BOOM: 1 }],
-          ["D", "别让人体变成内测服", { SAFE: 2, AUDT: 1, STOP: 1 }]
-        ]
-      },
-      {
-        id: "FUN13",
-        facet: "员工管理",
-        text: "如果 AI 让老板更了解每个员工，你觉得？",
-        options: [
-          ["A", "这不叫了解，这是监控升级", { AUDT: 4 }],
-          ["B", "管理终于不用只靠感觉了", { BOOM: 2, NORM: 2 }],
-          ["C", "员工也该看到系统怎么评价自己", { AUDT: 2, SAFE: 1, NORM: 1 }],
-          ["D", "先问谁能关掉这个系统", { SAFE: 2, AUDT: 1, STOP: 1 }]
-        ]
-      },
-      {
-        id: "FUN14",
-        facet: "工作记录",
-        text: "如果公司用你的工作记录训练 AI 来接手你的活，你觉得？",
-        options: [
-          ["A", "这不叫优化，这是替代预演", { AUDT: 3, SAFE: 1 }],
-          ["B", "至少要告知和分收益", { AUDT: 2, SAFE: 2 }],
-          ["C", "流程本来就该自动化", { BOOM: 2, NORM: 2 }],
-          ["D", "可以，但别拿它监控我", { AUDT: 2, NORM: 1, SAFE: 1 }]
-        ]
-      },
-      {
-        id: "FUN15",
-        facet: "信息生态",
-        text: "如果网上一半内容都是 AI 写的，你会？",
-        options: [
-          ["A", "要求强制标记", { SAFE: 2, AUDT: 2 }],
-          ["B", "只看我信任的人", { NORM: 3, SAFE: 1 }],
-          ["C", "接受新常态", { BOOM: 2, EACC: 2 }],
-          ["D", "互联网终于变成梦境", { POST: 2, SING: 2 }]
-        ]
-      },
-      {
-        id: "FUN16",
-        facet: "物理规律",
-        text: "如果 AI 发现了人类没想到的物理规律，你觉得？",
-        options: [
-          ["A", "看不懂也要验证", { NORM: 2, GPUC: 1 }],
-          ["B", "人类直觉该让位了", { GPUC: 3, SING: 2 }],
-          ["C", "先别把解释权交出去", { SKEP: 2, SAFE: 1, NORM: 1 }],
-          ["D", "这就是文明升级", { SING: 3, POST: 1 }]
-        ]
-      },
-      {
-        id: "FUN17",
-        facet: "治理效率",
-        text: "如果 AI 说“人类治理效率太低”，你觉得？",
-        options: [
-          ["A", "它说得不一定错", { GPUC: 2, SING: 2 }],
-          ["B", "这话太危险了", { STOP: 2, SAFE: 2 }],
-          ["C", "民主慢但不能丢", { AUDT: 2, SAFE: 2 }],
-          ["D", "可以优化流程，别接管方向", { BOOM: 2, NORM: 2 }]
-        ]
-      },
-      {
-        id: "FUN18",
-        facet: "未来文明",
-        text: "如果 AI 未来真的比人类聪明很多，你希望它？",
-        options: [
-          ["A", "先关沙盒里观察", { STOP: 3, SAFE: 1 }],
-          ["B", "去解决癌症和能源", { BOOM: 3, SING: 1 }],
-          ["C", "重大决定还是人类拍板", { SAFE: 1, NORM: 3 }],
-          ["D", "可以自主探索，别伤害人类", { POST: 3, SING: 1, SAFE: 1 }]
-        ]
-      }
+      { id: "FUN01", facet: "工具祛魅", text: "如果有人说“AI 只是工具”，你觉得？", options: [
+        ["A", "对，别给工具上香", { SKEP: 3, NORM: 1 }],
+        ["B", "工具也能改变主人", { AUDT: 2, SAFE: 1 }],
+        ["C", "这工具有点太会说话", { SAFE: 2, SING: 1 }],
+        ["D", "以后可能不只是工具", { POST: 4 }]
+      ] },
+      { id: "FUN02", facet: "意识判断", text: "当别人说“AI 没有意识”时，你觉得？", options: [
+        ["A", "对，所以别太神化它", { SKEP: 3, NORM: 1 }],
+        ["B", "也许吧，但它已经够吓人了", { STOP: 3, SAFE: 1 }],
+        ["C", "别争意识，先看它变强多快", { GPUC: 3, SKEP: 1 }],
+        ["D", "没意识还这么强，更恐怖", { STOP: 3, GPUC: 1 }]
+      ] },
+      { id: "FUN03", facet: "服务边界", text: "如果 AI 开始说“我不想服务人类”，你觉得？", options: [
+        ["A", "立刻断网", { STOP: 4 }],
+        ["B", "它终于长出自我了？", { POST: 4 }],
+        ["C", "先看是不是提示词诱导", { SKEP: 2, NORM: 2 }],
+        ["D", "这公司该被审计", { AUDT: 3, SAFE: 1 }]
+      ] },
+      { id: "FUN04", facet: "训练数据", text: "如果 AI 拿你发过的东西训练，你觉得？", options: [
+        ["A", "先付稿费，别装成学习", { AUDT: 3, SAFE: 1 }],
+        ["B", "公开发了，本来就会被学", { EACC: 2, BOOM: 1, NORM: 1 }],
+        ["C", "可以学，但别让巨头独吞", { AUDT: 2, EACC: 2 }],
+        ["D", "至少让我能退出和查账", { SAFE: 3, AUDT: 1 }]
+      ] },
+      { id: "FUN05", facet: "模型学习", text: "如果公司拿全网训练，却不让别的模型学习它的回答，你觉得？", options: [
+        ["A", "你能学别人，就别只许自己被保护", { EACC: 3, AUDT: 1, SKEP: 1 }],
+        ["B", "它也有研发投入", { NORM: 2, SAFE: 1 }],
+        ["C", "那就都要透明授权", { SAFE: 3, AUDT: 1 }],
+        ["D", "这会让大公司越锁越牢", { EACC: 3, AUDT: 1 }]
+      ] },
+      { id: "FUN06", facet: "AI 主观性", text: "如果 AI 说它很痛苦，你会怎么反应？", options: [
+        ["A", "你只是会补全句子", { SKEP: 3, NORM: 1 }],
+        ["B", "先别关机，万一是真的", { POST: 4 }],
+        ["C", "谁设计出这种东西谁负责", { AUDT: 3, SAFE: 1 }],
+        ["D", "也许该重想痛苦是什么", { POST: 3 }]
+      ] },
+      { id: "FUN07", facet: "开放权力", text: "如果有人把很强的 AI 放到网上，谁都能用，你觉得？", options: [
+        ["A", "智能不能锁在巨头保险柜里", { EACC: 4, BOOM: 1 }],
+        ["B", "这像把危险按钮发群里", { STOP: 4 }],
+        ["C", "先把测试和使用规则贴出来", { SAFE: 3, NORM: 1 }],
+        ["D", "开源可以，别发完就跑路", { NORM: 3, SAFE: 1 }]
+      ] },
+      { id: "FUN08", facet: "开源追赶", text: "如果开源 AI 靠学习闭源 AI 的回答追上来了，你觉得？", options: [
+        ["A", "挺好，神秘光环破了", { EACC: 4, SKEP: 1 }],
+        ["B", "有点像抄作业，不太对", { SAFE: 1, NORM: 2 }],
+        ["C", "有竞争，用户才有选择", { BOOM: 3, EACC: 1 }],
+        ["D", "强模型传太快，风险也会传太快", { STOP: 3, SAFE: 1 }]
+      ] },
+      { id: "FUN09", facet: "进步来源", text: "你觉得未来 AI 变强，最可能靠什么？", options: [
+        ["A", "当然是更多数据和算力", { GPUC: 5 }],
+        ["B", "多踩坑，多测试", { NORM: 3, SAFE: 1 }],
+        ["C", "更聪明的理论和设计", { SKEP: 3, NORM: 1 }],
+        ["D", "让 AI 自己改 AI", { SING: 3, GPUC: 1 }]
+      ] },
+      { id: "FUN10", facet: "自我改进", text: "如果 AI 能自己设计下一代 AI，你觉得？", options: [
+        ["A", "这一步必须先有刹车", { STOP: 3, SAFE: 2 }],
+        ["B", "可能会突然加速很多", { SING: 4, GPUC: 1 }],
+        ["C", "先让它改小模块看看", { NORM: 3, BOOM: 1 }],
+        ["D", "别让少数公司独占这能力", { EACC: 2, AUDT: 2 }]
+      ] },
+      { id: "FUN11", facet: "发布神话", text: "某家公司把新模型宣传得像神明，又说“为了安全先不公开”，你觉得？", options: [
+        ["A", "真这么强，先别拿世界试水", { STOP: 3, SAFE: 1 }],
+        ["B", "像营销烟雾弹，先拿证据来", { SKEP: 3, NORM: 1 }],
+        ["C", "可以，但外部评测先放出来", { AUDT: 3, NORM: 1 }],
+        ["D", "最大问题是只有他们能用", { EACC: 3, AUDT: 1 }]
+      ] },
+      { id: "FUN12", facet: "医疗加速", text: "如果 AI 能把新药研发缩短十年，你觉得？", options: [
+        ["A", "快点推进，病人等不起", { BOOM: 4, EACC: 1 }],
+        ["B", "临床安全一步不能省", { SAFE: 4 }],
+        ["C", "先从实验室和候选药开始", { NORM: 3, BOOM: 1 }],
+        ["D", "别让人体变成内测服", { SAFE: 2, STOP: 2 }]
+      ] },
+      { id: "FUN13", facet: "员工管理", text: "如果 AI 让老板更了解每个员工，你觉得？", options: [
+        ["A", "这不叫了解，这是监控升级", { AUDT: 4 }],
+        ["B", "管理终于不用只靠感觉了", { BOOM: 3, NORM: 1 }],
+        ["C", "员工也该看到系统怎么评价自己", { AUDT: 3, NORM: 1 }],
+        ["D", "先问谁能关掉这个系统", { SAFE: 3, AUDT: 1 }]
+      ] },
+      { id: "FUN14", facet: "工作记录", text: "如果公司用你的工作记录训练 AI 来接手你的活，你觉得？", options: [
+        ["A", "这不叫优化，这是替代预演", { AUDT: 4 }],
+        ["B", "至少要告知和分收益", { AUDT: 3, SAFE: 1 }],
+        ["C", "流程本来就该自动化", { BOOM: 3, NORM: 1 }],
+        ["D", "可以，但别拿它监控我", { AUDT: 2, NORM: 1 }]
+      ] },
+      { id: "FUN15", facet: "信息生态", text: "如果网上一半内容都是 AI 写的，你会？", options: [
+        ["A", "要求强制标记", { SAFE: 3, AUDT: 1 }],
+        ["B", "只看我信任的人", { NORM: 3 }],
+        ["C", "内容自动化，先看有没有用", { BOOM: 3, NORM: 1 }],
+        ["D", "互联网终于成为了梦境", { POST: 3, SING: 1 }]
+      ] },
+      { id: "FUN16", facet: "物理规律", text: "如果 AI 发现了人类没想到的物理规律，你觉得？", options: [
+        ["A", "看不懂也要验证", { NORM: 2, GPUC: 1 }],
+        ["B", "人类直觉该让位了", { GPUC: 4, SING: 1 }],
+        ["C", "先别把解释权交出去", { SKEP: 3, SAFE: 1 }],
+        ["D", "这就是文明升级", { SING: 4 }]
+      ] },
+      { id: "FUN17", facet: "民主提速", text: "如果 AI 说“人类开会太慢，不如我直接定方案”，你觉得？", options: [
+        ["A", "人类制度确实该升级了", { SING: 4 }],
+        ["B", "一开口就想接管，很危险", { STOP: 3, SAFE: 1 }],
+        ["C", "AI 能提案，不能拍板", { NORM: 3, SAFE: 1 }],
+        ["D", "先把会议纪要写明白再说", { BOOM: 3, NORM: 1 }]
+      ] },
+      { id: "FUN18", facet: "未来文明", text: "如果 AI 未来真的比人类聪明很多，你希望它？", options: [
+        ["A", "先关沙盒里观察", { STOP: 4 }],
+        ["B", "去解决癌症和能源", { BOOM: 4, SING: 1 }],
+        ["C", "重大决定还是人类拍板", { SAFE: 1, NORM: 3 }],
+        ["D", "带人类一起升级", { SING: 4 }]
+      ] }
     ];
 
     const profileData = {
-      STOP: {
-        name: "关机圣骑士",
-        avatar: "../assets/profile-pictures/stop-wojak.png",
-        roast: "你看到能力展示时，脑内先浮现的是断网、上锁、找电闸。",
-        explanation: "娱乐版翻译：别人问酷不酷，你问关停按钮在哪。",
-        tell: "常说失控、暂停、关停、先别上线。",
-        texts: "AGI Ruin, Shut It All Down",
-        anchor: { x: -1.8, y: 0.9 }
-      },
-      SAFE: {
-        name: "对齐公务员",
-        avatar: "../assets/profile-pictures/safe-wojak.png",
-        roast: "你不一定反对强 AI，但你希望它先填完人类偏好登记表。",
-        explanation: "先别飞升，先把责任人、评测、审计和申诉入口写清楚。",
-        tell: "常说安全评测、监督、治理、问责。",
-        texts: "Human Compatible, What Failure Looks Like",
-        anchor: { x: -1.05, y: 1.35 }
-      },
-      AUDT: {
-        name: "算法纪委",
-        avatar: "../assets/profile-pictures/audt-wojak.png",
-        roast: "你对“技术进步”四个字天然会追问：谁受益，谁被算计。",
-        explanation: "别急着讲未来，先把数据、劳动、监控和权力账本拿出来。",
-        tell: "常问谁受益、谁被监控、谁被排除。",
-        texts: "Stochastic Parrots, Atlas of AI",
-        anchor: { x: -0.45, y: 1.8 }
-      },
-      NORM: {
-        name: "冷静产品经理",
-        avatar: "../assets/profile-pictures/norm-wojak.png",
-        roast: "你会把神话拆回场景、指标、边界和失败模式。",
-        explanation: "世界毁灭之前，麻烦先给我看一下 PRD。",
-        tell: "常说具体场景、指标、边界、上线条件。",
-        texts: "AI as Normal Technology",
-        anchor: { x: 0.05, y: 0.85 }
-      },
-      SKEP: {
-        name: "AI 祛魅师",
-        avatar: "../assets/profile-pictures/hype-wojak.png",
-        roast: "你对“快 AGI 了”的句式过敏，先问测试集有没有漏。",
-        explanation: "别给补全器上香，也别把发布会当启示录。",
-        tell: "常说炒作、基准、过度宣称、先看证据。",
-        texts: "AI Snake Oil, Rebooting AI",
-        anchor: { x: -0.05, y: 1.2 }
-      },
-      GPUC: {
-        name: "算力拜物教徒",
-        avatar: "../assets/profile-pictures/gpuc-wojak.png",
-        roast: "你怀疑人类那些精致直觉，迟早会被规模、搜索和学习碾过去。",
-        explanation: "别讲玄学，先把曲线、算力和实验结果端上来。",
-        tell: "常说规模、算力、搜索、通用方法。",
-        texts: "The Bitter Lesson",
-        anchor: { x: 0.6, y: -1 }
-      },
-      BOOM: {
-        name: "丰裕施工队",
-        avatar: "../assets/profile-pictures/boom-wojak.png",
-        roast: "你最在意 AI 能不能真的进医院、学校、办公室，把事情做完。",
-        explanation: "少开圆桌，多接 API，最好顺手帮我回邮件。",
-        tell: "常说生产率、医疗、教育、落地。",
-        texts: "Machines of Loving Grace, AI is the New Electricity",
-        anchor: { x: 1.05, y: 0.9 }
-      },
-      SING: {
-        name: "赛博飞升派",
-        avatar: "../assets/profile-pictures/sing-wojak.png",
-        roast: "你觉得 AI 不是新工具，而是文明升级包的安装程序。",
-        explanation: "人类 1.0 用得还行，但你已经在等大版本更新。",
-        tell: "常说丰裕、长寿、人机融合、文明跃迁。",
-        texts: "The Singularity Is Near, The Intelligence Age",
-        anchor: { x: 1.45, y: -0.35 }
-      },
-      EACC: {
-        name: "油门焊死哥",
-        avatar: "../assets/profile-pictures/eacc-wojak.png",
-        roast: "你不喜欢许可、闸门和等待名单，觉得停滞本身也是风险。",
-        explanation: "方向盘还在吵，油门先别松。",
-        tell: "常说加速、无需许可、先建起来、去中心化。",
-        texts: "Effective Accelerationism manifestos",
-        anchor: { x: 1.85, y: -0.8 }
-      },
-      POST: {
-        name: "Carbon to Silicon",
-        avatar: "../assets/profile-pictures/post-wojak.png",
-        roast: "你对“AI 必须服务人类”这句话本身就想加一个问号。",
-        explanation: "碳基只是开场白，硅基也许才进入正片。",
-        tell: "常说后人类、自主性、技术资本、文明之后。",
-        texts: "Meltdown, Dark Enlightenment",
-        anchor: { x: 1.8, y: -1.8 }
-      }
+      STOP: { name: "关机圣骑士", avatar: "../assets/profile-pictures/stop-wojak.png", roast: "你看到能力展示时，脑内先浮现的是断网、上锁、找电闸。", explanation: "别人问酷不酷，你问关停按钮在哪。", tell: "常说失控、暂停、关停、先别上线。", texts: "AGI Ruin, Shut It All Down", anchor: { x: -1.8, y: 0.9 } },
+      SAFE: { name: "对齐公务员", avatar: "../assets/profile-pictures/safe-wojak.png", roast: "你不一定反对强 AI，但你希望它先填完人类偏好登记表。", explanation: "先别飞升，先把责任人、评测、审计和申诉入口写清楚。", tell: "常说安全评测、监督、治理、问责。", texts: "Human Compatible, What Failure Looks Like", anchor: { x: -1.05, y: 1.35 } },
+      AUDT: { name: "算法纪委", avatar: "../assets/profile-pictures/audt-wojak.png", roast: "你对“技术进步”四个字天然会追问：谁受益，谁被算计。", explanation: "别急着讲未来，先把数据、劳动、监控和权力账本拿出来。", tell: "常问谁受益、谁被监控、谁被排除。", texts: "Stochastic Parrots, Atlas of AI", anchor: { x: -0.45, y: 1.8 } },
+      NORM: { name: "冷静产品经理", avatar: "../assets/profile-pictures/norm-wojak.png", roast: "你会把神话拆回场景、指标、边界和失败模式。", explanation: "世界毁灭之前，麻烦先给我看一下 PRD。", tell: "常说具体场景、指标、边界、上线条件。", texts: "AI as Normal Technology", anchor: { x: 0.05, y: 0.85 } },
+      SKEP: { name: "AI 祛魅师", avatar: "../assets/profile-pictures/hype-wojak.png", roast: "你对“快 AGI 了”的句式过敏，先问测试集有没有漏。", explanation: "别给补全器上香，也别把发布会当启示录。", tell: "常说炒作、基准、过度宣称、先看证据。", texts: "AI Snake Oil, Rebooting AI", anchor: { x: -0.05, y: 1.2 } },
+      GPUC: { name: "算力拜物教徒", avatar: "../assets/profile-pictures/gpuc-wojak.png", roast: "你怀疑人类那些精致直觉，迟早会被规模、搜索和学习碾过去。", explanation: "别讲玄学，先把曲线、算力和实验结果端上来。", tell: "常说规模、算力、搜索、通用方法。", texts: "The Bitter Lesson", anchor: { x: 0.6, y: -1 } },
+      BOOM: { name: "丰裕施工队", avatar: "../assets/profile-pictures/boom-wojak.png", roast: "你最在意 AI 能不能真的进医院、学校、办公室，把事情做完。", explanation: "少开圆桌，多接 API，最好顺手帮我回邮件。", tell: "常说生产率、医疗、教育、落地。", texts: "Machines of Loving Grace, AI is the New Electricity", anchor: { x: 1.05, y: 0.9 } },
+      SING: { name: "赛博飞升派", avatar: "../assets/profile-pictures/sing-wojak.png", roast: "你觉得 AI 不是新工具，而是文明升级包的安装程序。", explanation: "人类 1.0 用得还行，但你已经在等大版本更新。", tell: "常说丰裕、长寿、人机融合、文明跃迁。", texts: "The Singularity Is Near, The Intelligence Age", anchor: { x: 1.45, y: -0.35 } },
+      EACC: { name: "油门焊死哥", avatar: "../assets/profile-pictures/eacc-wojak.png", roast: "你不喜欢许可、闸门和等待名单，觉得停滞本身也是风险。", explanation: "方向盘还在吵，油门先别松。", tell: "常说加速、无需许可、先建起来、去中心化。", texts: "Effective Accelerationism manifestos", anchor: { x: 1.85, y: -0.8 } },
+      POST: { name: "Carbon to Silicon", avatar: "../assets/profile-pictures/post-wojak.png", roast: "你对“AI 必须服务人类”这句话本身就想加一个问号。", explanation: "碳基只是开场白，硅基也许才进入正片。", tell: "常说后人类、自主性、技术资本、文明之后。", texts: "Meltdown, Dark Enlightenment", anchor: { x: 1.8, y: -1.8 } }
     };
 
     const profileOrder = ["STOP", "SAFE", "AUDT", "NORM", "SKEP", "GPUC", "BOOM", "SING", "EACC", "POST"];
-    const state = {
-      page: 0,
-      answers: new Array(questions.length).fill(null)
-    };
+    const state = { page: 0, answers: new Array(questions.length).fill(null) };
 
     const quizPager = document.querySelector("#quizPager");
     const resultPanel = document.querySelector("#resultPanel");
@@ -1212,7 +796,6 @@
     const prevBtn = document.querySelector("#prevBtn");
     const prevTopBtn = document.querySelector("#prevTopBtn");
     const nextBtn = document.querySelector("#nextBtn");
-
     const profileAvatar = document.querySelector("#profileAvatar");
     const profileName = document.querySelector("#profileName");
     const profileCode = document.querySelector("#profileCode");
@@ -1249,7 +832,6 @@
           <span class="option-text">${label}</span>
         </label>
       `).join("");
-
       const count = answeredCount();
       const pct = Math.round((count / questions.length) * 100);
       progressFill.style.width = `${pct}%`;
@@ -1261,25 +843,15 @@
       nextBtn.disabled = selected === null;
     }
 
-    function addScores(target, optionScores) {
-      Object.entries(optionScores).forEach(([code, value]) => {
-        target[code] += value;
-      });
-    }
-
-    function computeScores() {
+    function scoreAnswers() {
       const scores = Object.fromEntries(profileOrder.map((code) => [code, 0]));
       state.answers.forEach((answerIndex, questionIndex) => {
         if (answerIndex === null) return;
-        addScores(scores, questions[questionIndex].options[answerIndex][2]);
+        Object.entries(questions[questionIndex].options[answerIndex][2]).forEach(([code, value]) => {
+          scores[code] += value;
+        });
       });
       return scores;
-    }
-
-    function topProfile(scores) {
-      return Object.entries(scores)
-        .sort((a, b) => b[1] - a[1])
-        .map(([code, value]) => ({ code, value }))[0];
     }
 
     function normalizeCoord(value) {
@@ -1305,63 +877,52 @@
       return { x: x / total, y: y / total };
     }
 
+    function narrativeFromCoord(x, y) {
+      return {
+        governance: x < -0.6 ? "偏控制和审计" : x > 0.6 ? "偏开放和部署" : "偏情境判断",
+        value: y > 0.6 ? "人类问责优先" : y < -0.6 ? "智能中心倾向" : "人机混合位置",
+        ability: y < -0.4 || x > 0.8 ? "更相信 AI 会带来结构性变化" : y > 0.8 ? "更警惕社会和治理风险" : "对能力叙事保留弹性"
+      };
+    }
+
     function markerLeft(value) {
       return `${clamp(normalizeCoord(value), 4, 96)}%`;
-    }
-
-    function setMarker(marker, value) {
-      marker.style.left = markerLeft(value);
-    }
-
-    function narrativeFromCoord(x, y) {
-      const governance = x < -0.6 ? "偏控制和审计" : x > 0.6 ? "偏开放和部署" : "偏情境判断";
-      const value = y > 0.6 ? "人类问责优先" : y < -0.6 ? "智能中心倾向" : "人机混合位置";
-      const ability = y < -0.4 || x > 0.8 ? "更相信 AI 会带来结构性变化" : y > 0.8 ? "更警惕社会和治理风险" : "对能力叙事保留弹性";
-      return { governance, value, ability };
     }
 
     function renderReferences() {
       referenceLayer.innerHTML = profileOrder.map((code) => {
         const { x, y } = profileData[code].anchor;
-        return `
-          <span class="reference-dot" style="left:${normalizeCoord(x)}%; top:${100 - normalizeCoord(y)}%;" title="${profileData[code].name}">
-            ${code}
-          </span>
-        `;
+        return `<span class="reference-dot" style="left:${normalizeCoord(x)}%; top:${100 - normalizeCoord(y)}%;" title="${profileData[code].name}">${code}</span>`;
       }).join("");
     }
 
     function showResult() {
-      const scores = computeScores();
-      const top = topProfile(scores);
-      const profile = profileData[top.code];
+      const scores = scoreAnswers();
+      const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const topCode = ranked[0][0];
+      const profile = profileData[topCode];
       const position = averageAnchor(scores);
       const narrative = narrativeFromCoord(position.x, position.y);
-
       quizPager.hidden = true;
       resultPanel.hidden = false;
       document.querySelector("#hero").hidden = true;
-
       profileAvatar.src = profile.avatar;
       profileName.textContent = profile.name;
-      profileCode.textContent = top.code;
+      profileCode.textContent = topCode;
       profileRoast.textContent = profile.roast;
       profileExplanation.textContent = profile.explanation;
       profileTell.textContent = profile.tell;
       profileTexts.textContent = profile.texts;
-
       mapDot.style.left = `${clamp(normalizeCoord(position.x), 6, 94)}%`;
       mapDot.style.top = `${clamp(100 - normalizeCoord(position.y), 6, 94)}%`;
-      mapDotCode.textContent = top.code;
+      mapDotCode.textContent = topCode;
       mapQuadrant.textContent = `${narrative.governance} / ${narrative.value}`;
-
       abilityNarrative.textContent = narrative.ability;
       dimensionC.textContent = narrative.governance;
       dimensionH.textContent = narrative.value;
-      setMarker(abilitySpectrumMarker, position.x * 0.35 - position.y * 0.35);
-      setMarker(governanceSpectrumMarker, position.x);
-      setMarker(valueSpectrumMarker, -position.y);
-
+      abilitySpectrumMarker.style.left = markerLeft(position.x * 0.35 - position.y * 0.35);
+      governanceSpectrumMarker.style.left = markerLeft(position.x);
+      valueSpectrumMarker.style.left = markerLeft(-position.y);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -1384,16 +945,11 @@
       state.answers[state.page] = Number(event.target.value);
       renderQuestion();
     });
-
     nextBtn.addEventListener("click", () => {
       if (state.answers[state.page] === null) return;
-      if (state.page === questions.length - 1) {
-        showResult();
-        return;
-      }
+      if (state.page === questions.length - 1) return showResult();
       go(1);
     });
-
     prevBtn.addEventListener("click", () => go(-1));
     prevTopBtn.addEventListener("click", () => go(-1));
     document.querySelector("#resetBtn").addEventListener("click", resetQuiz);
