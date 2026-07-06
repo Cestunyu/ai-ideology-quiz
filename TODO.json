@@ -1,7 +1,7 @@
 {
   "schema_version": "0.1",
   "project_id": "ai-governance-persona",
-  "last_updated": "2026-06-25",
+  "last_updated": "2026-07-06",
   "tasks": [
     {
       "id": "DEPLOY-001",
@@ -475,6 +475,18 @@
         "scripts/check-go-live-status.js",
         "docs/vercel-supabase-go-live.md",
         "docs/secrets.md"
+      ]
+    },
+    {
+      "id": "DEPLOY-032",
+      "title": "Restore GitHub Actions production deployment for the ai-persona Vercel project",
+      "status": "done",
+      "priority": "P0",
+      "source": "2026-07-06 VERCEL_TOKEN replaced with a LinenYu-scoped Vercel token; release run 28800340563 succeeded",
+      "links": [
+        ".github/workflows/ai-persona-release.yml",
+        "scripts/deploy-vercel-dynamic.sh",
+        "https://github.com/Cestunyu/ai-governance-persona/actions/runs/28800340563"
       ]
     },
     {

@@ -23,6 +23,7 @@ Last updated: 2026-07-06
 
 ## Recent Checkpoints
 
+- 2026-07-06: Replaced the GitHub Actions `VERCEL_TOKEN` secret with a LinenYu-scoped Vercel token, reran release run 28800340563, and confirmed both `Release gate` and `Deploy production` succeeded. Live checks on `https://ai-persona.linenyu.com/fun/cn/` and `/fun/en/` found the corrected profile-avatar paths and zero old `../assets/profile-pictures/` references.
 - 2026-07-06: Fixed `/fun/cn/` and `/fun/en/` result/share avatar paths from `../assets/...` to `../../assets/...`; the old path resolved to `/fun/assets/...` and made final profile pictures fail to load. Added release-check coverage for the fun avatar asset path.
 - 2026-06-29: Ran three fresh respondent-agent passes on `/en/`, `/cn/`, and `/fun/`; added explicit pilot/not-validated caveats on intro and result pages; softened “closest reference” to “nearby reference point”; clarified C03/R01/H04 canonical wording without changing scores; split the lightweight route into `/fun/en/` and `/fun/cn/`; updated fun gates and release checks for both locales.
 - 2026-06-28: Rebuilt `/fun/` from the Chinese production `index.html` shell so entry, pager, result page, map, nearest-person block, classification stability, share image, and save-image flow stay aligned; only the lightweight questions/count/scoring differ.
@@ -76,7 +77,7 @@ Last updated: 2026-07-06
 
 1. Run another fresh human or respondent-agent pass on `/fun/en/` and `/fun/cn/`, watching for unstable profile results and jargon in result/reference copy.
 2. Start frontend modularization from the current `/en/`, `/cn/`, and bilingual `/fun/` pages.
-3. Add `VERCEL_TOKEN` to GitHub repository secrets, then use the manual GitHub Actions production deploy when ready.
+3. Keep GitHub Actions production deploy automation green; `AUTO_DEPLOY_PRODUCTION=true`, `VERCEL_PROJECT_NAME=ai-governance-persona`, `VERCEL_SCOPE=linen-yu`, and the LinenYu-scoped `VERCEL_TOKEN` are now configured.
 4. If production storage is still needed, run the Supabase schema and set Vercel env vars using `docs/vercel-supabase-go-live.md`.
 
 ## Open Questions
