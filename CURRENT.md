@@ -1,6 +1,6 @@
 # Current AI Governance Persona State
 
-Last updated: 2026-06-29
+Last updated: 2026-07-06
 
 ## Current Boundary
 
@@ -23,6 +23,7 @@ Last updated: 2026-06-29
 
 ## Recent Checkpoints
 
+- 2026-07-06: Fixed `/fun/cn/` and `/fun/en/` result/share avatar paths from `../assets/...` to `../../assets/...`; the old path resolved to `/fun/assets/...` and made final profile pictures fail to load. Added release-check coverage for the fun avatar asset path.
 - 2026-06-29: Ran three fresh respondent-agent passes on `/en/`, `/cn/`, and `/fun/`; added explicit pilot/not-validated caveats on intro and result pages; softened “closest reference” to “nearby reference point”; clarified C03/R01/H04 canonical wording without changing scores; split the lightweight route into `/fun/en/` and `/fun/cn/`; updated fun gates and release checks for both locales.
 - 2026-06-28: Rebuilt `/fun/` from the Chinese production `index.html` shell so entry, pager, result page, map, nearest-person block, classification stability, share image, and save-image flow stay aligned; only the lightweight questions/count/scoring differ.
 - 2026-06-28: Made `/fun/` independent from the production quiz navigation and added automatic next-question advance after single-answer selection.
